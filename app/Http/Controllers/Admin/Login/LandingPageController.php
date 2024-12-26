@@ -15,7 +15,7 @@ class LandingPageController extends AdminController
     }
 
     public function getRandomImage(){
-        echo 111111111111;exit;
+        return '获取随机图片';
     }
 
     public function login()
