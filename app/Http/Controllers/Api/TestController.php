@@ -14,6 +14,6 @@ class TestController extends ApiController
 
     public function checkRequest()
     {
-        dd(111);
+        dd('这是API的POST请求');
     }
 }

@@ -13,11 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
                       health: '/up',
                   )
                   ->withRouting(
-                      api: __DIR__ . '/../routes/admin/admin.php',
-                      health: '/up',
-                      apiPrefix: 'admin',
-                  )
-                  ->withRouting(
                       api: __DIR__ . '/../routes/api/api.php',
                       health: '/up',
                   )
