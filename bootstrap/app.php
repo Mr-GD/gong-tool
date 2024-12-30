@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
                       api: __DIR__ . '/../routes/api/api.php',
                       health: '/up',
                   )
+                  ->withRouting(
+                      api: __DIR__ . '/../routes/admin/admin.php',
+                      health: '/up',
+                      apiPrefix: 'admin'
+                  )
                   ->withMiddleware(function (Middleware $middleware) {
                       //
                   })
