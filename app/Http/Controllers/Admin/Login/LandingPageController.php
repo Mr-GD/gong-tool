@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Admin\Login;
 
 use common\Controller\AdminController;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LandingPageController extends AdminController
 {
     public function index()
     {
         return view('admin.login.index');
-//        return view('admin.login.index', [
-//            'csrfToken' => csrf_token()
-//        ]);
     }
 
-    public function getRandomImage(){
-        return '获取随机图片';
+    public function getRandomImage()
+    {
+        return $this->response()->success(['name' => '张三', 'age' => 18]);
     }
 
     public function login()

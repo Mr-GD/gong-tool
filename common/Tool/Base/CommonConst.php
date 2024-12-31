@@ -4,6 +4,7 @@ namespace common\Tool\Base;
 
 trait CommonConst
 {
+    const STATUS_DEFAULT = 0; //无
     const STATUS_SUCCESS = 1; //成功
     const STATUS_FAIL    = 2; //失败
 

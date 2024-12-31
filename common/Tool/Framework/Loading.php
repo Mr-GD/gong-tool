@@ -38,7 +38,7 @@ class Loading
     public function setLogDir()
     {
         /** 设置日志文件路径 */
-        $logDir = str_replace('/public', '', getcwd()) . sprintf('/runtime/logs/%s/', $this->model);
+        $logDir = str_replace('/public', '', getcwd()) . sprintf('/runtime/logs/%s/%s/%s/', $this->model, date('Y'), date('m'));
         globalVariable()->setVariable('LOGGER_PATH', $logDir);
     }
 

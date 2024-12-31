@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36cb42cd55d659617da689863790d26b",
+    "content-hash": "ee8439eddba30645be125d3d85d4182e",
     "packages": [
         {
             "name": "brick/math",
@@ -1347,6 +1347,163 @@
             },
             "abandoned": "mongodb/laravel-mongodb",
             "time": "2024-08-27T16:45:13+00:00"
+        },
+        {
+            "name": "jiannei/helpers",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jiannei/helpers.git",
+                "reference": "1fa669201e3c4f9b384ffdb5ab3ea4caabc594f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jiannei/helpers/zipball/1fa669201e3c4f9b384ffdb5ab3ea4caabc594f3",
+                "reference": "1fa669201e3c4f9b384ffdb5ab3ea4caabc594f3",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jiannei",
+                    "email": "longjian.huang@foxmail.com"
+                }
+            ],
+            "description": "Some helper functions.",
+            "support": {
+                "issues": "https://github.com/jiannei/helpers/issues",
+                "source": "https://github.com/jiannei/helpers/tree/v0.2.1"
+            },
+            "time": "2021-06-16T03:01:10+00:00"
+        },
+        {
+            "name": "jiannei/laravel-enum",
+            "version": "v4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jiannei/laravel-enum.git",
+                "reference": "59d40d00e9c3b85332e50facafae0cb96bb92d84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jiannei/laravel-enum/zipball/59d40d00e9c3b85332e50facafae0cb96bb92d84",
+                "reference": "59d40d00e9c3b85332e50facafae0cb96bb92d84",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "jiannei/helpers": "^0.2.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.23"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jiannei\\Enum\\Laravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jiannei",
+                    "email": "longjian.huang@foxmail.com"
+                }
+            ],
+            "description": "A simple and easy-to-use enumeration extension package to help you manage enumerations in your project more conveniently, supporting Laravel and Lumen",
+            "support": {
+                "issues": "https://github.com/jiannei/laravel-enum/issues",
+                "source": "https://github.com/jiannei/laravel-enum/tree/v4.0.2"
+            },
+            "time": "2024-03-13T07:15:47+00:00"
+        },
+        {
+            "name": "jiannei/laravel-response",
+            "version": "v6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jiannei/laravel-response.git",
+                "reference": "f2e925d596cffca575ce1ed84fe2fedb1396d582"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jiannei/laravel-response/zipball/f2e925d596cffca575ce1ed84fe2fedb1396d582",
+                "reference": "f2e925d596cffca575ce1ed84fe2fedb1396d582",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "jiannei/laravel-enum": "dev-main",
+                "laravel/pint": "^1.18.1",
+                "orchestra/testbench": "^9.5.2",
+                "pestphp/pest": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Response": "Jiannei\\Response\\Laravel\\Support\\Facades\\Response"
+                    },
+                    "providers": [
+                        "Jiannei\\Response\\Laravel\\Providers\\LaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jiannei\\Response\\Laravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jiannei",
+                    "email": "longjian.huang@foxmail.com"
+                }
+            ],
+            "description": "Laravel api response data format.",
+            "support": {
+                "issues": "https://github.com/jiannei/laravel-response/issues",
+                "source": "https://github.com/jiannei/laravel-response/tree/v6.0.1"
+            },
+            "time": "2024-10-30T10:07:57+00:00"
         },
         {
             "name": "knplabs/knp-snappy",
@@ -7568,6 +7725,173 @@
     ],
     "packages-dev": [
         {
+            "name": "doctrine/dbal",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "b4a1c16ab0a13ae1bd3bb1abcb88573f80afc420"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/b4a1c16ab0a13ae1bd3bb1abcb88573f80afc420",
+                "reference": "b4a1c16ab0a13ae1bd3bb1abcb88573f80afc420",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "doctrine/deprecations": "^0.5.3|^1",
+                "php": "^8.1",
+                "psr/cache": "^1|^2|^3",
+                "psr/log": "^1|^2|^3"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "12.0.0",
+                "fig/log-test": "^1",
+                "jetbrains/phpstorm-stubs": "2023.2",
+                "phpstan/phpstan": "1.12.6",
+                "phpstan/phpstan-phpunit": "1.4.0",
+                "phpstan/phpstan-strict-rules": "^1.6",
+                "phpunit/phpunit": "10.5.30",
+                "psalm/plugin-phpunit": "0.19.0",
+                "slevomat/coding-standard": "8.13.1",
+                "squizlabs/php_codesniffer": "3.10.2",
+                "symfony/cache": "^6.3.8|^7.0",
+                "symfony/console": "^5.4|^6.3|^7.0",
+                "vimeo/psalm": "5.25.0"
+            },
+            "suggest": {
+                "symfony/console": "For helpful console commands such as SQL execution and import of files."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\DBAL\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                }
+            ],
+            "description": "Powerful PHP database abstraction layer (DBAL) with many features for database schema introspection and management.",
+            "homepage": "https://www.doctrine-project.org/projects/dbal.html",
+            "keywords": [
+                "abstraction",
+                "database",
+                "db2",
+                "dbal",
+                "mariadb",
+                "mssql",
+                "mysql",
+                "oci8",
+                "oracle",
+                "pdo",
+                "pgsql",
+                "postgresql",
+                "queryobject",
+                "sasql",
+                "sql",
+                "sqlite",
+                "sqlserver",
+                "sqlsrv"
+            ],
+            "support": {
+                "issues": "https://github.com/doctrine/dbal/issues",
+                "source": "https://github.com/doctrine/dbal/tree/4.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fdbal",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-10-10T13:19:21+00:00"
+        },
+        {
+            "name": "doctrine/deprecations",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/deprecations.git",
+                "reference": "dfbaa3c2d2e9a9df1118213f3b8b0c597bb99fab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/dfbaa3c2d2e9a9df1118213f3b8b0c597bb99fab",
+                "reference": "dfbaa3c2d2e9a9df1118213f3b8b0c597bb99fab",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^9",
+                "phpstan/phpstan": "1.4.10 || 1.10.15",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "psalm/plugin-phpunit": "0.18.4",
+                "psr/log": "^1 || ^2 || ^3",
+                "vimeo/psalm": "4.30.0 || 5.12.0"
+            },
+            "suggest": {
+                "psr/log": "Allows logging deprecations via PSR-3 logger implementation"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Deprecations\\": "lib/Doctrine/Deprecations"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A small layer on top of trigger_error(E_USER_DEPRECATED) or PSR-3 logging with options to disable all deprecations or selectively for packages.",
+            "homepage": "https://www.doctrine-project.org/",
+            "support": {
+                "issues": "https://github.com/doctrine/deprecations/issues",
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.3"
+            },
+            "time": "2024-01-30T19:34:25+00:00"
+        },
+        {
             "name": "fakerphp/faker",
             "version": "v1.23.1",
             "source": {
@@ -8835,6 +9159,75 @@
                 }
             ],
             "time": "2024-06-07T04:48:50+00:00"
+        },
+        {
+            "name": "reliese/laravel",
+            "version": "v1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reliese/laravel.git",
+                "reference": "c286d2815987fa627a26cce3d2f1f04dd031c626"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reliese/laravel/zipball/c286d2815987fa627a26cce3d2f1f04dd031c626",
+                "reference": "c286d2815987fa627a26cce3d2f1f04dd031c626",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "doctrine/dbal": ">=2.5",
+                "illuminate/console": ">=5.1",
+                "illuminate/contracts": ">=5.1",
+                "illuminate/database": ">=5.1",
+                "illuminate/filesystem": ">=5.1",
+                "illuminate/support": ">=5.1",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "mockery/mockery": ">=1.4",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Reliese\\Coders\\CodersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Reliese\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Llanos",
+                    "email": "cristianllanos@outlook.com"
+                }
+            ],
+            "description": "Reliese Components for Laravel Framework code generation.",
+            "homepage": "http://cristianllanos.com",
+            "keywords": [
+                "laravel",
+                "reliese"
+            ],
+            "support": {
+                "issues": "https://github.com/reliese/laravel/issues",
+                "source": "https://github.com/reliese/laravel"
+            },
+            "time": "2024-06-06T14:27:32+00:00"
         },
         {
             "name": "sebastian/cli-parser",

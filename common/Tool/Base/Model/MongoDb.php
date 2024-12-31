@@ -50,6 +50,6 @@ class MongoDb extends Model
      */
     public static function instance()
     {
-        return self::query();
+        return static::query();
     }
 }
