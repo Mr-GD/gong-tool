@@ -4,8 +4,8 @@ namespace App\Console\Commands\AI;
 
 use common\Console\BaseCommand;
 use common\Constant\Storage\Mode;
+use common\Tool\File\Upload\KodboxUpload;
 use common\Tool\MessageSent\Bark;
-use common\Tool\Upload\KodboxUpload;
 
 /**
  * @command php82 artisan app:test

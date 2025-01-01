@@ -1,6 +1,6 @@
 <?php
 
-namespace common\Tool\Upload;
+namespace common\Tool\File\Upload;
 
 use common\Tool\Base\Request\InterfaceRequest;
 use Exception;

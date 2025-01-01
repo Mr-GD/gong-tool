@@ -3,7 +3,7 @@
 namespace common\Tool\MessageSent;
 
 use common\Tool\Base\Request\InterfaceRequest;
-use common\tool\MessageSent\ConcreteClass\NotifySend;
+use common\Tool\MessageSent\ConcreteClass\NotifySend;
 use gong\tool\base\api\Request\MakeRequest;
 
 class Bark extends InterfaceRequest implements MakeRequest, NotifySend

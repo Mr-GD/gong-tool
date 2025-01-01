@@ -6,7 +6,7 @@
 
 namespace App\Models\Background;
 
-use Illuminate\Database\Eloquent\Model;
+use common\Tool\Base\Model\MysqlModel;
 
 /**
  * Class LoginBackgroundPicture
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class LoginBackgroundPicture extends Model
+class LoginBackgroundPicture extends MysqlModel
 {
 	protected $table = 'login_background_picture';
 	protected $perPage = 30;

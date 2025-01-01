@@ -3,7 +3,7 @@
 namespace common\Tool\Base\Request;
 
 use App\Models\MongoDB\RequestLog;
-use common\tool\MessageSent\ConcreteClass\NotifySend;
+use common\Tool\MessageSent\ConcreteClass\NotifySend;
 use Exception;
 use gong\tool\base\abs\Request\MakeRequestAbs;
 use gong\tool\Rabbitmq\RabbitMq;

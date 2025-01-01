@@ -1,0 +1,16 @@
+<?php
+
+namespace common\Tool\Base\Model;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
+class MysqlModel extends Model
+{
+    public static function instance()
+    {
+        $static = new static();
+
+        return DB::table($static->getTable());
+    }
+}

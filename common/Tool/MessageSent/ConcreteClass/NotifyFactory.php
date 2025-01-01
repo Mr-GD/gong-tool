@@ -2,7 +2,7 @@
 
 namespace common\Tool\MessageSent\ConcreteClass;
 
-use common\tool\MessageSent\Bark;
+use common\Tool\MessageSent\Bark;
 use gong\tool\base\api\Factory;
 
 class NotifyFactory implements Factory

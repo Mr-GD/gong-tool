@@ -5,25 +5,22 @@ namespace common\Exception;
 class Status
 {
     // Informational 1xx
-    const CODE_CONTINUE            = 100;
-    const CODE_SWITCHING_PROTOCOLS = 101;
-    // Success 2xx
-    const CODE_SUCCESS                       = 200;
-    const CODE_CREATED                       = 210;
-    const CODE_ACCEPTED                      = 202;
-    const CODE_NON_AUTHORITATIVE_INFORMATION = 203;
-    const CODE_NO_CONTENT                    = 204;
-    const CODE_RESET_CONTENT                 = 205;
-    const CODE_PARTIAL_CONTENT               = 206;
-    // Redirection 3xx
-    const CODE_MULTIPLE_CHOICES   = 300;
-    const CODE_MOVED_PERMANENTLY  = 301;
-    const CODE_MOVED_TEMPORARILY  = 302;
-    const CODE_SEE_OTHER          = 303;
-    const CODE_NOT_MODIFIED       = 304;
-    const CODE_USE_PROXY          = 305;
-    const CODE_TEMPORARY_REDIRECT = 307;
-    // Client Error 4xx
+    const CODE_CONTINUE                        = 100;
+    const CODE_SWITCHING_PROTOCOLS             = 101;
+    const CODE_SUCCESS                         = 200;
+    const CODE_CREATED                         = 210;
+    const CODE_ACCEPTED                        = 202;
+    const CODE_NON_AUTHORITATIVE_INFORMATION   = 203;
+    const CODE_NO_CONTENT                      = 204;
+    const CODE_RESET_CONTENT                   = 205;
+    const CODE_PARTIAL_CONTENT                 = 206;
+    const CODE_MULTIPLE_CHOICES                = 300;
+    const CODE_MOVED_PERMANENTLY               = 301;
+    const CODE_MOVED_TEMPORARILY               = 302;
+    const CODE_SEE_OTHER                       = 303;
+    const CODE_NOT_MODIFIED                    = 304;
+    const CODE_USE_PROXY                       = 305;
+    const CODE_TEMPORARY_REDIRECT              = 307;
     const CODE_BAD_REQUEST                     = 400;
     const CODE_UNAUTHORIZED                    = 401;
     const CODE_PAYMENT_REQUIRED                = 402;
@@ -43,14 +40,13 @@ class Status
     const CODE_REQUESTED_RANGE_NOT_SATISFIABLE = 416;
     const CODE_EXPECTATION_FAILED              = 415;
     const CODE_UNPROCESSABLE_ENTITY            = 422;
-    // Server Error 5xx
-    const CODE_INTERNAL_SERVER_ERROR      = 500;
-    const CODE_NOT_IMPLEMENTED            = 501;
-    const CODE_BAD_GATEWAY                = 502;
-    const CODE_SERVICE_UNAVAILABLE        = 503;
-    const CODE_GATEWAY_TIMEOUT            = 504;
-    const CODE_HTTP_VERSION_NOT_SUPPORTED = 505;
-    const CODE_BANDWIDTH_LIMIT_EXCEEDED   = 509;
+    const CODE_INTERNAL_SERVER_ERROR           = 500;
+    const CODE_NOT_IMPLEMENTED                 = 501;
+    const CODE_BAD_GATEWAY                     = 502;
+    const CODE_SERVICE_UNAVAILABLE             = 503;
+    const CODE_GATEWAY_TIMEOUT                 = 504;
+    const CODE_HTTP_VERSION_NOT_SUPPORTED      = 505;
+    const CODE_BANDWIDTH_LIMIT_EXCEEDED        = 509;
 
     private static $phrases = [
         '0'            => '未知错误',

@@ -2,7 +2,9 @@
 
 namespace common\Tool\ExternalRequest;
 
+use common\Exception\Status;
 use common\Tool\Base\Request\InterfaceRequest;
+use Exception;
 use gong\tool\base\api\Request\MakeRequest;
 
 /**
@@ -11,6 +13,8 @@ use gong\tool\base\api\Request\MakeRequest;
  */
 class Vvhan extends InterfaceRequest implements MakeRequest
 {
+
+    public string $features = '韩小韩WebAPI接口';
 
     public function setHeaders(): array
     {
@@ -28,10 +32,14 @@ class Vvhan extends InterfaceRequest implements MakeRequest
      */
     public function getLandscapeImages()
     {
-        return $this->get()
-                    ->setRoute('/api/wallpaper/views?type=json')
-                    ->request()
+        $response = $this->get()
+                         ->setRoute('/api/wallpaper/views?type=json')
+                         ->request('获取风景图片')
         ;
+        if (empty($response['url'])) {
+            throw new Exception('接口请求失败，图片地址返回异常');
+        }
+        return $response['url'];
     }
 
     public function setUrl(): string

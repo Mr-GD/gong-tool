@@ -22,12 +22,8 @@ class Loading
     {
         $this->setLogDir();
         $this->setRequestId();
+        $this->setRuntimeDir();
         return true;
-    }
-
-    public function loadSessionStory()
-    {
-        session_start();
     }
 
     /**
@@ -53,5 +49,17 @@ class Loading
         $datacenterId = $flip[$this->model] ?? 0;
         $snowflakeId  = generateSnowflakeId($datacenterId);
         globalVariable()->setVariable('REQUEST_ID', $snowflakeId);
+    }
+
+    /**
+     * 设置runtime位置
+     * @author 龚德铭
+     * @date 2025/1/1 23:55
+     */
+    public function setRuntimeDir()
+    {
+        /** 设置日志文件路径 */
+        $logDir = str_replace('/public', '', getcwd()) . '/runtime/';
+        globalVariable()->setVariable('runtime_dir', $logDir);
     }
 }
