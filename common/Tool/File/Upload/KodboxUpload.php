@@ -2,6 +2,8 @@
 
 namespace common\Tool\File\Upload;
 
+use App\Models\Kodbox;
+use App\Service\Common\KodboxService;
 use common\Tool\Base\Request\InterfaceRequest;
 use Exception;
 use gong\tool\base\api\Request\MakeRequest;
@@ -10,7 +12,11 @@ use Illuminate\Support\Facades\Cache;
 /** 可道云文件上传 */
 class KodboxUpload extends InterfaceRequest implements MakeRequest
 {
-    public string $features = '文件上传';
+    public bool $recordLog = true;
+
+    public string $features = '可道云';
+
+    public string $catalogue = '{source:20}';
 
     public function setHeaders(): array
     {
@@ -29,11 +35,9 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
      */
     public function simulateFormUpload(string $filePath)
     {
-        $accessToken   = $this->getAccessToken();
         $basename      = basename($filePath);
         $name          = explode('.', $basename);
         $suffix        = end($name);
-        $snowflakeId   = generateSnowflakeId();
         $uploadFileUrl = $this->post()
                               ->setReplenishOptions([
                                   'multipart' => [
@@ -44,19 +48,50 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
                                       ],
                                       [
                                           'name'     => 'path',
-                                          'contents' => '{source:20}',
+                                          'contents' => $this->mkDir($suffix),
                                       ],
                                       [
                                           'name'     => 'name',
-                                          'contents' => sprintf('%s_%s.%s', $suffix, $snowflakeId, $suffix),
+                                          'contents' => sprintf('%s_%s.%s', $suffix, generateSnowflakeId(), $suffix),
                                       ],
                                   ]
                               ])
-                              ->setRoute('/index.php?explorer/upload/fileUpload&accessToken=' . $accessToken)
+                              ->setRoute('/index.php?explorer/upload/fileUpload&accessToken=' . $this->getAccessToken())
                               ->request('模拟表单上传文件')
         ;
 
         return '/index.php?explorer/index/fileOut&path=' . $uploadFileUrl;
+    }
+
+    /**
+     * 创建文件夹
+     * @param $dir
+     * @return mixed
+     * @throws Exception
+     * @author 龚德铭
+     * @date 2025/1/2 11:46
+     */
+    public function mkDir($dir)
+    {
+        $path = KodboxService::instance()->getPathByExt($dir);
+        if ($path) {
+            return $path;
+        }
+
+        $path = $this->post()
+                     ->setFormParams([
+                         'path' => $this->catalogue . '/' . $dir,
+                     ])
+                     ->setRoute('/index.php?explorer/index/mkdir&accessToken=' . $this->getAccessToken())
+                     ->request('创建文件夹')
+        ;
+
+        Kodbox::instance()->insert([
+            'ext'        => $dir,
+            'path'       => $path,
+            'created_at' => time(),
+        ]);
+        return $path;
     }
 
     /**
@@ -95,7 +130,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
     public function analyze($response)
     {
         if (empty($response['code']) || $response['code'] !== true) {
-            throw new Exception('文件上传失败 ' . $response['data'] ?? '');
+            throw new Exception($this->features . '失败 ' . $response['data'] ?? '');
         }
 
         return $response['info'] ?? '';

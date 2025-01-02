@@ -2,26 +2,25 @@
 
 namespace App\Console\Commands\Admin;
 
-use App\Models\Background\LoginBackgroundPicture;
+use common\Console\BaseCommand;
 use common\Tool\ExternalRequest\Vvhan;
 use common\Tool\File\SaveLocally;
 use common\Tool\File\Upload\KodboxUpload;
 use Exception;
 use gong\tool\Rabbitmq\RabbitMq;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 /**
- * @command php82 artisan admin:grab-background-picture
+ * @command php82 artisan admin:grab-background-picture 10000
  */
-class BackgroundPicture extends Command
+class BackgroundPicture extends BaseCommand
 {
+    public int $limit = 0;
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'admin:grab-background-picture';
+    protected $signature = 'admin:grab-background-picture {limit}';
 
     /**
      * The console command description.
@@ -35,6 +34,7 @@ class BackgroundPicture extends Command
      */
     public function handle()
     {
+        $this->analyzeParameters();
         consoleLine('------ Start ------');
         $num    = 0;
         $mq     = RabbitMq::instance()
@@ -42,9 +42,10 @@ class BackgroundPicture extends Command
                           ->setRoutingKey(env('FILE_UPLOAD_BACKGROUND_ROUTING_KEY'))
                           ->setCloseLink(false)
         ;
+        $limit = $this->limit ?: 100;
         while (true) {
             $num++;
-            if ($num > 100) {
+            if ($num > $limit) {
                 break;
             }
 
@@ -57,6 +58,7 @@ class BackgroundPicture extends Command
                 consoleLine(sprintf('【Error】第%s张图片 Message:%s', $num, $e->getMessage()));
                 continue;
             }
+            sleep(1);
         }
         $mq->close();
         consoleLine('------ End ------');

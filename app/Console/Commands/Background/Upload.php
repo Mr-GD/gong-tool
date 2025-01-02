@@ -45,7 +45,6 @@ class Upload extends Command
                         'url'        => $imageUrl,
                         'created_at' => time(),
                     ]);
-                    @unlink($localUrl);
                     return true;
                 })
         ;

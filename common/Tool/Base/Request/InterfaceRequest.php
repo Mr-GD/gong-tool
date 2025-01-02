@@ -34,7 +34,7 @@ abstract class InterfaceRequest extends MakeRequestAbs
                       'features'   => $this->features,
                       'method'     => $this->requestType,
                       'http_code'  => $this->response->getStatusCode(),
-                      'options'    => json_encode($this->params, JSON_UNESCAPED_UNICODE),
+                      'options'    => json_encode($this->options, JSON_UNESCAPED_UNICODE),
                       'response'   => json_encode($body, JSON_UNESCAPED_UNICODE),
                       'created_at' => time(),
                       'status'     => $this->response->getStatusCode() === 200 ? RequestLog::STATUS_SUCCESS : RequestLog::STATUS_FAIL,
@@ -61,6 +61,7 @@ abstract class InterfaceRequest extends MakeRequestAbs
         RabbitMq::instance()
                 ->setExchange(env('REQUEST_EXCHANGE'))
                 ->setRoutingKey(env('REQUEST_NOTIFY_RESULT_ROUTING_KEY'))
+                ->setRemark('三方请求结果消息通知')
                 ->sendMessage([
                     'request_id' => globalVariable()->getVariable('request_id'),
                     'features'   => $this->features,

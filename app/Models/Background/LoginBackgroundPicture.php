@@ -30,6 +30,7 @@ class LoginBackgroundPicture extends MysqlModel
 
 	protected $fillable = [
 		'url',
-		'storage_mode'
+		'storage_mode',
+        'created_at',
 	];
 }
