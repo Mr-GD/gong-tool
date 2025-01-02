@@ -131,10 +131,10 @@
         loginContainer.style.opacity = '0';
 
         $.ajax({
-            url: 'https://api.vvhan.com/api/bing?type=json&rand=sj',
-            method: 'GET',
-            // url: '/admin/LandingPage/getRandomImage',
-            // method: 'POST',
+            // url: 'https://api.vvhan.com/api/bing?type=json&rand=sj',
+            // method: 'GET',
+            url: '/admin/LandingPage/getRandomImage',
+            method: 'POST',
             dataType: 'json',
             success: function (response) {
                 console.log('请求成功:', response);

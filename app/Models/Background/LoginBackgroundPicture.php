@@ -25,7 +25,7 @@ class LoginBackgroundPicture extends MysqlModel
 	public $timestamps = false;
 
 	protected $casts = [
-		'storage_mode' => 'bool'
+		'storage_mode' => 'int'
 	];
 
 	protected $fillable = [

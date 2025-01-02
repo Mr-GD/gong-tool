@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Background;
 
 use App\Models\Background\LoginBackgroundPicture;
+use common\Constant\Storage\Mode;
 use common\Tool\File\Upload\KodboxUpload;
 use gong\tool\Rabbitmq\RabbitMq;
 use Illuminate\Console\Command;
@@ -42,8 +43,9 @@ class Upload extends Command
                     }
                     $imageUrl = KodboxUpload::instance()->simulateFormUpload($localUrl);
                     LoginBackgroundPicture::instance()->insert([
-                        'url'        => $imageUrl,
-                        'created_at' => time(),
+                        'url'          => $imageUrl,
+                        'created_at'   => time(),
+                        'storage_mode' => Mode::KODBOX, //可道云
                     ]);
                     return true;
                 })

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Login;
 
+use App\Models\Background\LoginBackgroundPicture;
 use common\Controller\AdminController;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LandingPageController extends AdminController
 {
@@ -14,7 +14,10 @@ class LandingPageController extends AdminController
 
     public function getRandomImage()
     {
-        return $this->response()->success(['name' => '张三', 'age' => 18]);
+        $count   = LoginBackgroundPicture::instance()->count();
+        $random  = rand(0, $count - 1);
+        $picture = LoginBackgroundPicture::instance()->find($random);
+        return $this->response()->success(['url' => $picture->formatStorageFileUrl() ?? '']);
     }
 
     public function login()
