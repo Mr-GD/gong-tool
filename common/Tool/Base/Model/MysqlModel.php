@@ -31,7 +31,6 @@ class MysqlModel extends Model
         $return = '';
         switch ($this->storage_mode) {
             case Mode::LOCAL:
-                print_r($this);exit;
                 $return = $this->url;
                 break;
             case Mode::KODBOX:
