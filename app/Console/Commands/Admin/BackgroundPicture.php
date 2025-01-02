@@ -5,7 +5,6 @@ namespace App\Console\Commands\Admin;
 use common\Console\BaseCommand;
 use common\Tool\ExternalRequest\Vvhan;
 use common\Tool\File\SaveLocally;
-use common\Tool\File\Upload\KodboxUpload;
 use Exception;
 use gong\tool\Rabbitmq\RabbitMq;
 
