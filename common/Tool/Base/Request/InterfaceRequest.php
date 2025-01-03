@@ -38,6 +38,7 @@ abstract class InterfaceRequest extends MakeRequestAbs
                       'response'   => json_encode($body, JSON_UNESCAPED_UNICODE),
                       'created_at' => time(),
                       'status'     => $this->response->getStatusCode() === 200 ? RequestLog::STATUS_SUCCESS : RequestLog::STATUS_FAIL,
+                      'time_taken' => bcsub($this->requestEndTime, $this->requestStartTime, 3), //用时
                   ])
         ;
     }

@@ -34,7 +34,8 @@ class Vvhan extends InterfaceRequest implements MakeRequest
     {
         $response = $this->get()
                          ->setRoute('/api/wallpaper/views?type=json')
-                         ->request('获取风景图片')
+                         ->setRemark('获取风景图片')
+                         ->request()
         ;
         if (empty($response['url'])) {
             throw new Exception('接口请求失败，图片地址返回异常');

@@ -12,9 +12,10 @@ use common\Tool\Base\Model\MongoDb;
  * @property string $method 请求方式
  * @property int $http_code http状态码
  * @property array $options 提交参数
- * @property array $response 请求结果
+ * @property array $response 响应体
  * @property string $created_at 请求时间
  * @property int $status 请求结果
+ * @property float $time_taken 请求用时
  */
 class RequestLog extends MongoDb
 {
@@ -27,9 +28,10 @@ class RequestLog extends MongoDb
         'method'     => '请求方式',
         'http_code'  => 'http状态码',
         'options'    => '提交参数',
-        'response'   => '请求结果',
+        'response'   => '响应体',
         'created_at' => '请求时间',
-        'status'     => '请求结果'
+        'status'     => '请求结果',
+        'time_taken' => '请求用时',
     ];
 
 }

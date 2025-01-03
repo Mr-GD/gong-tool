@@ -57,7 +57,8 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
                                   ]
                               ])
                               ->setRoute('/index.php?explorer/upload/fileUpload&accessToken=' . $this->getAccessToken())
-                              ->request('模拟表单上传文件')
+                              ->setRemark('模拟表单上传文件')
+                              ->request()
         ;
 
         return '/index.php?explorer/index/fileOut&path=' . $uploadFileUrl;
@@ -83,7 +84,8 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
                          'path' => $this->catalogue . '/' . $dir,
                      ])
                      ->setRoute('/index.php?explorer/index/mkdir&accessToken=' . $this->getAccessToken())
-                     ->request('创建文件夹')
+                     ->setRemark('创建文件夹')
+                     ->request()
         ;
 
         Kodbox::instance()->insert([
@@ -115,7 +117,8 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
         );
         $accessToken = $this->get()
                             ->setRoute($route)
-                            ->request('获取AccessToken')
+                            ->setRemark('获取AccessToken')
+                            ->request()
         ;
 
         Cache::put($cacheKey, $accessToken, 3600);

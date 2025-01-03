@@ -23,7 +23,8 @@ class Bark extends InterfaceRequest implements MakeRequest, NotifySend
     {
         return $this->get()
                     ->setRoute(sprintf('/%s', $message))
-                    ->request('发送普通消息')
+                    ->setRemark('发送普通消息')
+                    ->request()
         ;
     }
 

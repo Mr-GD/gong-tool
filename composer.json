@@ -3,10 +3,15 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-bcmath": "*",
+        "ext-fileinfo": "*",
         "ext-pdo": "*",
         "gong/tool": "dev-master",
         "jenssegers/mongodb": "*",
@@ -14,8 +19,7 @@
         "jiannei/laravel-response": "^6.0",
         "laravel/breeze": "^2.2",
         "laravel/framework": "^11.31",
-        "laravel/tinker": "^2.9",
-        "ext-fileinfo": "*"
+        "laravel/tinker": "^2.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
