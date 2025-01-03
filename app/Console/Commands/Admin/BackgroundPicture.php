@@ -9,7 +9,7 @@ use Exception;
 use gong\tool\Rabbitmq\RabbitMq;
 
 /**
- * @command php82 artisan admin:grab-background-picture 10000
+ * @command php82 artisan admin:background-picture 10000
  */
 class BackgroundPicture extends BaseCommand
 {
@@ -19,7 +19,7 @@ class BackgroundPicture extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'admin:grab-background-picture {limit}';
+    protected $signature = 'admin:background-picture {limit}';
 
     /**
      * The console command description.
@@ -35,11 +35,12 @@ class BackgroundPicture extends BaseCommand
     {
         $this->analyzeParameters();
         consoleLine('------ Start ------');
-        $num    = 0;
-        $mq     = RabbitMq::instance()
-                          ->setExchange(env('FILE_UPLOAD_EXCHANGE'))
-                          ->setRoutingKey(env('FILE_UPLOAD_BACKGROUND_ROUTING_KEY'))
-                          ->setCloseLink(false)
+        $num   = 0;
+        $mq    = RabbitMq::instance()
+                         ->setExchange(env('FILE_UPLOAD_EXCHANGE'))
+                         ->setRoutingKey(env('FILE_UPLOAD_BACKGROUND_ROUTING_KEY'))
+                         ->setRemark('获取背景图片')
+                         ->setCloseLink(false)
         ;
         $limit = $this->limit ?: 100;
         while (true) {

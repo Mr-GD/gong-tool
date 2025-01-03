@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Background;
+namespace App\Console\Commands\Admin\Background;
 
 use App\Models\Background\LoginBackgroundPicture;
 use common\Constant\Storage\Mode;
@@ -9,7 +9,7 @@ use gong\tool\Rabbitmq\RabbitMq;
 use Illuminate\Console\Command;
 
 /**
- * @command php82 artisan app:background:upload
+ * @command php82 artisan admin:consume:background:upload
  */
 class Upload extends Command
 {
@@ -18,7 +18,7 @@ class Upload extends Command
      *
      * @var string
      */
-    protected $signature = 'app:background:upload';
+    protected $signature = 'admin:consume:background:upload';
 
     /**
      * The console command description.
@@ -36,6 +36,7 @@ class Upload extends Command
                 ->setExchange(env('FILE_UPLOAD_EXCHANGE'))
                 ->setRoutingKey(env('FILE_UPLOAD_BACKGROUND_ROUTING_KEY'))
                 ->setQueue(env('FILE_UPLOAD_BACKGROUND_QUE'))
+                ->setRemark('登陆背景图片上传保存')
                 ->consume(function ($data) {
                     $localUrl = $data['file'] ?? '';
                     if (!$localUrl) {

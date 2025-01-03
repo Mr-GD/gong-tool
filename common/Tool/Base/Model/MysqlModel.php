@@ -3,6 +3,7 @@
 namespace common\Tool\Base\Model;
 
 use common\Constant\Storage\Mode;
+use common\Tool\File\Upload\KodboxUpload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -34,7 +35,9 @@ class MysqlModel extends Model
                 $return = $this->url;
                 break;
             case Mode::KODBOX:
-                $return = env('UPLOAD_FILE_KODBOX_API_URL') . $this->url;
+                $url    = rtrim($this->url, '/');
+                $return = env('UPLOAD_FILE_KODBOX_API_URL') . $url;
+                $return = $return ? $return . '&accessToken=' . KodboxUpload::instance()->getAccessToken() : '';
                 break;
         }
 

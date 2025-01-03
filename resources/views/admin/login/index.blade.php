@@ -138,6 +138,7 @@
             dataType: 'json',
             success: function (response) {
                 console.log('请求成功:', response);
+                console.log('请求成功:', response.data.url);
                 const img = new Image();
                 img.onload = function () {
                     bgImage.style.backgroundImage = `url(${response.data.url})`;

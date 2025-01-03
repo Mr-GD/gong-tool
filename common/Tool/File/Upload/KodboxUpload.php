@@ -101,7 +101,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
      * @author 龚德铭
      * @date 2024/12/17 15:33
      */
-    private function getAccessToken()
+    public function getAccessToken()
     {
         $cacheKey    = 'file.upload.accessToken';
         $accessToken = Cache::get($cacheKey);
