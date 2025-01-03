@@ -36,12 +36,6 @@ class BackgroundPicture extends BaseCommand
         $this->analyzeParameters();
         consoleLine('------ Start ------');
         $num   = 0;
-        $mq    = RabbitMq::instance()
-                         ->setExchange(env('FILE_UPLOAD_EXCHANGE'))
-                         ->setRoutingKey(env('FILE_UPLOAD_BACKGROUND_ROUTING_KEY'))
-                         ->setRemark('获取背景图片')
-                         ->setCloseLink(false)
-        ;
         $limit = $this->limit ?: 100;
         while (true) {
             $num++;
@@ -52,14 +46,18 @@ class BackgroundPicture extends BaseCommand
             try {
                 $remoteUrl = Vvhan::instance()->getLandscapeImages();
                 $localUrl  = SaveLocally::instance()->setRemoteUrl($remoteUrl)->execute();
-                $mq->sendMessage(['file' => $localUrl]);
+                RabbitMq::instance()
+                        ->setExchange(env('FILE_UPLOAD_EXCHANGE'))
+                        ->setRoutingKey(env('FILE_UPLOAD_BACKGROUND_ROUTING_KEY'))
+                        ->setRemark('获取背景图片')
+                        ->sendMessage(['file' => $localUrl]);
                 consoleLine(sprintf('【Successful】第%s张图片 Url:%s', $num, $localUrl));
             } catch (Exception $e) {
                 consoleLine(sprintf('【Error】第%s张图片 Message:%s', $num, $e->getMessage()));
                 continue;
             }
+            sleep(1);
         }
-        $mq->close();
         consoleLine('------ End ------');
     }
 }
