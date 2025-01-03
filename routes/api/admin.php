@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('api')->group(function () {
-    $dir = __DIR__ . '/api/';
+Route::prefix('admin')->group(function () {
+    $dir = __DIR__ . '/admin/';
     requireAllPhpFiles($dir);
 });
+

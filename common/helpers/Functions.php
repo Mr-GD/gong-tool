@@ -13,3 +13,24 @@ if (!function_exists('frameworkLoading')) {
         return Loading::instance()->analysisApplications()->execute();
     }
 }
+
+/** 遍历递归引入目录下php文件 */
+if (!function_exists('requireAllPhpFiles')) {
+    function requireAllPhpFiles($dir)
+    {
+        // 获取目录中的所有文件和目录
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($files as $file) {
+            // 确保是文件并且是PHP文件
+            if ($file->isFile() && $file->getExtension() === 'php') {
+                // 引入文件
+                require_once $file->getPathname();
+            }
+        }
+
+
+    }
+}

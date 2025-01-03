@@ -9,7 +9,7 @@ class TestController extends ApiController
 {
     public function index(Request $request)
     {
-        echo 'API接口';
+        echo 'Get请求';
     }
 
     public function checkRequest()
