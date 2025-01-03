@@ -137,18 +137,14 @@
             method: 'POST',
             dataType: 'json',
             success: function (response) {
-                console.log('请求成功:', response);
-                console.log('请求成功:', response.data.url);
                 const img = new Image();
                 img.onload = function () {
                     bgImage.style.backgroundImage = `url(${response.data.url})`;
                     bgImage.style.opacity = '1';
 
                     // 背景加载完成后，隐藏加载动画并显示登录表单
-                    setTimeout(() => {
-                        loadingSpinner.style.display = 'none';
-                        loginContainer.style.opacity = '1';
-                    }, 500);
+                    loadingSpinner.style.display = 'none';
+                    loginContainer.style.opacity = '1';
                 };
                 img.onerror = function () {
                     loadingSpinner.style.display = 'none';

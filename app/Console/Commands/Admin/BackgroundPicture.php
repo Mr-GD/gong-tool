@@ -58,7 +58,6 @@ class BackgroundPicture extends BaseCommand
                 consoleLine(sprintf('【Error】第%s张图片 Message:%s', $num, $e->getMessage()));
                 continue;
             }
-            sleep(1);
         }
         $mq->close();
         consoleLine('------ End ------');

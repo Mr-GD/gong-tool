@@ -4,6 +4,7 @@ namespace common\Tool\ExternalRequest\Yuzhua;
 
 use common\Tool\Base\Request\InterfaceRequest;
 use gong\tool\base\api\Request\MakeRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @method $this setPattern(string $pattern) // 设置请求模式
@@ -17,8 +18,8 @@ class Oa extends InterfaceRequest implements MakeRequest
 
     public string $features = '鱼爪OA';
     public int $number;
-    public $pattern = 'test';
-    public $token;
+    public string $pattern = 'test';
+    public string $token;
 
     /**
      * 课程学习统计
@@ -73,8 +74,15 @@ class Oa extends InterfaceRequest implements MakeRequest
             return '';
         }
 
+        $cacheKey    = 'yuzhua.oa.token.' . $this->number;
+        $accessToken = Cache::get($cacheKey);
+        if ($accessToken) {
+            return $accessToken;
+        }
+
         $code = $this->getCode();
-        return $this->post()
+        return $this->oneself()
+                    ->post()
                     ->setParams([
                         'grant_type'    => 'authorization_code',
                         'code'          => $code,
@@ -85,8 +93,12 @@ class Oa extends InterfaceRequest implements MakeRequest
                     ->setCompleteAddress('http://oauth-oa.yuzhua-test.com/token')
                     ->setUserDefinedHeader([])
                     ->setRemark('获取token')
-                    ->request(function ($response) {
-                        return $response['access_token'] ?? '';
+                    ->request(function ($response) use ($cacheKey) {
+                        $accessToken = $response['access_token'] ?? '';
+                        if ($accessToken) {
+                            Cache::put($cacheKey, $accessToken, 7000);
+                        }
+                        return $accessToken;
                     })
         ;
     }
@@ -105,7 +117,8 @@ class Oa extends InterfaceRequest implements MakeRequest
         $timestamp    = time();
         $random       = uniqid();
         $signature    = md5($clientId . $clientSecret . $timestamp . $random);
-        return $this->post()
+        return $this->oneself()
+                    ->post()
                     ->setParams([
                         'name' => 'oa'
                     ])

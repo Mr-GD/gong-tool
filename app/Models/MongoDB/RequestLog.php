@@ -19,7 +19,7 @@ use common\Tool\Base\Model\MongoDb;
  */
 class RequestLog extends MongoDb
 {
-    public string $collection = 'operation_log';
+    public string $collection = 'request_log';
     public array $fields = [
         '_id'        => '_id',
         'request_id' => '请求ID',
