@@ -14,9 +14,7 @@ class LandingPageController extends AdminController
 
     public function getRandomImage()
     {
-        $count   = LoginBackgroundPicture::instance()->count();
-        $random  = rand(0, $count - 1);
-        $picture = LoginBackgroundPicture::instance()->find($random);
+        $picture = LoginBackgroundPicture::randomData();
         return $this->response()->success(['url' => $picture->formatStorageFileUrl() ?? '']);
     }
 
