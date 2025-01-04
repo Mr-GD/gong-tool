@@ -1,6 +1,6 @@
 <?php
 
-namespace common\Tool\Base\Model;
+namespace common\Model;
 
 
 use common\Tool\Base\CommonConst;

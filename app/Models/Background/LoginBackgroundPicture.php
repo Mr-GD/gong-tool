@@ -6,7 +6,8 @@
 
 namespace App\Models\Background;
 
-use common\Tool\Base\Model\MysqlModel;
+use common\Model\MysqlModel;
+use common\Trait\File\RemoteFileHandle;
 
 /**
  * Class LoginBackgroundPicture
@@ -20,17 +21,19 @@ use common\Tool\Base\Model\MysqlModel;
  */
 class LoginBackgroundPicture extends MysqlModel
 {
-	protected $table = 'login_background_picture';
-	protected $perPage = 30;
-	public $timestamps = false;
+    use RemoteFileHandle;
 
-	protected $casts = [
-		'storage_mode' => 'int'
-	];
+    protected $table = 'login_background_picture';
+    protected $perPage = 30;
+    public $timestamps = false;
 
-	protected $fillable = [
-		'url',
-		'storage_mode',
+    protected $casts = [
+        'storage_mode' => 'int'
+    ];
+
+    protected $fillable = [
+        'url',
+        'storage_mode',
         'created_at',
-	];
+    ];
 }

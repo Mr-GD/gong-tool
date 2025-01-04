@@ -6,7 +6,7 @@
 
 namespace App\Models;
 
-use common\Tool\Base\Model\MysqlModel;
+use common\Model\MysqlModel;
 
 /**
  * Class Kodbox

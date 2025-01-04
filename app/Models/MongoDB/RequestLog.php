@@ -2,7 +2,7 @@
 
 namespace App\Models\MongoDB;
 
-use common\Tool\Base\Model\MongoDb;
+use common\Model\MongoDb;
 
 /**
  * @property string $_id

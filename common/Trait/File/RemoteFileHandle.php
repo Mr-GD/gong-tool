@@ -1,22 +1,12 @@
 <?php
 
-namespace common\Tool\Base\Model;
+namespace common\Trait\File;
 
 use common\Constant\Storage\Mode;
 use common\Tool\File\Upload\KodboxUpload;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
-/**
- * php artisan code:models --table=users
- */
-class MysqlModel extends Model
+trait RemoteFileHandle
 {
-    public static function instance()
-    {
-        return static::query();
-    }
-
     /**
      * 格式化存储文件地址
      * @return string

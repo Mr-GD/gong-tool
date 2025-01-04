@@ -115,7 +115,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
             env('UPLOAD_KODBOX_USERNAME'),
             env('UPLOAD_KODBOX_PASSWORD')
         );
-        $accessToken = $this->get()
+        $accessToken = $this->oneself()
                             ->setRoute($route)
                             ->setRemark('获取AccessToken')
                             ->request()
