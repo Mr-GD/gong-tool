@@ -4,8 +4,11 @@ namespace App\Console\Commands\AI;
 
 use common\Console\BaseCommand;
 use common\Constant\Storage\Mode;
+use common\Observe\Test\A;
+use common\Observe\Test\B;
 use common\Tool\File\Upload\KodboxUpload;
 use common\Tool\MessageSent\Bark;
+use gong\tool\Observer\Action;
 
 /**
  * @command php82 artisan app:test
@@ -31,14 +34,15 @@ class Test extends BaseCommand
      */
     public function handle()
     {
-        $file = getcwd() . '/runtime/下载 (18).mp4';
-        $url  = KodboxUpload::instance()->simulateFormUpload($file);
-
-        echo formatStorageFileUrl($url, Mode::KODBOX);
+        $action = new Action();
+        $action->register(new A(18))
+               ->register(new B('张三'))
+               ->notify()
+        ;
     }
 
     public function sendMessage()
     {
-        Bark::instance()->generalInformation('嘿嘿嘿嘿嘿嘿嘿');
+
     }
 }
