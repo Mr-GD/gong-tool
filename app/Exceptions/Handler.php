@@ -66,8 +66,9 @@ class Handler
             //判断当前路由是否为web中间件
             if (!in_array('web', $actions['middleware'] ?? [])) {
                 $return = [
-                    'code' => $statusCode,
-                    'msg'  => $msg,
+                    'code'       => $statusCode,
+                    'msg'        => $msg,
+                    'request_id' => globalVariable()->getVariable('request_id'),
                 ];
                 return response()->json($return, $statusCode);
             } else {
