@@ -72,7 +72,7 @@ class Handler
                 ];
                 return response()->json($return, $statusCode);
             } else {
-                return response()->view('errors.error', ['errCode' => $statusCode, 'msg' => $msg]);
+                return response()->view('errors.error', ['errCode' => $statusCode, 'msg' => $msg, 'request_id' => globalVariable()->getVariable('request_id')]);
             }
         });
     }
