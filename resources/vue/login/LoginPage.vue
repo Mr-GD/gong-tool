@@ -1,58 +1,7 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登陆页</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/js/components/common.js', 'resources/js/pages/login.js'])
-    
-    <style>
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: opacity 0.5s ease-in-out;
-            z-index: -1;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
-            z-index: -1;
-        }
-
-        /* 添加新的样式 */
-        .login-container {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .loading-spinner {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-        }
-    </style>
-</head>
-<body class="min-h-screen relative">
-    <div id="app"></div>
-    <!-- 背景图片容器 -->
+<template>
     <div class="bg-image" :style="{ backgroundImage: `url(${backgroundImage})` }"></div>
     <div class="overlay"></div>
 
-    <!-- 添加加载动画 -->
     <div class="loading-spinner" v-if="isLoading">
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
     </div>
@@ -110,5 +59,76 @@
             </form>
         </div>
     </div>
-</body>
-</html>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const backgroundImage = ref('');
+const isLoading = ref(true);
+const loginContainerOpacity = ref(0);
+
+function setRandomBackground() {
+    fetch('/admin/LandingPage/getRandomImage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        backgroundImage.value = data.data.url;
+        isLoading.value = false;
+        loginContainerOpacity.value = 1;
+    })
+    .catch(error => {
+        console.error('Fetch 请求失败:', error);
+        isLoading.value = false;
+        loginContainerOpacity.value = 1;
+    });
+}
+
+onMounted(() => {
+    console.log('页面加载完成，准备设置背景...');
+    setRandomBackground();
+});
+</script>
+
+<style scoped>
+.bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.5s ease-in-out;
+    z-index: -1;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
+    z-index: -1;
+}
+
+.login-container {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+</style> 
