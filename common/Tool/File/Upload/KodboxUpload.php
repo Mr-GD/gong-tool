@@ -74,25 +74,31 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
      */
     public function mkDir($dir)
     {
-        $path = KodboxService::instance()->getPathByExt($dir);
-        if ($path) {
-            return $path;
+        $dirs          = explode('/', $dir);
+        $path          = '';
+        $rootDirectory = $this->catalogue;
+        foreach ($dirs as $catalogue) {
+            $path = KodboxService::instance()->getPathByExt($dir);
+            if ($path) {
+                continue;
+            }
+
+            $rootDirectory = $this->oneself()
+                                  ->setFormParams([
+                                      'path' => $rootDirectory . '/' . $catalogue,
+                                  ])
+                                  ->setRoute('/index.php?explorer/index/mkdir&accessToken=' . $this->getAccessToken())
+                                  ->setRemark('创建文件夹')
+                                  ->request()
+            ;
+
+            Kodbox::instance()->insert([
+                'ext'        => $dir,
+                'path'       => $path,
+                'created_at' => time(),
+            ]);
         }
 
-        $path = $this->post()
-                     ->setFormParams([
-                         'path' => $this->catalogue . '/' . $dir,
-                     ])
-                     ->setRoute('/index.php?explorer/index/mkdir&accessToken=' . $this->getAccessToken())
-                     ->setRemark('创建文件夹')
-                     ->request()
-        ;
-
-        Kodbox::instance()->insert([
-            'ext'        => $dir,
-            'path'       => $path,
-            'created_at' => time(),
-        ]);
         return $path;
     }
 
