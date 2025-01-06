@@ -170,7 +170,6 @@
 
     // 确保 DOM 加载完成后执行
     $(document).ready(function () {
-        console.log('页面加载完成，准备设置背景...');
         setRandomBackground();
     });
 </script>

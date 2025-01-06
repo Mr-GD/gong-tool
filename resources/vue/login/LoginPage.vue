@@ -90,7 +90,6 @@ function setRandomBackground() {
 }
 
 onMounted(() => {
-    console.log('页面加载完成，准备设置背景...');
     setRandomBackground();
 });
 </script>
@@ -131,4 +130,4 @@ onMounted(() => {
     transform: translate(-50%, -50%);
     z-index: 1000;
 }
-</style> 
+</style>

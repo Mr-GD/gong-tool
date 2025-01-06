@@ -1,0 +1,420 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f5f6fa;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background: linear-gradient(135deg, #2c3e50, #3a506b);
+    color: #fff;
+    width: 250px;
+    padding: 20px 0;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+    border-radius: 0 20px 20px 0;
+}
+
+.logo {
+    padding: 0 25px;
+    margin-bottom: 30px;
+}
+
+.logo h1 {
+    padding: 0 25px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #ecf0f1;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 5px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #444;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    padding-bottom: 60px;
+    width: 100%;
+    height: 150px !important;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    overflow: auto;
+}
+
+.main-content main {
+    padding: 1px;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.vertical-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.vertical-menu li a {
+    color: #ecf0f1;
+    padding: 12px 25px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    margin: 2px 0;
+}
+
+.vertical-menu li a:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.vertical-menu a.active-page {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.submenu a.active-page,
+.submenu-l2 a.active-page {
+    background: rgba(52, 152, 219, 0.3);
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    z-index: 1000;
+    color: #7f8c8d;
+    font-size: 14px;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+}
+
+.vertical-menu a.active {
+    background-color: #e6e6e6;
+    font-weight: bold;
+}
+
+.rendering {
+    width: 100%;
+    padding: 20px;
+    flex-grow: 1;
+    min-height: 200px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.rendering * {
+    pointer-events: auto;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #fff;
+    border-radius: 20px;
+    margin: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.main-content {
+    width: 100%;
+    border-bottom: 1px solid rgba(238, 238, 238, 0.5);
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+}
+
+.main-content main {
+    padding: 30px;
+}
+
+.main-content h2 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.main-content p {
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* 添加一些动画效果 */
+.vertical-menu li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.vertical-menu li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 12px;
+}
+
+.vertical-menu li a:hover::before {
+    opacity: 1;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        border-radius: 0 15px 15px 0;
+    }
+    
+    .content-wrapper {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .vertical-menu li a {
+        padding: 10px 20px;
+    }
+}
+
+/* 添加滚动条美化 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 多级菜单基础样式 */
+.vertical-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vertical-menu li {
+    position: relative;
+}
+
+/* 箭头图标 */
+.arrow {
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+    margin-left: auto;
+}
+
+.has-submenu.active .arrow {
+    transform: rotate(-135deg);
+}
+
+/* 菜单基础样式 */
+.vertical-menu {
+    padding: 0 15px;
+}
+
+/* 一级菜单样式 */
+.vertical-menu > li > a {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
+}
+
+/* 修改箭头样式 */
+.has-submenu .arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    border: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.has-submenu .arrow::after {
+    content: '\203A';
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    transition: all 0.3s ease;
+}
+
+/* 展开状态的箭头动画 */
+.has-submenu.active .arrow::after {
+    transform: rotate(90deg);
+}
+
+/* 收起状态的箭头动画 */
+.has-submenu:not(.active) .arrow::after {
+    transform: rotate(0deg);
+}
+
+/* 悬停时的箭头效果 */
+.has-submenu:hover .arrow::after {
+    color: rgba(255, 255, 255, 1);
+}
+
+/* 二级菜单样式 */
+.submenu {
+    margin: 5px 0 5px 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 12px 12px;
+}
+
+.submenu > li > a {
+    padding: 10px 20px;
+    font-size: 0.95em;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 三级菜单样式 */
+.submenu-l2 {
+    margin: 5px 0 5px 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 12px 12px;
+}
+
+.submenu-l2 > li > a {
+    padding: 8px 20px;
+    font-size: 0.9em;
+    opacity: 0.85;
+}
+
+/* 悬停效果 */
+.vertical-menu a:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.submenu > li > a:hover {
+    padding-left: 25px;
+}
+
+.submenu-l2 > li > a:hover {
+    padding-left: 25px;
+}
+
+/* 活动状态 */
+.vertical-menu a.active-page {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.submenu a.active-page,
+.submenu-l2 a.active-page {
+    background: rgba(52, 152, 219, 0.3);
+}
+
+/* 子菜单过渡动画 */
+.submenu,
+.submenu-l2 {
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.vertical-menu li.active > .submenu,
+.vertical-menu li.active > .submenu-l2 {
+    display: block;
+}
+
+/* 添加子菜单的视觉层次 */
+.submenu::before,
+.submenu-l2::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(52, 152, 219, 0.5);
+}
+
+/* 优化间距 */
+.vertical-menu > li {
+    margin: 5px 0;
+}
+
+.submenu > li,
+.submenu-l2 > li {
+    margin: 2px 0;
+}
+
+/* 菜单项基础布局 */
+.vertical-menu a {
+    position: relative;
+    padding-right: 35px !important; /* 为箭头预留空间 */
+}
+
+/* 确保菜单文字不会与箭头重叠 */
+.vertical-menu a span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

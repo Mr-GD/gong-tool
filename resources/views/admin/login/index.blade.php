@@ -6,7 +6,7 @@
     <title>登陆页</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/js/components/common.js', 'resources/js/pages/login.js'])
-    
+
     <style>
         .bg-image {
             position: fixed;
@@ -44,6 +44,44 @@
             transform: translate(-50%, -50%);
             z-index: 1000;
         }
+
+        /* 添加新的全局样式 */
+        .login-container * {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* 最严格的光标控制 */
+        .login-container *:not(input[type="text"]):not(input[type="password"]) {
+            outline: none !important;
+            box-shadow: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-appearance: none !important;
+            --tw-ring-offset-width: 0 !important;
+            --tw-ring-offset-color: transparent !important;
+            --tw-ring-color: transparent !important;
+            --tw-ring-offset-shadow: none !important;
+            --tw-ring-shadow: none !important;
+        }
+
+        /* 输入框的焦点效果 */
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            outline: auto !important;
+        }
+
+        .login-container input[type="text"]:focus,
+        .login-container input[type="password"]:focus {
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
+            border-color: #6366f1 !important;
+        }
+
+        /* 移除所有按钮和链接的焦点效果 */
+        .login-container button,
+        .login-container a,
+        .login-container input[type="checkbox"] {
+            user-select: none !important;
+        }
     </style>
 </head>
 <body class="min-h-screen relative">
@@ -57,7 +95,7 @@
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
     </div>
 
-    <div class="min-h-screen flex flex-col items-center justify-center px-4 relative login-container" :style="{ opacity: loginContainerOpacity }">
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 relative login-container no-select" :style="{ opacity: loginContainerOpacity }">
         <!-- 登录卡片 -->
         <div class="max-w-md w-full space-y-8 bg-white/10 backdrop-blur-xl p-10 rounded-2xl shadow-2xl">
             <!-- Logo区域 -->
@@ -76,35 +114,37 @@
                 </p>
             </div>
             <!-- 登录表单 -->
-            <form class="mt-8 space-y-6" action="" method="POST">
+            <form class="mt-8 space-y-6 focus:outline-none focus:ring-0" action="" method="POST">
                 <div class="space-y-4">
                     <div class="relative">
-                        <label for="account" class="text-sm font-medium text-gray-700 block mb-2">账号</label>
+                        <label for="account" class="text-sm font-medium text-gray-700 block mb-2 select-none">账号</label>
                         <input id="account" name="account" type="text" required
                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
                                placeholder="账号">
                     </div>
                     <div class="relative">
-                        <label for="password" class="text-sm font-medium text-gray-700 block mb-2">密码</label>
+                        <label for="password" class="text-sm font-medium text-gray-700 block mb-2 select-none">密码</label>
                         <input id="password" name="password" type="password" required
                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-150 ease-in-out"
                                placeholder="请输入密码">
                     </div>
                 </div>
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between select-none">
                     <div class="flex items-center">
                         <input id="remember-me" name="remember-me" type="checkbox"
-                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                               class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-0 focus:outline-none select-none"
+                               tabindex="-1">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700 select-none">
                             记住我
                         </label>
                     </div>
-                    <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">
+                    <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-0 select-none" tabindex="-1">
                         忘记密码？
                     </a>
                 </div>
                 <button type="submit"
-                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-0 select-none"
+                        tabindex="-1">
                     登录
                 </button>
             </form>
