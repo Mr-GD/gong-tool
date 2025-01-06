@@ -83,7 +83,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
                 continue;
             }
 
-            $rootDirectory = $this->oneself()
+            $path = $rootDirectory = $this->oneself()
                                   ->setFormParams([
                                       'path' => $rootDirectory . '/' . $catalogue,
                                   ])
