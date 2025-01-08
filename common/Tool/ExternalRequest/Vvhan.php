@@ -2,16 +2,14 @@
 
 namespace common\Tool\ExternalRequest;
 
-use common\Exception\Status;
 use common\Tool\Base\Request\InterfaceRequest;
 use Exception;
-use gong\tool\base\api\Request\MakeRequest;
 
 /**
  * 韩小韩WebAPI接口
  * https://api.vvhan.com/
  */
-class Vvhan extends InterfaceRequest implements MakeRequest
+class Vvhan extends InterfaceRequest
 {
 
     public string $features = '韩小韩WebAPI接口';

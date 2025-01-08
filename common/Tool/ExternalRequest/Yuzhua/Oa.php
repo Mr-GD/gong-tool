@@ -3,7 +3,6 @@
 namespace common\Tool\ExternalRequest\Yuzhua;
 
 use common\Tool\Base\Request\InterfaceRequest;
-use gong\tool\base\api\Request\MakeRequest;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
  * @method $this setToken(string $token) // 设置token
  * @method $this setNumber(int $number) // 设置工号
  */
-class Oa extends InterfaceRequest implements MakeRequest
+class Oa extends InterfaceRequest
 {
 
     public bool $recordLog = true;

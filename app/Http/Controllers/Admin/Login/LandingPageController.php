@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin\Login;
 
 use App\Models\Background\LoginBackgroundPicture;
-use common\Controller\AdminController;
+use common\Controller\BaseController;
 
-class LandingPageController extends AdminController
+class LandingPageController extends BaseController
 {
     public function index()
     {
@@ -20,8 +20,7 @@ class LandingPageController extends AdminController
 
     public function login()
     {
-        echo 22222222;
-        exit;
+        return $this->response()->success(['access_token' => md5(time())]);
     }
 
 }
