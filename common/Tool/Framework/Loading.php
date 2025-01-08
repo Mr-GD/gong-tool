@@ -2,7 +2,9 @@
 
 namespace common\Tool\Framework;
 
+use App\Http\Middleware\CORS;
 use gong\helper\Instance;
+use Illuminate\Foundation\Configuration\Middleware;
 
 class Loading
 {
@@ -61,5 +63,25 @@ class Loading
         /** 设置日志文件路径 */
         $logDir = str_replace('/public', '', getcwd()) . '/runtime/';
         globalVariable()->setVariable('runtime_dir', $logDir);
+    }
+
+    public function loadMiddleware(Middleware $middleware)
+    {
+        /** 跨域 */
+        $middleware->append(CORS::class);
+//        switch ($this->model) {
+//            case 'admin':
+//                break;
+//            case 'api':
+//                break;
+//            case 'artisan':
+//                break;
+//            case 'web':
+//                break;
+//            default:
+//                break;
+//        }
+
+        return true;
     }
 }
