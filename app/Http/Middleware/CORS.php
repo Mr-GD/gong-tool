@@ -15,6 +15,14 @@ class CORS
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+            echo json_encode([
+                'code' => 200,
+                'data' => null
+            ], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
         return $next($request)
             ->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
