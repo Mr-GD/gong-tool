@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
                       apiPrefix: ''
                   )
                   ->withMiddleware(function (Middleware $middleware) {
-                      Loading::instance()->analysisApplications()->loadMiddleware($middleware);
+                      Loading::instance()->loadMiddleware($middleware);
                   })
                   ->withExceptions(function (Exceptions $exceptions) {
                       (new Handler($exceptions))->handle();

@@ -3,6 +3,8 @@
 namespace common\Tool\Framework;
 
 use App\Http\Middleware\CORS;
+use App\Http\Middleware\ParameterValidation;
+use gong\constant\Snowflake\Datacenter;
 use gong\helper\Instance;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -17,6 +19,8 @@ class Loading
         $requestUri  = explode('/', $_SERVER['REQUEST_URI'] ?? '');
         $model       = collect($requestUri)->filter()->shift();
         $this->model = $model ?: 'artisan';
+        /** 设置全局变量 */
+        globalVariable()->setVariable('request_model', $this->model);
         return $this;
     }
 
@@ -47,7 +51,7 @@ class Loading
      */
     public function setRequestId()
     {
-        $flip         = array_flip(\gong\constant\Snowflake\Datacenter::LABELS);
+        $flip         = array_flip(Datacenter::LABELS);
         $datacenterId = $flip[$this->model] ?? 0;
         $snowflakeId  = generateSnowflakeId($datacenterId);
         globalVariable()->setVariable('REQUEST_ID', $snowflakeId);
@@ -68,8 +72,11 @@ class Loading
     public function loadMiddleware(Middleware $middleware)
     {
         /** 跨域 */
-        $middleware->append(CORS::class);
-//        switch ($this->model) {
+        $middleware->append(CORS::class)
+                   ->append(ParameterValidation::class)
+        ;
+        $model = globalVariable()->getVariable('request_model');
+//        switch ($model) {
 //            case 'admin':
 //                break;
 //            case 'api':
