@@ -4,7 +4,7 @@
  * Created by Reliese Model.
  */
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use common\Model\MysqlModel;
 
@@ -40,4 +40,25 @@ class Admin extends MysqlModel
 		'email',
 		'email_verify',
 	];
+
+    public function beforeSave()
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        // TODO: Implement beforeSave() method.
+    }
+
+    public function afterSave()
+    {
+        // TODO: Implement afterSave() method.
+    }
+
+    public function beforeDelete()
+    {
+        // TODO: Implement beforeDelete() method.
+    }
+
+    public function afterDelete()
+    {
+        // TODO: Implement afterDelete() method.
+    }
 }

@@ -20,6 +20,8 @@ class LandingPageController extends BaseController
 
     public function login()
     {
+        $params = $this->getBodyParams();
+
         return $this->response()->success(['access_token' => md5(time())]);
     }
 

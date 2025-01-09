@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands\Admin\Yuzhua;
 
+use App\Models\Admin\Admin;
+use App\Service\Admin\AdminService;
 use Illuminate\Console\Command;
 use common\Tool\ExternalRequest\Yuzhua\Oa as YuzhuaOa;
 
@@ -30,9 +32,22 @@ class Oa extends Command
     public function handle()
     {
 //        $return = $this->retreats();
-        $return = $this->courseLearningStatistics();
+//        $return = $this->courseLearningStatistics();
 
-        print_r($return);
+//        $admin = new Admin([
+//            'username' => 'username',
+//            'password' => 'password'
+//        ]);
+//        $admin->save();
+        $admin = AdminService::instance()
+                             ->setParams([
+                                 'username' => 'username',
+                                 'password' => 'password'
+                             ])
+                             ->create()
+        ;
+
+        echo 2222222222222;
         exit;
     }
 

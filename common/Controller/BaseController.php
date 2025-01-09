@@ -22,4 +22,19 @@ class BaseController extends Controller
     {
         return (new Response());
     }
+
+    public function getBodyParams()
+    {
+        return request()->request->all();
+    }
+
+    public function getQueryParams()
+    {
+        return request()->query->all();
+    }
+
+    public function getAllParams($key = null, $default = null)
+    {
+        return request()->input($key, $default);
+    }
 }

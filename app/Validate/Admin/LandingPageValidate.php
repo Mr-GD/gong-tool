@@ -16,7 +16,7 @@ class LandingPageValidate extends LaravelValidate
         ];
     }
 
-    public function scenarios()
+    public function scenarios() : array
     {
         return [
             'login' => [

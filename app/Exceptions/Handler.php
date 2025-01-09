@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 
 use common\Exception\Status;
+use Exception;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -47,7 +48,6 @@ class Handler
             //验证器异常统一处理
             $msg        = '';
             $statusCode = 200;
-
             switch (true) {
                 case $e instanceof ValidationException: //验证器类型异常
                     $msg = array_values($e->errors())[0][0] ?? '';
@@ -59,9 +59,22 @@ class Handler
                     $statusCode = $e->getStatusCode() ? (string)$e->getStatusCode() : '0';
                     $msg        = Status::getReasonPhrase($statusCode);
                     break;
+                default:
+                    $msg        = $e->getMessage();
+                    $statusCode = $e->getCode() ? (string)$e->getCode() : '0';
+                    break;
             }
 
             /** 获取当前路由相关信息 */
+            if (empty(request()->route())) {
+                $statusCode = $statusCode ?: Status::CODE_PARAMS_ERROR;
+                $return     = [
+                    'code'       => $statusCode,
+                    'msg'        => $msg,
+                    'request_id' => globalVariable()->getVariable('request_id'),
+                ];
+                return response()->json($return, $statusCode);
+            }
             $actions = request()->route()->getAction() ?? [];
             //判断当前路由是否为web中间件
             if (!in_array('web', $actions['middleware'] ?? [])) {

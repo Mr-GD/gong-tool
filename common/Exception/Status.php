@@ -47,6 +47,7 @@ class Status
     const CODE_GATEWAY_TIMEOUT                 = 504;
     const CODE_HTTP_VERSION_NOT_SUPPORTED      = 505;
     const CODE_BANDWIDTH_LIMIT_EXCEEDED        = 509;
+    const CODE_PARAMS_ERROR                    = 417;
 
     private static $phrases = [
         '0'            => '未知错误',

@@ -25,8 +25,6 @@ class LoginBackgroundPicture extends MysqlModel
 
     protected $table = 'login_background_picture';
     protected $perPage = 30;
-    public $timestamps = false;
-
     protected $casts = [
         'storage_mode' => 'int'
     ];
@@ -36,4 +34,24 @@ class LoginBackgroundPicture extends MysqlModel
         'storage_mode',
         'created_at',
     ];
+
+    public function beforeSave()
+    {
+        // TODO: Implement beforeSave() method.
+    }
+
+    public function afterSave()
+    {
+        // TODO: Implement afterSave() method.
+    }
+
+    public function beforeDelete()
+    {
+        // TODO: Implement beforeDelete() method.
+    }
+
+    public function afterDelete()
+    {
+        // TODO: Implement afterDelete() method.
+    }
 }

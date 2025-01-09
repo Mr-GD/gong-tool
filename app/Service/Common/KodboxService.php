@@ -3,12 +3,10 @@
 namespace App\Service\Common;
 
 use App\Models\Kodbox;
-use gong\helper\Data;
-use gong\helper\Instance;
+use App\Service\Service;
 
-class KodboxService
+class KodboxService extends Service
 {
-    use Data, Instance;
 
     public function getPathByExt(string $ext)
     {

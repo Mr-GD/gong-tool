@@ -2,14 +2,19 @@
 
 namespace common\Model;
 
+use common\Model\Api\MysqlEventInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
  * php artisan code:models --table=users
  */
-class MysqlModel extends Model
+abstract class MysqlModel extends Model implements MysqlEventInterface
 {
+    public $timestamps = false;
+
+    public $isNewRecord = false;
+
     public static function instance()
     {
         return static::query();
@@ -23,15 +28,55 @@ class MysqlModel extends Model
      */
     public static function randomData()
     {
-        $tableName = (new static)->getTable();
-        $minId     = DB::table($tableName)->min('id');
-        $maxId     = DB::table($tableName)->max('id');
-        $randomId  = rand($minId, $maxId);
+        $tableName  = (new static)->getTable();
+        $minId      = DB::table($tableName)->min('id');
+        $maxId      = DB::table($tableName)->max('id');
+        $randomId   = rand($minId, $maxId);
+        $aliasTable = 'random_table';
         return self::instance()
-                   ->from($tableName . ' AS random_table')
-                   ->where('random_table.id', '>=', $randomId)
-                   ->orderBy('random_table.id')
+                   ->from($tableName . ' AS ' . $aliasTable)
+                   ->where(sprintf('%s.id', $aliasTable), '>=', $randomId)
+                   ->orderBy(sprintf('%s.id', $aliasTable))
                    ->first()
         ;
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        /** 保存前 */
+        static::saving(function (self $model) {
+            $model->beforeSave();
+        });
+        /** 保存后 */
+        static::saved(function (self $model) {
+            $model->afterSave();
+        });
+        /** 删除前 */
+        static::deleting(function (self $model) {
+            $model->beforeDelete();
+        });
+        /** 删除后 */
+        static::deleted(function (self $model) {
+            $model->afterDelete();
+        });
+        /** 修改前 */
+        static::updating(function (self $model) {
+            $model->beforeSave();
+        });
+        /** 修改后 */
+        static::updated(function (self $model) {
+            $model->afterSave();
+        });
+        /** 创建前 */
+        static::creating(function (self $model) {
+            $model->beforeSave();
+        });
+        /** 创建后 */
+        static::created(function (self $model) {
+            $model->afterSave();
+        });
+
+    }
+
 }
