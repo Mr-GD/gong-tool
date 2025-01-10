@@ -41,7 +41,7 @@ class Admin extends MysqlModel
 		'email_verify',
 	];
 
-    public function beforeSave()
+    public function beforeSave(bool $isNewRecord)
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         // TODO: Implement beforeSave() method.

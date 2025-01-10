@@ -13,8 +13,6 @@ abstract class MysqlModel extends Model implements MysqlEventInterface
 {
     public $timestamps = false;
 
-    public $isNewRecord = false;
-
     public static function instance()
     {
         return static::query();
@@ -46,7 +44,7 @@ abstract class MysqlModel extends Model implements MysqlEventInterface
         parent::boot();
         /** 保存前 */
         static::saving(function (self $model) {
-            $model->beforeSave();
+            $model->beforeSave(!$model->exists);
         });
         /** 保存后 */
         static::saved(function (self $model) {
@@ -62,7 +60,7 @@ abstract class MysqlModel extends Model implements MysqlEventInterface
         });
         /** 修改前 */
         static::updating(function (self $model) {
-            $model->beforeSave();
+            $model->beforeSave(false);
         });
         /** 修改后 */
         static::updated(function (self $model) {
@@ -70,13 +68,12 @@ abstract class MysqlModel extends Model implements MysqlEventInterface
         });
         /** 创建前 */
         static::creating(function (self $model) {
-            $model->beforeSave();
+            $model->beforeSave(true);
         });
         /** 创建后 */
         static::created(function (self $model) {
             $model->afterSave();
         });
-
     }
 
 }

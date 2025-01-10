@@ -34,18 +34,18 @@ class Oa extends Command
 //        $return = $this->retreats();
 //        $return = $this->courseLearningStatistics();
 
-//        $admin = new Admin([
-//            'username' => 'username',
-//            'password' => 'password'
-//        ]);
-//        $admin->save();
-        $admin = AdminService::instance()
-                             ->setParams([
-                                 'username' => 'username',
-                                 'password' => 'password'
-                             ])
-                             ->create()
-        ;
+        $admin = new Admin([
+            'username' => 'username',
+            'password' => 'password'
+        ]);
+        $admin->save();
+//        $admin = AdminService::instance()
+//                             ->setParams([
+//                                 'username' => 'username',
+//                                 'password' => 'password'
+//                             ])
+//                             ->create()
+//        ;
 
         echo 2222222222222;
         exit;

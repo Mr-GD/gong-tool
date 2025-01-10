@@ -5,7 +5,7 @@ namespace common\Model\Api;
 interface MysqlEventInterface
 {
 
-    public function beforeSave();
+    public function beforeSave(bool $isNewRecord);
 
     public function afterSave();
 

@@ -35,7 +35,7 @@ class LoginBackgroundPicture extends MysqlModel
         'created_at',
     ];
 
-    public function beforeSave()
+    public function beforeSave(bool $isNewRecord)
     {
         // TODO: Implement beforeSave() method.
     }
