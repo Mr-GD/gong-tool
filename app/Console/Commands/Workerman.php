@@ -9,11 +9,14 @@ use GatewayWorker\Gateway;
 use GatewayWorker\Register;
 use Workerman\Worker;
 
+/**
+ * @command php82 artisan workman start
+ */
 class Workerman extends BaseCommand
 {
     protected $signature = 'workman {action} {--d}';
 
-    protected $description = 'Start a Workerman server.';
+    protected $description = 'Workerman 服务';
 
     public function handle()
     {
