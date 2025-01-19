@@ -7,11 +7,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use common\Model\MysqlModel;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends MysqlModel
 {
 	protected $table = 'users';
 	protected $perPage = 30;
@@ -44,4 +45,24 @@ class User extends Model
 		'password',
 		'remember_token'
 	];
+
+    public function beforeSave(bool $isNewRecord)
+    {
+        // TODO: Implement beforeSave() method.
+    }
+
+    public function afterSave()
+    {
+        // TODO: Implement afterSave() method.
+    }
+
+    public function beforeDelete()
+    {
+        // TODO: Implement beforeDelete() method.
+    }
+
+    public function afterDelete()
+    {
+        // TODO: Implement afterDelete() method.
+    }
 }

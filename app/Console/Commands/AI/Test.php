@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\AI;
 
+use App\Events\Broadcasting\CommonMessage;
 use common\Console\BaseCommand;
 use common\Constant\Storage\Mode;
 use common\Observe\Test\A;
@@ -34,6 +35,10 @@ class Test extends BaseCommand
      */
     public function handle()
     {
+
+        CommonMessage::dispatch('这是我的测试数据');
+
+        exit;
         $action = new Action();
         $action->register(new A(18))
                ->register(new B('张三'))
