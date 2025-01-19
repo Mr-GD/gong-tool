@@ -2,15 +2,17 @@
 
 namespace App\Events\Broadcasting;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CommonMessage implements ShouldBroadcastNow
+class CommonMessage implements ShouldBroadcast, ShouldQueue
 {
 
-    use Dispatchable;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public array $message = [
         'type'    => 'CommonMessage',
@@ -24,11 +26,11 @@ class CommonMessage implements ShouldBroadcastNow
 
     public function broadcastOn()
     {
-        // TODO: Implement broadcastOn() method.
+        return new Channel('CommonMessage');
     }
 
     public function broadcastAs()
     {
-        return 'commonMessage';
+        return 'CommonMessage';
     }
 }

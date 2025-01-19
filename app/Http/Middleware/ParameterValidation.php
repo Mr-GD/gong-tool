@@ -14,7 +14,7 @@ class ParameterValidation
     public function handle(Request $request, Closure $next): Response
     {
         $paths = explode('/', request()->path());
-        if (count(array_filter($paths)) > 3) {
+        if (count(array_filter($paths)) != 3) {
             return $next($request);
         }
 

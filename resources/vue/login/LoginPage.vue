@@ -6,7 +6,8 @@
         <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
     </div>
 
-    <div class="min-h-screen flex flex-col items-center justify-center px-4 relative login-container" :style="{ opacity: loginContainerOpacity }">
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 relative login-container"
+         :style="{ opacity: loginContainerOpacity }">
         <!-- 登录卡片 -->
         <div class="max-w-md w-full space-y-8 bg-white/10 backdrop-blur-xl p-10 rounded-2xl shadow-2xl">
             <!-- Logo区域 -->
@@ -62,36 +63,55 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {ref, onMounted} from 'vue'
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
 const backgroundImage = ref('');
 const isLoading = ref(true);
 const loginContainerOpacity = ref(0);
 
+
 function setRandomBackground() {
     fetch('/admin/LandingPage/getRandomImage', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        backgroundImage.value = data.data.url;
-        isLoading.value = false;
-        loginContainerOpacity.value = 1;
-    })
-    .catch(error => {
-        console.error('Fetch 请求失败:', error);
-        isLoading.value = false;
-        loginContainerOpacity.value = 1;
-    });
+        .then(response => response.json())
+        .then(data => {
+            backgroundImage.value = data.data.url;
+            isLoading.value = false;
+            loginContainerOpacity.value = 1;
+        })
+        .catch(error => {
+            console.error('Fetch 请求失败:', error);
+            isLoading.value = false;
+            loginContainerOpacity.value = 1;
+        });
 }
 
 onMounted(() => {
     setRandomBackground();
+    listenMessage();
 });
+
+function listenMessage(){
+    window.Pusher = Pusher;
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: import.meta.env.VITE_PUSHER_APP_KEY,
+        cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+        forceTLS: true
+    });
+    console.log(window.Echo);
+    window.Echo.channel('CommonMessage').listen('.CommonMessage', (e) => {
+        console.log(e);
+    });
+}
+
 </script>
 
 <style scoped>
