@@ -3,130 +3,138 @@
 namespace common\Exception;
 class Code
 {
-    const SWITCHING_PROTOCOLS             = 101;
-    const PROCESSING                      = 102;
-    const EARLY_HINTS                     = 103;
-    const SUCCESS                         = 200;
-    const CREATED                         = 201;
-    const ACCEPTED                        = 202;
-    const NON_AUTHORITATIVE_INFORMATION   = 203;
-    const NO_CONTENT                      = 204;
-    const RESET_CONTENT                   = 205;
-    const PARTIAL_CONTENT                 = 206;
-    const MULTI_STATUS                    = 207;
-    const ALREADY_REPORTED                = 208;
-    const IM_Used                         = 226;
-    const MULTIPLE_CHOICES                = 300;
-    const MOVED_PERMANENTLY               = 301;
-    const FOUND                           = 302;
-    const SEE_OTHER                       = 303;
-    const NOT_MODIFIED                    = 304;
-    const USE_PROXY                       = 305;
-    const TEMPORARY_REDIRECT              = 307;
-    const PERMANENT_REDIRECT              = 308;
-    const PARAMS_ERROR                    = 400;
-    const unauthorized                    = 401;
-    const PAYMENT_REQUIRED                = 402;
-    const FORBIDDEN                       = 403;
-    const NOT_FOUND                       = 404;
-    const METHOD_NOT_ALLOWED              = 405;
-    const NOT_ACCEPTABLE                  = 406;
-    const PROXY_AUTHENTICATION_REQUIRED   = 407;
-    const REQUEST_TIMEOUT                 = 408;
-    const CONFLICT                        = 409;
-    const GONE                            = 410;
-    const LENGTH_REQUIRED                 = 411;
-    const PRECONDITION_FAILED             = 412;
-    const CONTENT_TOO_LARGE               = 413;
-    const URI_Too_Long                    = 414;
-    const UNSUPPORTED_MEDIA_TYPE          = 415;
-    const RANGE_NOT_SATISFIABLE           = 416;
-    const EXPECTATION_FAILED              = 417;
-    const TEAPOT                          = 418;
-    const MISDIRECTED_REQUEST             = 421;
-    const UNPROCESSABLE_CONTENT           = 422;
-    const LOCKED                          = 423;
-    const FAILED_DEPENDENCY               = 424;
-    const TOO_EARLY                       = 425;
-    const UPGRADE_REQUIRED                = 426;
-    const PRECONDITION_REQUIRED           = 428;
-    const TOO_MANY_REQUESTS               = 429;
-    const REQUEST_HEADER_FIELDS_TOO_LARGE = 431;
-    const UNAVAILABLE_FOR_LEGAL_REASONS   = 451;
-    const INTERNAL_SERVER_ERROR           = 500;
-    const NOT_IMPLEMENTED                 = 501;
-    const BAD_GATEWAY                     = 502;
-    const SERVICE_UNAVAILABLE             = 503;
-    const GATEWAY_TIMEOUT                 = 504;
-    const HTTP_VERSION_NOT_SUPPORTED      = 505;
-    const VARIANT_ALSO_NEGOTIATES         = 506;
-    const INSUFFICIENT_STORAGE            = 507;
-    const LOOP_DETECTED                   = 508;
-    const NOT_EXTENDED                    = 510;
-    const NETWORK_AUTHENTICATION_REQUIRED = 511;
+    // 成功
+    const SUCCESS                  = 200;
 
-    const STATUS_TEXTS = [
-        self::SWITCHING_PROTOCOLS             => 'Switching Protocols',
-        self::PROCESSING                      => 'Processing',
-        self::EARLY_HINTS                     => 'Early Hints',
-        self::SUCCESS                         => 'OK',
-        self::CREATED                         => 'Created',
-        self::ACCEPTED                        => 'Accepted',
-        self::NON_AUTHORITATIVE_INFORMATION   => 'Non-Authoritative Information',
-        self::NO_CONTENT                      => 'No Content',
-        self::RESET_CONTENT                   => 'Reset Content',
-        self::PARTIAL_CONTENT                 => 'Partial Content',
-        self::MULTI_STATUS                    => 'Multi-Status',
-        self::ALREADY_REPORTED                => 'Already Reported',
-        self::IM_Used                         => 'IM Used',
-        self::MULTIPLE_CHOICES                => 'Multiple Choices',
-        self::MOVED_PERMANENTLY               => 'Moved Permanently',
-        self::FOUND                           => 'Found',
-        self::SEE_OTHER                       => 'See Other',
-        self::NOT_MODIFIED                    => 'Not Modified',
-        self::USE_PROXY                       => 'Use Proxy',
-        self::TEMPORARY_REDIRECT              => 'Temporary Redirect',
-        self::PERMANENT_REDIRECT              => 'Permanent Redirect',
-        self::PARAMS_ERROR                    => 'Bad Request',
-        self::unauthorized                    => 'Unauthorized',
-        self::PAYMENT_REQUIRED                => 'Payment Required',
-        self::FORBIDDEN                       => 'Forbidden',
-        self::NOT_FOUND                       => 'Not Found',
-        self::METHOD_NOT_ALLOWED              => 'Method Not Allowed',
-        self::NOT_ACCEPTABLE                  => 'Not Acceptable',
-        self::PROXY_AUTHENTICATION_REQUIRED   => 'Proxy Authentication Required',
-        self::REQUEST_TIMEOUT                 => 'Request Timeout',
-        self::CONFLICT                        => 'Conflict',
-        self::GONE                            => 'Gone',
-        self::LENGTH_REQUIRED                 => 'Length Required',
-        self::PRECONDITION_FAILED             => 'Precondition Failed',
-        self::CONTENT_TOO_LARGE               => 'Content Too Large',
-        self::URI_Too_Long                    => 'URI Too Long',
-        self::UNSUPPORTED_MEDIA_TYPE          => 'Unsupported Media Type',
-        self::RANGE_NOT_SATISFIABLE           => 'Range Not Satisfiable',
-        self::EXPECTATION_FAILED              => 'Expectation Failed',
-        self::TEAPOT                          => 'I\'m a teapot',
-        self::MISDIRECTED_REQUEST             => 'Misdirected Request',
-        self::UNPROCESSABLE_CONTENT           => 'Unprocessable Content',
-        self::LOCKED                          => 'Locked',
-        self::FAILED_DEPENDENCY               => 'Failed Dependency',
-        self::TOO_EARLY                       => 'Too Early',
-        self::UPGRADE_REQUIRED                => 'Upgrade Required',
-        self::PRECONDITION_REQUIRED           => 'Precondition Required',
-        self::TOO_MANY_REQUESTS               => 'Too Many Requests',
-        self::REQUEST_HEADER_FIELDS_TOO_LARGE => 'Request Header Fields Too Large',
-        self::UNAVAILABLE_FOR_LEGAL_REASONS   => 'Unavailable For Legal Reasons',
-        self::INTERNAL_SERVER_ERROR           => 'Internal Server Error',
-        self::NOT_IMPLEMENTED                 => 'Not Implemented',
-        self::BAD_GATEWAY                     => 'Bad Gateway',
-        self::SERVICE_UNAVAILABLE             => 'Service Unavailable',
-        self::GATEWAY_TIMEOUT                 => 'Gateway Timeout',
-        self::HTTP_VERSION_NOT_SUPPORTED      => 'HTTP Version Not Supported',
-        self::VARIANT_ALSO_NEGOTIATES         => 'Variant Also Negotiates',
-        self::INSUFFICIENT_STORAGE            => 'Insufficient Storage',
-        self::LOOP_DETECTED                   => 'Loop Detected',
-        self::NOT_EXTENDED                    => 'Not Extended',
-        self::NETWORK_AUTHENTICATION_REQUIRED => 'Network Authentication Required',
+    // 授权|权限错误
+    const UNAUTHORIZED                = 100000;
+    const AUTHORIZATION_FAILED        = 100001;
+    const LOGIN_TOKEN_OVERDUE         = 100002;
+    const LOGIN_FAILED                = 100003;
+    const REFRESH_ACCESS_TOKEN_FAILED = 100004;
+    const NO_PERMISSION               = 100005;
+    const SIGN_INVALID                = 100006;
+    const SIGN_PARAMS_ERROR           = 100007;
+    const APP_DOES_NOT_EXIST          = 100008;
+    const SIGN_MISMATCH               = 100009;
+    const USER_ID_TOO_MUCH            = 100010;
+    const ACCESS_DENIED               = 100011;
+
+    //业务调用系列（2系列）
+    const ERROR_CALL             = 200000;
+    const BUSINESS_UNABLE_HANDLE = 200001;
+    const BUSINESS_APP_NOT_EXIST = 200002;
+    const BUSINESS_NOT_OPEN      = 200003;
+    const NOT_CALL_BUSINESS      = 200004;
+
+    //业务调用系列（3系列）
+    const BUSINESS_ABNORMAL  = 300000;
+    const DATABASE_EXCEPTION = 300001;
+    const NOT_EXIST          = 300002;
+    const CALL_EXCEPTION     = 300003;
+
+    //业务调用系列（4系列）
+    const WRONG_REQUEST               = 400000;
+    const CLIENT_REQUESTS_NOT_ALLOWED = 400001;
+    const PARAMS_ERROR                = 400002;
+    const PARAMS_TYPE_ERROR           = 400003;
+    const LACK_PARAMS                 = 400004;
+    const CLIENTS_NOT_OPEN            = 400005;
+    const UNKNOWN_CLIENTS             = 400006;
+    const DATA_ERROR                  = 400007;
+    const CREATE_ERROR                = 400008;
+    const UPDATE_ERROR                = 400009;
+    const DELETE_ERROR                = 400010;
+    const VALIDATE_CODE_ERROR         = 400011;
+    const CODE_SEND_ERROR             = 400012;
+    const DUPLICATE_DATA              = 400013;
+
+    //安全校验系列（5系列）
+    const ILLEGAL_REQUEST   = 500000;
+    const RESTRICTED_ACCESS = 500001;
+    const SENSITIVE_INFO    = 500002;
+
+    //服务系列系列（7系列）
+    const SERVICE_INTERRUPTION = 700000;
+
+    //网关系列系列（8系列）
+    const BAD_GATEWAY = 800000;
+
+    //系统级别类型系列（9系列）
+    const SYSTEM_ERROR = 900000;
+    const EXCEPTION    = 900001;
+
+
+    //状态码信息
+    const MESSAGE = [
+        // 成功
+        self::SUCCESS                     => ['status' => 200, 'message' => 'Successful'],
+
+        // 授权|权限错误
+        self::UNAUTHORIZED                => ['status' => 401, 'message' => '未授权'],
+        self::AUTHORIZATION_FAILED        => ['status' => 401, 'message' => '未通过授权校验'],
+        self::LOGIN_TOKEN_OVERDUE         => ['status' => 401, 'message' => '授权状态已过期'],
+        self::LOGIN_FAILED                => ['status' => 401, 'message' => '登录失败'],
+        self::REFRESH_ACCESS_TOKEN_FAILED => ['status' => 401, 'message' => '刷新令牌失败'],
+        self::NO_PERMISSION               => ['status' => 403, 'message' => '没有权限'],
+        self::SIGN_INVALID                => ['status' => 401, 'message' => '签名失效'],
+        self::SIGN_PARAMS_ERROR           => ['status' => 400, 'message' => '签名参数错误'],
+        self::APP_DOES_NOT_EXIST          => ['status' => 401, 'message' => '应用不存在'],
+        self::SIGN_MISMATCH               => ['status' => 401, 'message' => '签名不匹配'],
+        self::USER_ID_TOO_MUCH            => ['status' => 403, 'message' => '账号身份不明确'],
+        self::ACCESS_DENIED               => ['status' => 403, 'message' => '无权访问'],
+
+        // 业务调用系列（2系列）
+        self::ERROR_CALL                  => ['status' => 400, 'message' => '错误的业务调用'],
+        self::BUSINESS_UNABLE_HANDLE      => ['status' => 400, 'message' => '业务当前暂时无法处理请求'],
+        self::BUSINESS_APP_NOT_EXIST      => ['status' => 401, 'message' => '业务应用不存在'],
+        self::BUSINESS_NOT_OPEN           => ['status' => 401, 'message' => '业务未开放'],
+        self::NOT_CALL_BUSINESS           => ['status' => 403, 'message' => '无权调用当前业务'],
+
+        // 业务调用系列（3系列）
+        self::BUSINESS_ABNORMAL           => ['status' => 400, 'message' => '业务处理异常'],
+        self::DATABASE_EXCEPTION          => ['status' => 404, 'message' => '数据库操作异常'],
+        self::NOT_EXIST                   => ['status' => 400, 'message' => '数据不存在'],
+        self::CALL_EXCEPTION              => ['status' => 403, 'message' => '第三方业务调用异常'],
+
+        // 业务调用系列（4系列）
+        self::WRONG_REQUEST               => ['status' => 400, 'message' => '错误请求'],
+        self::CLIENT_REQUESTS_NOT_ALLOWED => ['status' => 400, 'message' => '不允许的客户端请求'],
+        self::PARAMS_ERROR                => ['status' => 400, 'message' => '参数值错误'],
+        self::PARAMS_TYPE_ERROR           => ['status' => 403, 'message' => '参数类型错误'],
+        self::LACK_PARAMS                 => ['status' => 403, 'message' => '缺少参数'],
+        self::CLIENTS_NOT_OPEN            => ['status' => 403, 'message' => '未开放的客户端'],
+        self::UNKNOWN_CLIENTS             => ['status' => 403, 'message' => '未知客户端'],
+        self::DATA_ERROR                  => ['status' => 400, 'message' => '数据错误'],
+        self::CREATE_ERROR                => ['status' => 400, 'message' => '创建失败'],
+        self::UPDATE_ERROR                => ['status' => 400, 'message' => '更新失败'],
+        self::DELETE_ERROR                => ['status' => 400, 'message' => '删除失败'],
+        self::VALIDATE_CODE_ERROR         => ['status' => 400, 'message' => '验证码错误'],
+        self::CODE_SEND_ERROR             => ['status' => 404, 'message' => '验证码下发失败'],
+        self::DUPLICATE_DATA              => ['status' => 400, 'message' => '重复数据'],
+
+        //安全校验系列（5系列）
+        self::ILLEGAL_REQUEST             => ['status' => 403, 'message' => '非法请求，已记录ip'],
+        self::RESTRICTED_ACCESS           => ['status' => 403, 'message' => '已被限制访问'],
+        self::SENSITIVE_INFO              => ['status' => 403, 'message' => '发现敏感信息'],
+
+        //服务系列系列（7系列）
+        self::SERVICE_INTERRUPTION        => ['status' => 500, 'message' => '服务已中断'],
+
+        //网关系列系列（8系列）
+        self::BAD_GATEWAY                 => ['status' => 500, 'message' => '网关错误'],
+
+        //系统级别类型系列（9系列）
+        self::SYSTEM_ERROR                => ['status' => 500, 'message' => '系统错误'],
+        self::EXCEPTION                   => ['status' => 500, 'message' => '系统内部错误']
     ];
+
+    /**
+     * @return array
+     */
+    public static function statusMessages()
+    {
+        return self::MESSAGE;
+    }
 }
 

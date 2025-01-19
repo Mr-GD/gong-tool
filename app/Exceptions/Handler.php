@@ -53,11 +53,12 @@ class Handler
                     $msg = array_values($e->errors())[0][0] ?? '';
                     break;
                 case $e instanceof HttpException:
-                    // 给客户端返回自定义的错误信息，同时将具体错误记录日志
-                    // 具体报错信息开发人员可到laravel.log中查看
-                    Log::error(sprintf("%s \n%s", $e->getMessage(), $e->getTraceAsString()));
                     $statusCode = $e->getStatusCode() ? (string)$e->getStatusCode() : '0';
                     $msg        = Status::getReasonPhrase($statusCode);
+                    break;
+                case $e instanceof ErrException:
+                    $statusCode = $e->getStatus();
+                    $msg        = $e->getFriendlyMessage();
                     break;
                 default:
                     $msg        = $e->getMessage();

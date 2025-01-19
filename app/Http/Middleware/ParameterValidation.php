@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\ErrException;
 use Closure;
+use common\Exception\Code;
 use gong\tool\Validate\LaravelValidate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,11 @@ class ParameterValidation
         if (class_exists($classDir)) {
             /** @var LaravelValidate $class */
             $class = new $classDir;
-            $class->validator($request->all(), $scenario);
+            try {
+                $class->validator($request->all(), $scenario);
+            } catch (\Exception $e) {
+                throw new ErrException(Code::PARAMS_ERROR, $e->getMessage());
+            }
         }
 
         return $next($request);
