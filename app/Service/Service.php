@@ -12,5 +12,5 @@ class Service
 {
     use Data, Instance;
 
-    public $params;
+    public mixed $params;
 }
