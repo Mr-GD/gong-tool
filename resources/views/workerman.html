@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Workerman</title>
+</head>
+<body>
+
+</body>
+<script>
+    const socket = new WebSocket("ws://wsl.exercises.com:2345//ws");
+    // 建立连接时触发 建立链接的时候，需要向workerman发送一条指令，告诉他我是谁，使用id或者用户标识作为uid，告诉workerman 例如，当前html 用户id是37
+    socket.onopen = function(event) {
+        console.log('连接开始...');
+        socket.send('{"uid":35,"type":"login"}');
+    }
+
+    //workerman发送消息的时候，接收并打印
+    socket.onmessage = function(event) {
+        console.log(event);
+    }
+    // socket.close();
+
+</script>
+</html>

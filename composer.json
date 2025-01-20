@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "ext-bcmath": "*",
+        "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
         "gong/tool": "dev-master",
@@ -21,7 +22,7 @@
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "pusher/pusher-php-server": "^7.2",
-        "ext-curl": "*"
+        "workerman/workerman": "^4.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
