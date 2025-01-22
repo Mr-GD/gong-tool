@@ -31,7 +31,7 @@ class BackgroundPicture extends BaseCommand
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->analyzeParameters();
         consoleLine('------ Start ------');

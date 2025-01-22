@@ -84,6 +84,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
             }
 
             $path = $rootDirectory = $this->oneself()
+                                  ->post()
                                   ->setFormParams([
                                       'path' => $rootDirectory . '/' . $catalogue,
                                   ])
