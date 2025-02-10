@@ -69,7 +69,7 @@ class Email
 
         // 设置邮件内容
         $this->email->isHTML();
-        $this->email->Subject = $this->subject;
+        $this->email->Subject = $this->subject ?: '超级系统邮件';
         $this->email->Body    = $this->body;
 
         // 发送邮件

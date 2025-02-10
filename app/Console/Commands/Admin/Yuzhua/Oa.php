@@ -30,6 +30,13 @@ class Oa extends Command
      */
     public function handle()
     {
+        Email::instance()
+             ->setAddressee('1026709547@qq.com')
+             ->setSubject('您的登录验证码')
+             ->setBody(sprintf(\common\Template\Email::LOGIN_CODE, rand(1000000,9999999)))
+             ->send()
+        ;
+
 //        $return = $this->retreats();
 //        $return = $this->courseLearningStatistics();
 //        $admin = AdminService::instance()
