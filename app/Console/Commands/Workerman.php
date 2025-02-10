@@ -64,7 +64,8 @@ class Workerman extends Command
     }
 
     //创建uid方法
-    public function createUid($connection,$data, Worker $worker){
+    public function createUid($connection, $data, Worker $worker)
+    {
         $connection->uid = $data['uid'];
         //保存用户的uid
         $worker->connections[$connection->uid] = $connection;
