@@ -3,13 +3,19 @@
 namespace common\Console\Consume\MessageSend;
 
 use common\Tool\MessageSent\ConcreteClass\NotifyFactory;
+use gong\tool\base\abs\RabbitConsumeAbs;
 use gong\tool\base\api\RabbitMqConsume;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class RequestNotifyMessageSend implements RabbitMqConsume
+class RequestNotifyMessageSend extends RabbitConsumeAbs
 {
+    public string $requestId;
 
-    public function consume($data)
+    public string $features;
+
+    public string $result;
+
+    public function consume()
     {
         globalVariable()->setVariable('request_id', $data['request_id'] ?? '');
         try {
@@ -18,9 +24,9 @@ class RequestNotifyMessageSend implements RabbitMqConsume
             throw new HttpException(500, $e->getMessage());
         }
         $messages = sprintf('RequestId:%s 功能:%s 结果:%s',
-            $data['request_id'] ?? '',
-            $data['features'] ?? '',
-            $data['result'] ?? ''
+            $this->requestId,
+            $this->features,
+            $this->result
         );
         $notify->generalInformation($messages);
     }
