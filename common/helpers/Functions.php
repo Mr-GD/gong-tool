@@ -5,6 +5,7 @@
  * @params string $route
  */
 
+use common\helpers\Auth;
 use common\Tool\Framework\Loading;
 
 if (!function_exists('frameworkLoading')) {
@@ -32,5 +33,12 @@ if (!function_exists('requireAllPhpFiles')) {
         }
 
 
+    }
+}
+
+if (!function_exists('auth')) {
+    function auth()
+    {
+        return new Auth();
     }
 }
