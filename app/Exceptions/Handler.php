@@ -46,7 +46,6 @@ class Handler
         // 异常处理
         $this->excepHandler->render(function (Throwable $e) {
             //验证器异常统一处理
-            $msg        = '';
             $statusCode = 200;
             switch (true) {
                 case $e instanceof ValidationException: //验证器类型异常
