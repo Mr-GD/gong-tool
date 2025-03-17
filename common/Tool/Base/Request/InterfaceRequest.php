@@ -6,6 +6,7 @@ use App\Models\MongoDB\RequestLog;
 use common\Tool\MessageSent\ConcreteClass\NotifySend;
 use Exception;
 use gong\tool\base\abs\Request\MakeRequestAbs;
+use gong\tool\Log\Log;
 use gong\tool\Rabbitmq\RabbitMq;
 
 abstract class InterfaceRequest extends MakeRequestAbs
@@ -14,8 +15,12 @@ abstract class InterfaceRequest extends MakeRequestAbs
 
     public function afterRequest()
     {
-        $this->recordLogMongo();
-        $this->requestNotice();
+        try {
+            $this->recordLogMongo();
+            $this->requestNotice();
+        } catch (\Exception $e) {
+            Log::error('【InterfaceRequest】Error:' . $e->getMessage());
+        }
     }
 
     /**
