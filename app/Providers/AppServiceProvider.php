@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\ControllerHasFinishedExecuting;
+use Illuminate\Foundation\Http\Events\RequestHandled;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        /**
+         * 请使用官方推荐的注册事件和监听器
+         * php artisan make:event //注册事件
+         * php artisan make:listener //注册监听器
+         */
+        /** 手动注册事件 */
+//        Event::listen([
+//            RequestHandled::class, //事件
+//            ControllerHasFinishedExecuting::class, //监听器
+//        ]);
     }
 }
