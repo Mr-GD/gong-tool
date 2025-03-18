@@ -3,7 +3,7 @@
 namespace common\Model;
 
 
-use common\Tool\Base\CommonConst;
+use common\Tool\Base\Traits\CommonConst;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use MongoDB\Laravel\Eloquent\Model;

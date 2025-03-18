@@ -2,8 +2,8 @@
 
 namespace common\Tool\MessageSent;
 
-use gong\helper\Data;
-use gong\helper\Instance;
+use gong\helper\traits\Data;
+use gong\helper\traits\Instance;
 use PHPMailer\PHPMailer\PHPMailer;
 
 

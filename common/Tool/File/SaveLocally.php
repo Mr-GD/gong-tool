@@ -2,8 +2,8 @@
 
 namespace common\Tool\File;
 
-use gong\helper\Data;
-use gong\helper\Instance;
+use gong\helper\traits\Data;
+use gong\helper\traits\Instance;
 
 /**
  * @method $this setRemoteUrl(string $url) //设置远程地址

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\Tool\Base;
+namespace common\Tool\Base\Traits;
 
 trait CommonConst
 {

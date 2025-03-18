@@ -25,12 +25,13 @@ class ControllerHasFinishedExecuting
     public function handle(RequestHandled $event): void
     {
         /** 执行观察者 */
-        $this->fireAction();
+        $this->fireListen();
     }
 
-    public function fireAction()
+
+    public function fireListen()
     {
-        action()->notify();
-        action()->clearResult();
+        listen()->notify();
+        listen()->clearResult();
     }
 }

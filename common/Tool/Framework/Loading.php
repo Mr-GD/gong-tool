@@ -5,7 +5,7 @@ namespace common\Tool\Framework;
 use App\Http\Middleware\CORS;
 use App\Http\Middleware\ParameterValidation;
 use gong\constant\Snowflake\Datacenter;
-use gong\helper\Instance;
+use gong\helper\traits\Instance;
 use Illuminate\Foundation\Configuration\Middleware;
 
 class Loading
