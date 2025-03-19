@@ -29,12 +29,12 @@ class Loading
         $this->setLogDir();
         $this->setRequestId();
         $this->setRuntimeDir();
+        $this->setOperationTime();
         return true;
     }
 
     /**
      * 设置日志文件路径
-     * @author 龚德铭
      * @date 2024/12/24 10:11
      */
     public function setLogDir()
@@ -46,7 +46,6 @@ class Loading
 
     /**
      * 设置当前请求操作唯一ID
-     * @author 龚德铭
      * @date 2024/12/24 10:11
      */
     public function setRequestId()
@@ -59,7 +58,6 @@ class Loading
 
     /**
      * 设置runtime位置
-     * @author 龚德铭
      * @date 2025/1/1 23:55
      */
     public function setRuntimeDir()
@@ -90,5 +88,14 @@ class Loading
 //        }
 
         return true;
+    }
+
+    /**
+     * 设置操作时间
+     * @date 2025/3/19 11:09
+     */
+    public function setOperationTime()
+    {
+        globalVariable()->setVariable('operation_time', time());
     }
 }

@@ -23,5 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
                   ->withExceptions(function (Exceptions $exceptions) {
                       (new Handler($exceptions))->handle();
                   })
+                  ->withProviders([
+                      /** 命令行事件 */
+                      \App\Providers\Artisan\EventServiceProvider::class
+                  ])
                   ->create()
 ;

@@ -12,6 +12,11 @@ class LandingPageController extends BaseController
         return view('admin.login.index');
     }
 
+    /**
+     * 获取随机背景图片
+     * @return \Illuminate\Http\JsonResponse
+     * @date 2025/3/19 11:19
+     */
     public function getRandomImage()
     {
         $picture = LoginBackgroundPicture::randomData();
