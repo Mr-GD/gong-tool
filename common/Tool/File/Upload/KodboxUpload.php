@@ -84,13 +84,13 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
             }
 
             $path = $rootDirectory = $this->oneself()
-                                  ->post()
-                                  ->setFormParams([
-                                      'path' => $rootDirectory . '/' . $catalogue,
-                                  ])
-                                  ->setRoute('/index.php?explorer/index/mkdir&accessToken=' . $this->getAccessToken())
-                                  ->setRemark('创建文件夹')
-                                  ->request()
+                                          ->post()
+                                          ->setFormParams([
+                                              'path' => $rootDirectory . '/' . $catalogue,
+                                          ])
+                                          ->setRoute('/index.php?explorer/index/mkdir&accessToken=' . $this->getAccessToken())
+                                          ->setRemark('创建文件夹')
+                                          ->request()
             ;
 
             Kodbox::instance()->insert([
@@ -112,7 +112,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
      */
     public function getAccessToken()
     {
-        $cacheKey    = 'file.upload.accessToken';
+        $cacheKey    = globalVariable()->getVariable('redis_prefix') . 'file.upload.accessToken';
         $accessToken = Cache::get($cacheKey);
         if ($accessToken) {
             return $accessToken;

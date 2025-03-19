@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use gong\helper\Data;
-use gong\helper\Instance;
+use gong\helper\traits\Data;
+use gong\helper\traits\Instance;
 
 /**
  * @method $this setParams($params) 设置参数

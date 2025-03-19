@@ -3,6 +3,7 @@
 namespace App\Listeners\Artisan;
 
 use common\Observe\Artisan\ServeStarted;
+use gong\tool\Observer\Action;
 use Illuminate\Console\Events\CommandStarting;
 
 class CheckServeCommand
@@ -20,12 +21,14 @@ class CheckServeCommand
      */
     public function handle(CommandStarting $event): void
     {
+        $params = ['event' => $event];
         switch ($event->command) {
             case 'serve':
-                listen()->register(new ServeStarted());
+                listen()->register(new ServeStarted($params));
                 break;
         }
 
         listen()->notify();
+        Action::clear();
     }
 }

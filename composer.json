@@ -22,7 +22,8 @@
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "pusher/pusher-php-server": "^7.2",
-        "workerman/workerman": "^4.2"
+        "workerman/workerman": "^4.2",
+        "ext-redis": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

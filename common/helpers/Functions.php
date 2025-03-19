@@ -42,3 +42,35 @@ if (!function_exists('auth')) {
         return new Auth();
     }
 }
+
+/**
+ * 遍历获取目录文件
+ */
+if (!function_exists('recursiveGlob')) {
+    function recursiveGlob($pattern)
+    {
+        $allFiles = [];
+        $files    = glob($pattern);
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                $allFiles[] = $file;
+            }
+
+            if (is_dir($file)) {
+                $subFiles = recursiveGlob($file . '/*');
+                $allFiles = array_merge($allFiles, $subFiles);
+            }
+        }
+        return $allFiles;
+    }
+}
+
+/**
+ * 原生Redis实例
+ */
+if (!function_exists('redis')) {
+    function redis()
+    {
+        return \common\Tool\Redis::instance();
+    }
+}

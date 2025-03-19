@@ -30,6 +30,7 @@ class Loading
         $this->setRequestId();
         $this->setRuntimeDir();
         $this->setOperationTime();
+        $this->setRedisPrefix();
         return true;
     }
 
@@ -97,5 +98,10 @@ class Loading
     public function setOperationTime()
     {
         globalVariable()->setVariable('operation_time', time());
+    }
+
+    public function setRedisPrefix()
+    {
+        globalVariable()->setVariable('redis_prefix', 'exercises.');
     }
 }
