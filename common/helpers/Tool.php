@@ -19,10 +19,8 @@ class Tool extends SingleCase
     private GlobalVariable $value;
     public function initialise()
     {
-        $this->redis = Redis::instance()->redis;
-        $this->value = globalVariable();
+        $this->loadShineUpon();
     }
-
 
     /**
      * 遍历获取目录文件
@@ -45,6 +43,16 @@ class Tool extends SingleCase
             }
         }
         return $allFiles;
+    }
+
+    /**
+     * 加载映射数据
+     * @date 2025/3/20 11:05
+     */
+    public function loadShineUpon()
+    {
+        $this->redis = Redis::instance()->redis;
+        $this->value = globalVariable();
     }
 
 }
