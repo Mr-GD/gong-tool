@@ -6,14 +6,6 @@
  */
 
 use common\helpers\Auth;
-use common\Tool\Framework\Loading;
-
-if (!function_exists('frameworkLoading')) {
-    function frameworkLoading()
-    {
-        return Loading::instance()->analysisApplications()->execute();
-    }
-}
 
 /** 遍历递归引入目录下php文件 */
 if (!function_exists('requireAllPhpFiles')) {
@@ -44,33 +36,11 @@ if (!function_exists('auth')) {
 }
 
 /**
- * 遍历获取目录文件
- */
-if (!function_exists('recursiveGlob')) {
-    function recursiveGlob($pattern)
-    {
-        $allFiles = [];
-        $files    = glob($pattern);
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                $allFiles[] = $file;
-            }
-
-            if (is_dir($file)) {
-                $subFiles = recursiveGlob($file . '/*');
-                $allFiles = array_merge($allFiles, $subFiles);
-            }
-        }
-        return $allFiles;
-    }
-}
-
-/**
  * 原生Redis实例
  */
-if (!function_exists('redis')) {
-    function redis()
+if (!function_exists('tool')) {
+    function tool()
     {
-        return \common\Tool\Redis::instance();
+        return \common\helpers\Tool::instance();
     }
 }

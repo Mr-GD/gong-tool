@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c34a78561660c02430dc409feeda3860",
+    "content-hash": "05a67e1bc74347db8c3896dbc18abece",
     "packages": [
         {
             "name": "brick/math",
@@ -587,7 +587,7 @@
             "source": {
                 "type": "git",
                 "url": "https://gitee.com/fantasy_stray/gong-tool.git",
-                "reference": "2d83c548ad9bf412737bfc5125d297f8061e463c"
+                "reference": "38e2c45f705abd800140db0147d6b308395923c2"
             },
             "require": {
                 "ext-amqp": "*",
@@ -627,7 +627,7 @@
                 }
             ],
             "description": "Personal use only",
-            "time": "2025-03-19T06:12:33+00:00"
+            "time": "2025-03-20T01:37:09+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -10137,7 +10137,8 @@
         "ext-bcmath": "*",
         "ext-curl": "*",
         "ext-fileinfo": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-redis": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"

@@ -20,7 +20,7 @@ class Loading
         $model       = collect($requestUri)->filter()->shift();
         $this->model = $model ?: 'artisan';
         /** 设置全局变量 */
-        globalVariable()->setVariable('request_model', $this->model);
+        tool()->value()->setVariable('request_model', $this->model);
         return $this;
     }
 
@@ -30,8 +30,6 @@ class Loading
         $this->setRequestId();
         $this->setRuntimeDir();
         $this->setOperationTime();
-        $this->setRedisPrefix();
-        return true;
     }
 
     /**
@@ -42,7 +40,7 @@ class Loading
     {
         /** 设置日志文件路径 */
         $logDir = str_replace('/public', '', getcwd()) . sprintf('/runtime/logs/%s/%s/%s/', $this->model, date('Y'), date('m'));
-        globalVariable()->setVariable('LOGGER_PATH', $logDir);
+        tool()->value()->setVariable('LOGGER_PATH', $logDir);
     }
 
     /**
@@ -54,7 +52,7 @@ class Loading
         $flip         = array_flip(Datacenter::LABELS);
         $datacenterId = $flip[$this->model] ?? 0;
         $snowflakeId  = generateSnowflakeId($datacenterId);
-        globalVariable()->setVariable('REQUEST_ID', $snowflakeId);
+        tool()->value()->setVariable('REQUEST_ID', $snowflakeId);
     }
 
     /**
@@ -65,7 +63,7 @@ class Loading
     {
         /** 设置日志文件路径 */
         $logDir = str_replace('/public', '', getcwd()) . '/runtime/';
-        globalVariable()->setVariable('runtime_dir', $logDir);
+        tool()->value()->setVariable('runtime_dir', $logDir);
     }
 
     public function loadMiddleware(Middleware $middleware)
@@ -97,11 +95,7 @@ class Loading
      */
     public function setOperationTime()
     {
-        globalVariable()->setVariable('operation_time', time());
+        tool()->value()->setVariable('operation_time', time());
     }
 
-    public function setRedisPrefix()
-    {
-        globalVariable()->setVariable('redis_prefix', 'exercises.');
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace common\Observe\Artisan;
 
+use common\Constant\RedisKey;
 use gong\tool\base\abs\ObserverAbs;
 use Illuminate\Console\Events\CommandStarting;
 
@@ -13,8 +14,7 @@ class ServeStarted extends ObserverAbs
     public function watch()
     {
         $docs     = $this->handleInterfaceDoc();
-        $redisKey = globalVariable()->getVariable('redis_prefix') . 'api.docs';
-        redis()->hMset($redisKey, $docs);
+        tool()->redis()->hMset(RedisKey::API_DOCS, $docs);
     }
 
     public function handleInterfaceDoc()
@@ -39,7 +39,7 @@ class ServeStarted extends ObserverAbs
 
     public function handleControllers()
     {
-        $files       = recursiveGlob(app_path('Http/Controllers'));
+        $files       = tool()->recursiveGlob(app_path('Http/Controllers'));
         $controllers = [];
         foreach ($files as $file) {
             $controllers[] = $this->trim($file);

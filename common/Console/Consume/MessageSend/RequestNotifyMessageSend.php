@@ -17,7 +17,7 @@ class RequestNotifyMessageSend extends RabbitConsumeAbs
 
     public function consume()
     {
-        globalVariable()->setVariable('request_id', $this->requestId ?: '');
+        tool()->value()->setVariable('request_id', $this->requestId ?: '');
         try {
             $notify = NotifyFactory::create(env('OPEN_REQUEST_NOTICE_TYPE'));
         } catch (\Exception $e) {

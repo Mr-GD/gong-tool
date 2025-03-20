@@ -2,15 +2,10 @@
 
 namespace App\Service;
 
-use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
+use gong\helper\traits\Params;
 
-/**
- * @method $this setParams($params) 设置参数
- */
 class Service
 {
-    use Data, Instance;
-
-    public mixed $params;
+    use Instance,Params;
 }

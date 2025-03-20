@@ -4,6 +4,7 @@ namespace common\Tool\File\Upload;
 
 use App\Models\Kodbox;
 use App\Service\Common\KodboxService;
+use common\Constant\RedisKey;
 use common\Tool\Base\Request\InterfaceRequest;
 use Exception;
 use gong\tool\base\api\Request\MakeRequest;
@@ -112,8 +113,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
      */
     public function getAccessToken()
     {
-        $cacheKey    = globalVariable()->getVariable('redis_prefix') . 'file.upload.accessToken';
-        $accessToken = Cache::get($cacheKey);
+        $accessToken = Cache::get(RedisKey::KODBOX_UPLOAD_ACCESS_TOKEN);
         if ($accessToken) {
             return $accessToken;
         }
@@ -128,7 +128,7 @@ class KodboxUpload extends InterfaceRequest implements MakeRequest
                             ->request()
         ;
 
-        Cache::put($cacheKey, $accessToken, 3600);
+        Cache::put(RedisKey::KODBOX_UPLOAD_ACCESS_TOKEN, $accessToken, 3600);
         return $accessToken;
     }
 
