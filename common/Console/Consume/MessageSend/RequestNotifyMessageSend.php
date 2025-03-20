@@ -4,7 +4,6 @@ namespace common\Console\Consume\MessageSend;
 
 use common\Tool\MessageSent\ConcreteClass\NotifyFactory;
 use gong\tool\base\abs\RabbitConsumeAbs;
-use gong\tool\base\api\RabbitMqConsume;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class RequestNotifyMessageSend extends RabbitConsumeAbs
@@ -17,7 +16,7 @@ class RequestNotifyMessageSend extends RabbitConsumeAbs
 
     public function consume()
     {
-        tool()->value()->set('request_id', $this->requestId ?: '');
+        variable()->set('request_id', $this->requestId ?: '');
         try {
             $notify = NotifyFactory::create(env('OPEN_REQUEST_NOTICE_TYPE'));
         } catch (\Exception $e) {

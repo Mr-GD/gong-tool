@@ -29,15 +29,14 @@ class MongoDb extends Model
     /**
      * 原始操作
      * @return Builder
-     * @author 龚德铭
      * @date 2024/12/19 23:17
      */
-    public static function original($dateSeparator = false)
+    public static function original($dateSeparator = '')
     {
         $static     = new static();
         $collection = $static->collection;
         if ($dateSeparator) {
-            $collection .= '_' . date('Y-m');
+            $collection .= '_' . $dateSeparator;
         }
 
         return DB::connection('mongodb')->table($collection);
@@ -45,7 +44,6 @@ class MongoDb extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Builder
-     * @author 龚德铭
      * @date 2024/12/19 23:25
      */
     public static function instance()

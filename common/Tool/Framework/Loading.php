@@ -20,7 +20,7 @@ class Loading
         $model       = collect($requestUri)->filter()->shift();
         $this->model = $model ?: 'artisan';
         /** 设置全局变量 */
-        tool()->value()->set('request_model', $this->model);
+        variable()->set('request_model', $this->model);
         return $this;
     }
 
@@ -40,7 +40,7 @@ class Loading
     {
         /** 设置日志文件路径 */
         $logDir = str_replace('/public', '', getcwd()) . sprintf('/runtime/logs/%s/%s/%s/', $this->model, date('Y'), date('m'));
-        tool()->value()->set('logger_path', $logDir);
+        variable()->set('logger_path', $logDir);
     }
 
     /**
@@ -52,7 +52,7 @@ class Loading
         $flip         = array_flip(Datacenter::LABELS);
         $datacenterId = $flip[$this->model] ?? 0;
         $snowflakeId  = generateSnowflakeId($datacenterId);
-        tool()->value()->set('REQUEST_ID', $snowflakeId);
+        variable()->set('request_id', $snowflakeId);
     }
 
     /**
@@ -63,7 +63,7 @@ class Loading
     {
         /** 设置日志文件路径 */
         $logDir = str_replace('/public', '', getcwd()) . '/runtime/';
-        tool()->value()->set('runtime_dir', $logDir);
+        variable()->set('runtime_dir', $logDir);
     }
 
     public function loadMiddleware(Middleware $middleware)
@@ -72,7 +72,7 @@ class Loading
         $middleware->append(CORS::class)
                    ->append(ParameterValidation::class)
         ;
-        $model = globalVariable()->get('request_model');
+        $model = variable()->get('request_model');
 //        switch ($model) {
 //            case 'admin':
 //                break;
@@ -95,7 +95,7 @@ class Loading
      */
     public function setOperationTime()
     {
-        tool()->value()->set('operation_time', time());
+        variable()->set('operation_time', time());
     }
 
 }

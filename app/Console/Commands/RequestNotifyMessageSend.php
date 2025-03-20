@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use common\Console\BaseCommand;
+use gong\helper\GlobalVariable;
 use gong\tool\Rabbitmq\RabbitMq;
 
 /**
@@ -33,6 +34,7 @@ class RequestNotifyMessageSend extends BaseCommand
                 ->setExchange(env('REQUEST_EXCHANGE'))
                 ->setRoutingKey(env('REQUEST_NOTIFY_RESULT_ROUTING_KEY'))
                 ->setQueue(env('REQUEST_NOTIFY_RESULT_QUEUE'))
+                ->setRemark('异步消息通知')
                 ->consume(new \common\Console\Consume\MessageSend\RequestNotifyMessageSend())
         ;
     }

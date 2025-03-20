@@ -60,14 +60,14 @@ return [
 
         'single' => [
             'driver'               => 'single',
-            'path'                 => (env('LOGGER_PATH', '') ?: globalVariable()->get('LOGGER_PATH')) . date('Y-m-d') . '.log',
+            'path'                 => (env('LOGGER_PATH', '') ?: variable()->get('LOGGER_PATH')) . date('Y-m-d') . '.log',
             'level'                => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
         ],
 
         'daily' => [
             'driver'               => 'daily',
-            'path'                 => (env('LOGGER_PATH', '') ?: globalVariable()->get('LOGGER_PATH')) . date('Y-m-d') . '.log',
+            'path'                 => (env('LOGGER_PATH', '') ?: variable()->get('LOGGER_PATH')) . date('Y-m-d') . '.log',
             'level'                => env('LOG_LEVEL', 'debug'),
             'days'                 => env('LOG_DAILY_DAYS', 14),
             'replace_placeholders' => true,
@@ -124,7 +124,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => (env('LOGGER_PATH', '') ?: globalVariable()->get('LOGGER_PATH')) . date('Y-m-d') . '.log',
+            'path' => (env('LOGGER_PATH', '') ?: variable()->get('LOGGER_PATH')) . date('Y-m-d') . '.log',
         ],
 
     ],

@@ -3,20 +3,16 @@
 namespace common\helpers;
 
 use common\Tool\Redis;
-use gong\helper\GlobalVariable;
 use gong\helper\traits\Data;
 use gong\tool\base\abs\SingleCase;
 
-
 /**
  * @method \Redis redis()
- * @method GlobalVariable value();
  */
 class Tool extends SingleCase
 {
     use Data;
     private \Redis $redis;
-    private GlobalVariable $value;
     public function initialise()
     {
         $this->loadShineUpon();
@@ -52,7 +48,6 @@ class Tool extends SingleCase
     public function loadShineUpon()
     {
         $this->redis = Redis::instance()->redis;
-        $this->value = GlobalVariable::instance();
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Listeners\Request;
 
 use App\Models\MongoDB\OperationLog;
 use common\Constant\RedisKey;
+use gong\tool\Log\Log;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
 /**
@@ -26,9 +27,12 @@ class ControllerHasFinishedExecuting
     {
         /** 执行观察者 */
         $this->fireListen();
-        $this->recordOperationLog($event);
+        try {
+            $this->recordOperationLog($event);
+        } catch (\Exception $e) {
+            Log::error('[ControllerHasFinishedExecuting] msg:' . $e->getMessage());
+        }
     }
-
 
     public function fireListen()
     {
@@ -42,9 +46,9 @@ class ControllerHasFinishedExecuting
         $action     = $event->request->route()->getAction();
         $controller = $action['controller'] ?? null;
         $docComment = $controller ? tool()->redis()->hGet(RedisKey::API_DOCS, $controller) : $controller;
-        OperationLog::original(true)
+        OperationLog::original(date('Y-m'))
                     ->insert([
-                        'request_id'   => tool()->value()->get('request_id'),
+                        'request_id'   => variable()->get('request_id'),
                         'url'          => $event->request->getUri(),
                         'api_doc'      => $docComment ?: $controller,
                         'method'       => $event->request->method(),
@@ -53,7 +57,7 @@ class ControllerHasFinishedExecuting
                             'body'  => $event->request->request->all(),
                         ], JSON_UNESCAPED_UNICODE),
                         'response'     => $event->response->getContent(),
-                        'created_at'   => tool()->value()->get('operation_time', time()),
+                        'created_at'   => variable()->get('operation_time', time()),
                         'user_type'    => 1,
                         'user_account' => 'admin',
                     ])
