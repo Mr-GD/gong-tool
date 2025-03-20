@@ -44,7 +44,7 @@ class ControllerHasFinishedExecuting
         $docComment = $controller ? tool()->redis()->hGet(RedisKey::API_DOCS, $controller) : $controller;
         OperationLog::original(true)
                     ->insert([
-                        'request_id'   => tool()->value()->getVariable('request_id'),
+                        'request_id'   => tool()->value()->get('request_id'),
                         'url'          => $event->request->getUri(),
                         'api_doc'      => $docComment ?: $controller,
                         'method'       => $event->request->method(),
@@ -53,7 +53,7 @@ class ControllerHasFinishedExecuting
                             'body'  => $event->request->request->all(),
                         ], JSON_UNESCAPED_UNICODE),
                         'response'     => $event->response->getContent(),
-                        'created_at'   => tool()->value()->getVariable('operation_time', time()),
+                        'created_at'   => tool()->value()->get('operation_time', time()),
                         'user_type'    => 1,
                         'user_account' => 'admin',
                     ])

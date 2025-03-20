@@ -16,6 +16,7 @@ class LandingPageController extends BaseController
      * 获取随机背景图片
      * @return \Illuminate\Http\JsonResponse
      * @date 2025/3/19 11:19
+     * /admin/LandingPage/getRandomImage
      */
     public function getRandomImage()
     {

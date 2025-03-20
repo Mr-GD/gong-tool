@@ -71,7 +71,7 @@ class Handler
                 $return     = [
                     'code'       => $statusCode,
                     'msg'        => $msg,
-                    'request_id' => globalVariable()->getVariable('request_id'),
+                    'request_id' => tool()->value()->get('request_id'),
                 ];
                 return response()->json($return, $statusCode);
             }
@@ -81,11 +81,11 @@ class Handler
                 $return = [
                     'code'       => $statusCode,
                     'msg'        => $msg,
-                    'request_id' => globalVariable()->getVariable('request_id'),
+                    'request_id' => tool()->value()->get('request_id'),
                 ];
                 return response()->json($return, $statusCode);
             } else {
-                return response()->view('errors.error', ['errCode' => $statusCode, 'msg' => $msg, 'request_id' => tool()->value()->getVariable('request_id')]);
+                return response()->view('errors.error', ['errCode' => $statusCode, 'msg' => $msg, 'request_id' => tool()->value()->get('request_id')]);
             }
         });
     }

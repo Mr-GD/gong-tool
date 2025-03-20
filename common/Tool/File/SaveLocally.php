@@ -29,7 +29,7 @@ class SaveLocally
 
     public function createSaveDir(string $ext)
     {
-        $dirFile = tool()->value()->getVariable('runtime_dir') . 'SaveLocally/' . $ext;
+        $dirFile = tool()->value()->get('runtime_dir') . 'SaveLocally/' . $ext;
         if (!is_dir($dirFile)) {
             mkdir($dirFile, 0777, true);
         }

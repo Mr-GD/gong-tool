@@ -52,7 +52,7 @@ class Tool extends SingleCase
     public function loadShineUpon()
     {
         $this->redis = Redis::instance()->redis;
-        $this->value = globalVariable();
+        $this->value = GlobalVariable::instance();
     }
 
 }
