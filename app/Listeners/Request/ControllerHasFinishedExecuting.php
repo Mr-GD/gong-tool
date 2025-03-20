@@ -59,10 +59,4 @@ class ControllerHasFinishedExecuting
                     ])
         ;
     }
-
-    public function getMethodComment($controllerClass, $methodName)
-    {
-        $reflection = new \ReflectionMethod($controllerClass, $methodName);
-        return $reflection->getDocComment();
-    }
 }
