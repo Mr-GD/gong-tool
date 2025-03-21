@@ -9,4 +9,7 @@ class RedisKey
 
     /** @var string 接口注释 */
     const API_DOCS = 'exercises.api.docs';
+
+    /** @var string IP解析 */
+    const IP_ANALYZE = 'exercises.ip.analyze';
 }

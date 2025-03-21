@@ -2,6 +2,8 @@
 
 namespace common\Tool\ExternalRequest;
 
+use App\Exceptions\ErrException;
+use common\Exception\Code;
 use common\Tool\Base\Request\InterfaceRequest;
 use Exception;
 
@@ -25,7 +27,6 @@ class Vvhan extends InterfaceRequest
      * 获取风景图片
      * @return mixed
      * @throws \Exception
-     * @author 龚德铭
      * @date 2024/12/31 18:01
      */
     public function getLandscapeImages()
@@ -39,6 +40,28 @@ class Vvhan extends InterfaceRequest
             throw new Exception('接口请求失败，图片地址返回异常');
         }
         return $response['url'];
+    }
+
+    /**
+     * 获取IP信息
+     * @param string $ip
+     * @return array|mixed
+     * @throws ErrException
+     * @date 2025/3/21 15:12
+     */
+    public function getIp(string $ip)
+    {
+        $response = $this->get()
+                         ->setRoute('/api/ipInfo?ip=' . $ip)
+                         ->setRemark('获取IP信息')
+                         ->request()
+        ;
+
+        if (empty($response['success'])) {
+            throw new ErrException(Code::TRILATERAL_REQUEST);
+        }
+
+        return $response['info'] ?? [];
     }
 
     public function setUrl(): string

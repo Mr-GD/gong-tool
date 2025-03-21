@@ -5,6 +5,7 @@ namespace common\Tool\Framework;
 use App\Http\Middleware\CORS;
 use App\Http\Middleware\ParameterValidation;
 use gong\constant\Snowflake\Datacenter;
+use gong\helper\GlobalVariable;
 use gong\helper\traits\Instance;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -16,6 +17,7 @@ class Loading
 
     public function analysisApplications()
     {
+        app(GlobalVariable::class);
         $requestUri  = explode('/', $_SERVER['REQUEST_URI'] ?? '');
         $model       = collect($requestUri)->filter()->shift();
         $this->model = $model ?: 'artisan';

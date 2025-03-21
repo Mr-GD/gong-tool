@@ -9,9 +9,9 @@ use Illuminate\Console\Events\CommandStarting;
 class EventServiceProvider extends ServiceProvider
 {
     protected array $listen = [
-        CommandStarting::class => [
-            CheckServeCommand::class, // 监听命令执行开始事件
-        ],
+//        CommandStarting::class => [
+//            CheckServeCommand::class, // 监听命令执行开始事件
+//        ],
     ];
 
 }

@@ -4,6 +4,7 @@ namespace App\Listeners\Request;
 
 use App\Models\MongoDB\OperationLog;
 use common\Constant\RedisKey;
+use common\Observe\BasicServices\ipAnalyze;
 use gong\tool\Log\Log;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
@@ -12,12 +13,16 @@ use Illuminate\Foundation\Http\Events\RequestHandled;
  */
 class ControllerHasFinishedExecuting
 {
+    public string $snowflakeId;
+    public mixed $ip;
+
     /**
      * Create the event listener.
      */
     public function __construct()
     {
-        //
+        $this->snowflakeId = snowflakeId();
+        $this->ip          = getIp();
     }
 
     /**
@@ -25,13 +30,14 @@ class ControllerHasFinishedExecuting
      */
     public function handle(RequestHandled $event): void
     {
-        /** 执行观察者 */
-        $this->fireListen();
         try {
             $this->recordOperationLog($event);
         } catch (\Exception $e) {
             Log::error('[ControllerHasFinishedExecuting] msg:' . $e->getMessage());
         }
+
+        /** 执行观察者 */
+        $this->fireListen();
     }
 
     public function fireListen()
@@ -48,7 +54,8 @@ class ControllerHasFinishedExecuting
         $docComment = $controller ? tool()->redis()->hGet(RedisKey::API_DOCS, $controller) : $controller;
         OperationLog::original(date('Y-m'))
                     ->insert([
-                        'request_id'   => variable()->get('request_id'),
+                        'id'           => $this->snowflakeId,
+                        'request_id'   => tool()->value()->get('request_id'),
                         'url'          => $event->request->getUri(),
                         'api_doc'      => $docComment ?: $controller,
                         'method'       => $event->request->method(),
@@ -57,10 +64,16 @@ class ControllerHasFinishedExecuting
                             'body'  => $event->request->request->all(),
                         ], JSON_UNESCAPED_UNICODE),
                         'response'     => $event->response->getContent(),
-                        'created_at'   => variable()->get('operation_time', time()),
+                        'created_at'   => tool()->value()->get('operation_time', time()),
                         'user_type'    => 1,
                         'user_account' => 'admin',
+                        'ip'           => $this->ip,
                     ])
         ;
+        listen()->register(new ipAnalyze([
+            'class' => OperationLog::class,
+            'id'    => $this->snowflakeId,
+            'ip'    => $this->ip
+        ]));
     }
 }

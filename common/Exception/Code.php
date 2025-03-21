@@ -4,7 +4,7 @@ namespace common\Exception;
 class Code
 {
     // 成功
-    const SUCCESS                  = 200;
+    const SUCCESS = 200;
 
     // 授权|权限错误
     const UNAUTHORIZED                = 100000;
@@ -64,6 +64,7 @@ class Code
     const SYSTEM_ERROR = 900000;
     const EXCEPTION    = 900001;
 
+    const TRILATERAL_REQUEST = 600000;
 
     //状态码信息
     const MESSAGE = [
@@ -112,6 +113,7 @@ class Code
         self::VALIDATE_CODE_ERROR         => ['status' => 400, 'message' => '验证码错误'],
         self::CODE_SEND_ERROR             => ['status' => 404, 'message' => '验证码下发失败'],
         self::DUPLICATE_DATA              => ['status' => 400, 'message' => '重复数据'],
+        self::TRILATERAL_REQUEST          => ['status' => 400, 'message' => '三方接口请求失败'],
 
         //安全校验系列（5系列）
         self::ILLEGAL_REQUEST             => ['status' => 403, 'message' => '非法请求，已记录ip'],

@@ -36,7 +36,7 @@ class MongoDb extends Model
         $static     = new static();
         $collection = $static->collection;
         if ($dateSeparator) {
-            $collection .= '_' . $dateSeparator;
+            $collection.= '_' . ( is_bool($dateSeparator) ? date('Y-m') : $dateSeparator);
         }
 
         return DB::connection('mongodb')->table($collection);

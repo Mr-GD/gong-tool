@@ -3,6 +3,7 @@
 namespace common\Model;
 
 use common\Model\Api\MysqlEventInterface;
+use common\Tool\Base\Traits\CommonConst;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
  */
 abstract class MysqlModel extends Model implements MysqlEventInterface
 {
+    use CommonConst;
     public $timestamps = false;
 
     public static function instance()
