@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\BasicServices;
 
 use common\Observe\Artisan\ServeStarted;
 use common\Tool\File\Upload\KodboxUpload;
