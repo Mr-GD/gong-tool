@@ -55,10 +55,13 @@ class IpAnalyze extends Command
      * [class] => App\Models\MongoDB\OperationLog
      * [id] => 161484808881439810
      * [ip] => 172.19.96.1
+     * [request_id] => 111
      * ];
      */
     public function handleIpAnalyze($data)
     {
+        variable()->set('request_id', $data['request_id'] ?? '-');
+
         if (!class_exists($data['class'])) {
             throw new ErrException(Code::DATA_ERROR, '数据错误');
         }

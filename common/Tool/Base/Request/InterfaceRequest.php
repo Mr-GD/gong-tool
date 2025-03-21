@@ -34,7 +34,7 @@ abstract class InterfaceRequest extends MakeRequestAbs
         $body = json_decode($body, true);
         RequestLog::original(date('Y-m'))
                   ->insert([
-                      'request_id' => variable()->get('request_id'),
+                      'request_id' => tool()->value()->get('request_id'),
                       'url'        => $this->url,
                       'features'   => $this->features,
                       'method'     => $this->requestType,
@@ -69,7 +69,7 @@ abstract class InterfaceRequest extends MakeRequestAbs
                 ->setRoutingKey(env('REQUEST_NOTIFY_RESULT_ROUTING_KEY'))
                 ->setRemark('三方请求结果消息通知')
                 ->sendMessage([
-                    'request_id' => variable()->get('request_id'),
+                    'request_id' => tool()->value()->get('request_id'),
                     'features'   => $this->features,
                     'result'     => $this->response->getStatusCode() === 200 ? '成功' : '失败'
                 ])

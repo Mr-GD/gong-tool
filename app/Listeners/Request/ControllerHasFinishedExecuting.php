@@ -71,9 +71,10 @@ class ControllerHasFinishedExecuting
                     ])
         ;
         listen()->register(new ipAnalyze([
-            'class' => OperationLog::class,
-            'id'    => $this->snowflakeId,
-            'ip'    => $this->ip
+            'class'      => OperationLog::class,
+            'id'         => $this->snowflakeId,
+            'ip'         => $this->ip,
+            'request_id' => tool()->value()->get('request_id'),
         ]));
     }
 }

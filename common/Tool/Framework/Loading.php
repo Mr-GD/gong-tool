@@ -7,6 +7,7 @@ use App\Http\Middleware\ParameterValidation;
 use gong\constant\Snowflake\Datacenter;
 use gong\helper\GlobalVariable;
 use gong\helper\traits\Instance;
+use gong\tool\Log\Log;
 use Illuminate\Foundation\Configuration\Middleware;
 
 class Loading
@@ -43,6 +44,7 @@ class Loading
         /** 设置日志文件路径 */
         $logDir = str_replace('/public', '', getcwd()) . sprintf('/runtime/logs/%s/%s/%s/', $this->model, date('Y'), date('m'));
         variable()->set('logger_path', $logDir);
+        Log::$logPath = $logDir;
     }
 
     /**

@@ -11,10 +11,11 @@ class ipAnalyze extends ObserverAbs
     public $class;
     public $id;
     public $ip;
+    public $requestId;
 
     public function watch()
     {
-        if (empty($ip)) {
+        if (empty($this->ip)) {
             return ;
         }
 
@@ -26,6 +27,7 @@ class ipAnalyze extends ObserverAbs
                     'class' => $this->class,
                     'id'    => $this->id,
                     'ip'    => $this->ip,
+                    'request_id' => $this->requestId
                 ])
         ;
     }
