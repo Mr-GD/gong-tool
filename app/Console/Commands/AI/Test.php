@@ -5,6 +5,8 @@ namespace App\Console\Commands\AI;
 use common\Console\BaseCommand;
 use common\Observe\Test\A;
 use common\Observe\Test\B;
+use common\Tool\ExternalRequest\Alapi;
+use common\Tool\ExternalRequest\PracticalToolKit;
 use gong\tool\Observer\Action;
 
 /**
@@ -32,11 +34,9 @@ class Test extends BaseCommand
     public function handle()
     {
 
-        $action = new Action();
-        $action->register(new A(18))
-               ->register(new B('张三'))
-               ->notify()
-        ;
+//        $idCard = Alapi::instance()->idCard('511011199507223395');
+        $ip = PracticalToolKit::instance()->imageRemoveBg('https://img0.baidu.com/it/u=2798244124,3144261418&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1200');
+        print_r($ip);exit;
     }
 
     public function sendMessage()

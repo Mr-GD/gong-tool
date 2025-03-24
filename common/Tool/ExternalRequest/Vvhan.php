@@ -28,6 +28,8 @@ class Vvhan extends InterfaceRequest
      * @return mixed
      * @throws \Exception
      * @date 2024/12/31 18:01
+     * https://api.vvhan.com/article/views.html
+     * response:{"success":true,"type":"风景","url":"https://api-storage.4ce.cn/v1/a1cd42b2bd007599ae70bc580061a2d8.webp"}
      */
     public function getLandscapeImages()
     {
@@ -48,6 +50,8 @@ class Vvhan extends InterfaceRequest
      * @return array|mixed
      * @throws ErrException
      * @date 2025/3/21 15:12
+     * https://api.vvhan.com/article/ipinfo.html
+     * response:{"success":true,"ip":"58.154.0.0","info":{"country":"中国","prov":"辽宁省","city":"沈阳市","isp":"教育网"}}
      */
     public function getIp(string $ip)
     {
