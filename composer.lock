@@ -636,7 +636,7 @@
             "source": {
                 "type": "git",
                 "url": "https://gitee.com/fantasy_stray/gong-tool.git",
-                "reference": "53f3e38a9f877b5368641bbe937abb27791472b8"
+                "reference": "09bcbe31ce624b5f3ae964c03b27a05674b8cba9"
             },
             "require": {
                 "ext-amqp": "*",
@@ -676,7 +676,7 @@
                 }
             ],
             "description": "Personal use only",
-            "time": "2025-03-24T09:34:05+00:00"
+            "time": "2025-03-24T10:42:28+00:00"
         },
         {
             "name": "graham-campbell/result-type",

@@ -13,6 +13,8 @@ abstract class InterfaceRequest extends MakeRequestAbs
 {
     public bool $recordLog = false;
 
+    public bool $isRequestNotice = true;
+
     public function afterRequest()
     {
         try {
@@ -56,7 +58,7 @@ abstract class InterfaceRequest extends MakeRequestAbs
      */
     public function requestNotice()
     {
-        if (!env('OPEN_REQUEST_NOTICE')) {
+        if (!env('OPEN_REQUEST_NOTICE') || !$this->isRequestNotice) {
             return;
         }
 
@@ -74,5 +76,18 @@ abstract class InterfaceRequest extends MakeRequestAbs
                     'result'     => $this->response->getStatusCode() === 200 ? '成功' : '失败'
                 ])
         ;
+    }
+
+    public function exceptionNotify()
+    {
+        $return = $this->response->getBody();
+        $return = json_decode($return, true);
+
+        /** 请求异常时通知，例：工作群 */
+//        try {
+//
+//        } catch (\Exception $e) {
+//
+//        }
     }
 }
