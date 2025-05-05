@@ -14,7 +14,6 @@
         "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
-        "gong/tool": "dev-master",
         "jenssegers/mongodb": "*",
         "jiannei/laravel-enum": "^4.0",
         "jiannei/laravel-response": "^6.0",
