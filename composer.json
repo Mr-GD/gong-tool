@@ -1,6 +1,10 @@
 {
   "name": "gong/tool",
   "description": "Personal use only",
+  "homepage": "https://github.com/Mr-GD/gong-tool.git",
+  "support": {
+    "source": "https://github.com/Mr-GD/gong-tool.git"
+  },
   "type": "library",
   "license": "MIT",
   "autoload": {
