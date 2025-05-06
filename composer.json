@@ -1,10 +1,12 @@
 {
-  "name": "gong/tool",
-  "description": "Personal use only",
-  "homepage": "https://github.com/Mr-GD/gong-tool.git",
-  "support": {
-    "source": "https://github.com/Mr-GD/gong-tool.git"
-  },
+  "name": "gdm/gong-tool",
+  "description": "For personal use only",
+  "authors": [
+    {
+      "name": "Mr.Gong",
+      "email": "1026709547@qq.com"
+    }
+  ],
   "type": "library",
   "license": "MIT",
   "autoload": {
@@ -15,12 +17,6 @@
       "src/helper/Functions.php"
     ]
   },
-  "authors": [
-    {
-      "name": "Gong",
-      "email": "mr.gong@gmail.com"
-    }
-  ],
   "require": {
     "php": ">=8.2",
     "ext-amqp": "*",
