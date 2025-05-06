@@ -14,6 +14,8 @@
         "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
+        "ext-redis": "*",
+        "gong/tool": "dev-main",
         "jenssegers/mongodb": "*",
         "jiannei/laravel-enum": "^4.0",
         "jiannei/laravel-response": "^6.0",
@@ -21,8 +23,7 @@
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "pusher/pusher-php-server": "^7.2",
-        "workerman/workerman": "^4.2",
-        "ext-redis": "*"
+        "workerman/workerman": "^4.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -83,5 +84,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/Mr-GD/gong-tool.git"
+        }
+    ]
 }
