@@ -636,7 +636,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mr-GD/gong-tool.git",
-                "reference": "f666b1ef9df01dac274b3d39c948f6f39fbfa829"
+                "reference": "366522f3a2ff44876800b3666b4e6d63e321e741"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mr-GD/gong-tool/zipball/366522f3a2ff44876800b3666b4e6d63e321e741",
+                "reference": "366522f3a2ff44876800b3666b4e6d63e321e741",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "ext-amqp": "*",
@@ -658,28 +670,29 @@
             "default-branch": true,
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "gong\\": "src/"
-                },
                 "files": [
                     "src/helper/Functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "gong\\": "src/"
+                }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "Gong",
-                    "email": "mr.gong@gmail.com"
+                    "name": "Mr.Gong",
+                    "email": "1026709547@qq.com"
                 }
             ],
-            "description": "Personal use only",
-            "homepage": "https://github.com/Mr-GD/gong-tool.git",
+            "description": "For personal use only",
             "support": {
-                "source": "https://github.com/Mr-GD/gong-tool.git"
+                "issues": "https://github.com/Mr-GD/gong-tool/issues",
+                "source": "https://github.com/Mr-GD/gong-tool/tree/main"
             },
-            "time": "2025-05-06T06:26:03+00:00"
+            "time": "2025-05-09T09:35:17+00:00"
         },
         {
             "name": "graham-campbell/result-type",

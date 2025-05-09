@@ -78,16 +78,10 @@ abstract class InterfaceRequest extends MakeRequestAbs
         ;
     }
 
-    public function exceptionNotify()
+    public function fail()
     {
         $return = $this->response->getBody();
         $return = json_decode($return, true);
 
-        /** 请求异常时通知，例：工作群 */
-//        try {
-//
-//        } catch (\Exception $e) {
-//
-//        }
     }
 }
