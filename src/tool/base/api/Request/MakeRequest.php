@@ -20,7 +20,5 @@ interface MakeRequest
 
     public function afterRequest();
 
-    public function exceptionNotify();
-
     public function fail();
 }
