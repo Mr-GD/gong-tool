@@ -89,6 +89,7 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->recordLog($return);
 
         if ($this->response->getStatusCode() != 200) {
+            $this->unusualNotification();
             throw new Exception('接口请求失败');
         }
 
@@ -100,6 +101,15 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->resetFeatures();
         $this->clear();
         return $return;
+    }
+
+    public function unusualNotification()
+    {
+        try {
+            $this->fail();
+        } catch (\Throwable $e) {
+            Log::error(sprintf('【三方接口请求异常】通知失败 Message: %s', $e->getMessage()));
+        }
     }
 
     public function resetFeatures()
