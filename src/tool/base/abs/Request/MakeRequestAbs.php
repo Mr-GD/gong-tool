@@ -93,14 +93,9 @@ abstract class MakeRequestAbs implements MakeRequest
             throw new Exception('接口请求失败');
         }
 
-        try {
-            $return = is_callable($callable) ? $callable($return) : $this->analyze($return);
-        } catch (\Exception $e) {
-            $this->exceptionNotify();
-        }
         $this->resetFeatures();
         $this->clear();
-        return $return;
+        return is_callable($callable) ? $callable($return) : $this->analyze($return);
     }
 
     public function unusualNotification()
