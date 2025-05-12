@@ -20,7 +20,7 @@ class Action implements Subject
     private array $_observer = [];
     protected array $result = [];
 
-    public static $instance = null;
+    public static ?Action $instance = null;
 
     /**
      * 获取节点结果
