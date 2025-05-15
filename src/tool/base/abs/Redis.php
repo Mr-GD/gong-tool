@@ -7,7 +7,7 @@ use gong\helper\traits\Params;
 
 abstract class Redis implements \gong\tool\base\api\Redis
 {
-    use Params,Instance;
+    use Params, Instance;
     public string $redisKey = '';
 
     public function __construct()
