@@ -8,10 +8,10 @@ use gong\helper\traits\Params;
 abstract class Redis implements \gong\tool\base\api\Redis
 {
     use Params, Instance;
-    public string $redisKey = '';
+    public string $key = '';
 
     public function __construct()
     {
-        $this->redisKey = $this->redisKey();
+        $this->key = $this->redisKey();
     }
 }
