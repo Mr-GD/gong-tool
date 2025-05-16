@@ -9,5 +9,5 @@ interface Redis
      * @return mixed
      */
     public function instantiation();
-    public function redisKey(): string;
+    public function redisKey(...$args): string;
 }
