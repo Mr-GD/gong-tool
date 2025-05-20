@@ -150,13 +150,18 @@ class RabbitMq
                         } else {
                             $callback = new $callback($data);
                             if ($callback instanceof RabbitMqConsume) {
-                                $callback->consume();
+                                try {
+                                    $callback->consume();
+                                } catch (\Throwable $e) {
+                                    $callback->fail($this, $e);
+                                    throw $e;
+                                }
                             }
                         }
 
                         //ack机制（消息确认机制，告知RabbitMQ数据已接收处理完成，可以安全删除）
                         $queue->ack($envelopeID);
-                    } catch (Exception $e) {
+                    } catch (\Throwable $e) {
                         $queue->ack($envelopeID);
                         Log::error("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
                         consoleLine("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
@@ -185,7 +190,7 @@ class RabbitMq
                 Log::error(sprintf("【Que】%s 消费者通道异常：%s", $this->queue, $e->getMessage()));
                 consoleLine("RabbitMQ 通道异常：" . $e->getMessage());
                 break; // 如果是通道问题，可以选择直接退出消费者
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
                 // 其他未预见的异常
                 Log::error(sprintf("【Que】%s 消费者未知异常：%s", $this->queue, $e->getMessage()));
                 consoleLine("RabbitMQ 未知异常：" . $e->getMessage());
