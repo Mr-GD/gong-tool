@@ -16,9 +16,4 @@ abstract class RabbitConsumeAbs implements RabbitMqConsume
         $this->params = $params;
         $this->assignParameter($this->params);
     }
-
-    public function fail(\gong\tool\Rabbitmq\RabbitMq $mq, \Throwable $e)
-    {
-
-    }
 }
