@@ -14,4 +14,9 @@ class ActionSingleCase extends Action
         self::$instance = self::instance();
         return self::$instance;
     }
+
+    public static function clear()
+    {
+        self::$instance = null;
+    }
 }

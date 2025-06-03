@@ -92,9 +92,4 @@ class Action implements Subject
         $this->result = [];
         return true;
     }
-
-    public static function clear()
-    {
-        static::$instance = null;
-    }
 }
