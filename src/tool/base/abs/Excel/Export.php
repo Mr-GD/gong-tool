@@ -16,7 +16,7 @@ use Vtiful\Kernel\Excel;
  */
 abstract class Export implements Execute, Title, Data, Callback, Paging
 {
-    use \gong\helper\traits\Data, Params;
+    use \gong\helper\traits\Data;
 
     public string $filename;
 
