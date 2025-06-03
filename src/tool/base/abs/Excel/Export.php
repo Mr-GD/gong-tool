@@ -2,7 +2,6 @@
 
 namespace gong\tool\base\abs\Excel;
 
-use gong\helper\traits\Params;
 use gong\tool\base\api\Excel\Callback;
 use gong\tool\base\api\Excel\Data;
 use gong\tool\base\api\Excel\Paging;
