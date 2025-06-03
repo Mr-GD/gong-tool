@@ -20,8 +20,6 @@ class Action implements Subject
     private array $_observer = [];
     protected array $result = [];
 
-    public static ?Action $instance = null;
-
     /**
      * 获取节点结果
      * @param Observer $panelPoint
@@ -81,16 +79,6 @@ class Action implements Subject
         $this->_observer = [];
 
         return true;
-    }
-
-    public static function singleCase()
-    {
-        if (self::$instance instanceof (new self)) {
-            return self::$instance;
-        }
-
-        self::$instance = self::instance();
-        return self::$instance;
     }
 
     public function clearObserver()

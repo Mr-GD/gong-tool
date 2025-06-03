@@ -30,7 +30,8 @@
     "ledc/snowflake": "^1.0",
     "knplabs/knp-snappy-bundle": "^1.10",
     "nesbot/carbon": "^3.8",
-    "gong/php-elasticsearch-orm": "dev-master"
+    "gong/php-elasticsearch-orm": "dev-master",
+    "ext-xlswriter": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.0"

@@ -220,7 +220,7 @@ if (!function_exists('millisecond')) {
 if (!function_exists('listen')) {
     function listen()
     {
-        return \gong\tool\Observer\Action::singleCase();
+        return \gong\tool\Observer\ActionSingleCase::singleCase();
     }
 }
 
