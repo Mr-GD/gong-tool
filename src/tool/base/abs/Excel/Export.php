@@ -12,7 +12,6 @@ use Vtiful\Kernel\Excel;
 
 /**
  * @method $this setFilename(string $filename) 设置文件名
- * @method $this setExportData(array $exportData) 设置导出数据
  * @method $this setLimit(int $limit) 设置每页数量
  */
 abstract class Export implements Execute, Title, Data, Callback, Paging
