@@ -6,7 +6,7 @@ use \gong\tool\base\api\SingleCase as SingleCaseApi;
 
 abstract class SingleCase implements SingleCaseApi
 {
-    public static null|self $instance;
+    public static ?self $instance = null;
 
     public function __construct()
     {
