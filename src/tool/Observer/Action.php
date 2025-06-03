@@ -95,6 +95,6 @@ class Action implements Subject
 
     public static function clear()
     {
-        self::$instance = null;
+        static::$instance = null;
     }
 }
