@@ -13,6 +13,7 @@ use Vtiful\Kernel\Excel;
 /**
  * @method $this setFilename(string $filename) 设置文件名
  * @method $this setExportData(array $exportData) 设置导出数据
+ * @method $this setLimit(int $limit) 设置每页数量
  */
 abstract class Export implements Execute, Title, Data, Callback, Paging
 {
@@ -28,6 +29,11 @@ abstract class Export implements Execute, Title, Data, Callback, Paging
     public Excel $excel;
 
     public int $lines = 1;
+
+    /**
+     * @var int 每页数量
+     */
+    public int $limit = 10000;
 
     /**
      * @var bool 是否分页导出
@@ -76,7 +82,7 @@ abstract class Export implements Execute, Title, Data, Callback, Paging
     {
         $page = 1;
         do {
-            $datas = $this->paging($page);
+            $datas = $this->paging($page, $this->limit);
             if (empty($datas)) {
                 break;
             }
