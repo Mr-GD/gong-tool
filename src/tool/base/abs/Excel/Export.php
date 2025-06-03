@@ -5,7 +5,6 @@ namespace gong\tool\base\abs\Excel;
 use gong\helper\traits\Params;
 use gong\tool\base\api\Excel\Callback;
 use gong\tool\base\api\Excel\Data;
-use gong\tool\base\api\Excel\Header;
 use gong\tool\base\api\Excel\Paging;
 use gong\tool\base\api\Excel\Title;
 use gong\tool\base\api\Execute;
@@ -15,7 +14,7 @@ use Vtiful\Kernel\Excel;
  * @method $this setFilename(string $filename) 设置文件名
  * @method $this setExportData(array $exportData) 设置导出数据
  */
-abstract class Export implements Execute, Header, Title, Data, Callback, Paging
+abstract class Export implements Execute, Title, Data, Callback, Paging
 {
     use \gong\helper\traits\Data, Params;
 
@@ -56,7 +55,7 @@ abstract class Export implements Execute, Header, Title, Data, Callback, Paging
             $this->setHeader();
         }
         $this->excel->fileName($this->filename)
-                    ->header(array_values($this->header()))
+                    ->header(array_values($this->title()))
         ;
 
         if ($this->isPaging) {
