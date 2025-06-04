@@ -92,4 +92,13 @@ class Action implements Subject
         $this->result = [];
         return true;
     }
+
+    /**
+     * 获取观察者
+     * @return array
+     */
+    public function getObserver()
+    {
+        return $this->_observer;
+    }
 }
