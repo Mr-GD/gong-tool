@@ -2,10 +2,12 @@
 
 namespace gong\helper;
 
-use gong\tool\base\abs\SingleCase;
+use gong\helper\traits\SingleCase;
 
-class GlobalVariable extends SingleCase
+class GlobalVariable
 {
+    use SingleCase;
+
     /** @var array 通用变量 */
     public array $variable = [
         'LOGGER_PATH' => './runtime/logs/', //日志保存默认地址
@@ -32,10 +34,4 @@ class GlobalVariable extends SingleCase
     {
         return $this->variable[strtoupper($name)] ?? $default;
     }
-
-    public function initialise()
-    {
-
-    }
-
 }
