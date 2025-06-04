@@ -8,8 +8,6 @@ interface ValidateInterface
 
     public function translate(): array;
 
-    public function methodMessage(): array;
-
     public function scenarios(): array;
 
     public function rules(): array;
