@@ -2,12 +2,13 @@
 
 namespace gong\tool\base\abs;
 
-use gong\helper\traits\Instance;
 use gong\helper\traits\Params;
+use gong\helper\traits\SingleCase;
 
 abstract class Redis implements \gong\tool\base\api\Redis
 {
-    use Params, Instance;
+    use Params, SingleCase;
+
     public string $key = '';
 
     public function __construct(...$args)
