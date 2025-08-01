@@ -250,16 +250,16 @@ if (!function_exists('getIp')) {
         // 最终回退到 REMOTE_ADDR
         return $_SERVER['REMOTE_ADDR'] ?? '';
     }
+}
 
-    if (!function_exists('renderYield')) {
-        function renderYield($data, callable $callback = null)
-        {
-            foreach ($data as $item) {
-                if (is_callable($callback)) {
-                    $item = $callback($item);
-                }
-                yield $item;
+if (!function_exists('renderYield')) {
+    function renderYield($data, callable $callback = null)
+    {
+        foreach ($data as $item) {
+            if (is_callable($callback)) {
+                $item = $callback($item);
             }
+            yield $item;
         }
     }
 }
