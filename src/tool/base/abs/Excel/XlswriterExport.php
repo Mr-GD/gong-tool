@@ -6,6 +6,11 @@ use gong\helper\traits\Instance;
 use gong\helper\traits\Params;
 use Vtiful\Kernel\Excel;
 
+/**
+ * Excel文件导出基类
+ * @method $this setWhetherPage(bool $whetherPage) 设置是否分页导出
+ * @method $this setDownload(bool $isDownload) 是否下载文件
+ */
 abstract class XlswriterExport
 {
     use Params, Instance;
