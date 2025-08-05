@@ -21,17 +21,6 @@ abstract class XlswriterExport
 
     protected $fileName;
 
-    /** 表头 */
-    abstract protected function setTitle(): array;
-
-    /** 文件名 */
-    abstract protected function setFileName(): string;
-
-    /** 导出数据 */
-    abstract protected function setExportData(): array;
-
-    abstract protected function beforeExport();
-
     /**
      * @var Excel
      */
@@ -48,6 +37,17 @@ abstract class XlswriterExport
      * @var bool 是否为分页导出
      */
     protected $whetherPage = false;
+
+    /** 表头 */
+    abstract protected function setTitle(): array;
+
+    /** 文件名 */
+    abstract protected function setFileName(): string;
+
+    /** 导出数据 */
+    abstract protected function setExportData(): array;
+
+    abstract protected function beforeExport();
 
     public function __construct(string $savePath = '')
     {
