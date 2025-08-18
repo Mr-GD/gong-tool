@@ -103,6 +103,7 @@ abstract class XlswriterExport
     {
         set_time_limit(0);
         ini_set('memory_limit', -1);
+        $this->extension();
         $this->savePath = $this->setDir($savePath);
         $this->title    = $this->setTitle();
         $this->fileName = $this->setFileName();
@@ -112,6 +113,13 @@ abstract class XlswriterExport
         ;
         if ($this->whetherPage) {
             $this->excel->constMemory($this->fileName . '.xlsx');
+        }
+    }
+
+    public function extension()
+    {
+        if (!extension_loaded('xlswriter')) {
+            throw new \Exception('请安装xlswriter扩展！');
         }
     }
 
