@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpExpressionResultUnusedInspection */
+<?php
 
 namespace gong\tool\base\abs\Excel;
 
