@@ -57,6 +57,7 @@ abstract class XlswriterExport
 
     public function __construct(string $savePath = '')
     {
+        $this->extension();
         $this->path = $savePath;
     }
 
@@ -288,5 +289,12 @@ abstract class XlswriterExport
             $column = (int)(($column - $remainder) / 26);
         }
         return $letter;
+    }
+
+    public function extension()
+    {
+        if (!extension_loaded('xlswriter')) {
+            throw new \Exception('请安装xlswriter扩展！');
+        }
     }
 }
