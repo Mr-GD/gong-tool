@@ -231,10 +231,14 @@ abstract class XlswriterExport
 
     protected function setHeader()
     {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type');
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header(sprintf('Content-Disposition: attachment;filename="%s.xlsx"', urlencode($this->fileName)));
         header('Cache-Control: max-age=0');
         header('Pragma: public');
+        header('Access-Control-Expose-Headers: Content-Disposition');
     }
 
     protected function getExportData($data, $field)
