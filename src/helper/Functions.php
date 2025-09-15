@@ -158,6 +158,7 @@ if (!function_exists('generateSnowflakeId')) {
     {
         $return[] = \gong\constant\Snowflake\Datacenter::LABELS[$datacenterId] ?? '';
         $return[] = snowflakeId($datacenterId, $workerId);
+        $return   = array_filter($return);
         return implode('_', $return);
     }
 }
