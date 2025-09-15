@@ -6,7 +6,6 @@ use Exception;
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
 use gong\tool\base\api\Request\MakeRequest;
-use gong\tool\Log\Log;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
@@ -103,7 +102,7 @@ abstract class MakeRequestAbs implements MakeRequest
         try {
             $this->fail();
         } catch (\Throwable $e) {
-            Log::error(sprintf('【三方接口请求异常】通知失败 Message: %s', $e->getMessage()));
+            $this->log(sprintf('【三方接口请求异常】通知失败 Message: %s', $e->getMessage()));
         }
     }
 
@@ -186,15 +185,14 @@ abstract class MakeRequestAbs implements MakeRequest
             return;
         }
 
-        $content = sprintf(
-            '【%s】Url:%s Method:%s Params:%s Headers:%s Response:%s',
-            $this->features,
-            $this->url,
-            $this->requestType,
-            is_array($this->params) ? json_encode($this->params, JSON_UNESCAPED_UNICODE) : $this->params,
-            json_encode($this->headers, JSON_UNESCAPED_UNICODE),
-            json_encode($response, JSON_UNESCAPED_UNICODE)
-        );
+
+        $content = [
+            'url'      => $this->url,
+            'method'   => $this->requestType,
+            'params'   => is_array($this->params) ? json_encode($this->params, JSON_UNESCAPED_UNICODE) : $this->params,
+            'headers'  => json_encode($this->headers, JSON_UNESCAPED_UNICODE),
+            'response' => json_encode($response, JSON_UNESCAPED_UNICODE)
+        ];
 
         $this->log($content);
     }
@@ -235,5 +233,5 @@ abstract class MakeRequestAbs implements MakeRequest
         return $this;
     }
 
-    abstract function log(string $message);
+    abstract function log(...$args);
 }
