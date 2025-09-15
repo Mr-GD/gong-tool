@@ -26,41 +26,41 @@ abstract class MakeRequestAbs implements MakeRequest
 {
     use Instance, Data;
 
-    public string $features = '';
+    protected string $features = '';
 
-    public array|string $params = [];
+    protected array|string $params = [];
 
-    public array $headers = [];
+    protected array $headers = [];
 
-    public array $options = [];
+    protected array $options = [];
 
     /** @var Response */
     public Response $response;
 
-    public Client $client;
+    protected Client $client;
 
-    public string $url = '';
-    public string $completeAddress = '';
-    public string $route = '';
+    protected string $url = '';
+    protected string $completeAddress = '';
+    protected string $route = '';
 
-    public $userDefinedHeader = null;
+    protected $userDefinedHeader = null;
 
-    public string $remark = '';
+    protected string $remark = '';
 
-    public float $requestStartTime;
+    protected float $requestStartTime;
 
-    public float $requestEndTime;
+    protected float $requestEndTime;
 
     /** @var array 补充options */
-    public array $replenishOptions = [];
+    protected array $replenishOptions = [];
 
-    public string $requestType = 'GET';
+    protected string $requestType = 'GET';
 
-    public int $timeout = 3;
+    protected int $timeout = 3;
 
     public bool $recordLog = true;
 
-    public bool $debug = false;
+    protected bool $debug = false;
 
     public function __construct(bool $debug = false)
     {
@@ -98,7 +98,7 @@ abstract class MakeRequestAbs implements MakeRequest
         return is_callable($callable) ? $callable($return) : $this->analyze($return);
     }
 
-    public function unusualNotification()
+    protected function unusualNotification()
     {
         try {
             $this->fail();
@@ -107,13 +107,13 @@ abstract class MakeRequestAbs implements MakeRequest
         }
     }
 
-    public function resetFeatures()
+    protected function resetFeatures()
     {
         $features       = explode('-', $this->features);
         $this->features = reset($features);
     }
 
-    public function clear()
+    protected function clear()
     {
         $this->params = $this->headers = $this->options = [];
         $this->remark = $this->completeAddress = $this->route = '';
@@ -121,12 +121,12 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->setClient();
     }
 
-    public function oneself()
+    protected function oneself()
     {
         return new static();
     }
 
-    public function beforeRequest()
+    protected function beforeRequest()
     {
         // 添加请求方法验证
         if (empty($this->requestType)) {
@@ -158,7 +158,7 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->setFormParams();
     }
 
-    public function setFormParams(array $formParams = [])
+    protected function setFormParams(array $formParams = [])
     {
         if (empty($formParams)) {
             return $this;
@@ -168,7 +168,7 @@ abstract class MakeRequestAbs implements MakeRequest
         return $this;
     }
 
-    public function assembleGetParams()
+    protected function assembleGetParams()
     {
         if (empty($this->params)) {
             return false;
@@ -180,7 +180,7 @@ abstract class MakeRequestAbs implements MakeRequest
         return true;
     }
 
-    public function recordLog($response)
+    protected function recordLog($response)
     {
         if (!$this->recordLog) {
             return;
@@ -196,10 +196,10 @@ abstract class MakeRequestAbs implements MakeRequest
             json_encode($response, JSON_UNESCAPED_UNICODE)
         );
 
-        Log::info($content);
+        $this->log($content);
     }
 
-    public function getFeatures()
+    protected function getFeatures()
     {
         $this->features          = $this->features ?: static::class;
         $this->features          .= $this->remark ? '-' . $this->remark : '';
@@ -235,4 +235,5 @@ abstract class MakeRequestAbs implements MakeRequest
         return $this;
     }
 
+    abstract function log(string $message);
 }
