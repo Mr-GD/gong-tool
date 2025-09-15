@@ -6,7 +6,6 @@ use Exception;
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
 use gong\tool\base\api\RabbitMqConsume;
-use gong\tool\Log\Log;
 
 /**
  * @method $this setExchange(string $exchange) 设置交换机
@@ -87,10 +86,10 @@ class RabbitMq
             foreach ($pushData as $pv) {
                 $pv = json_encode($pv, JSON_UNESCAPED_UNICODE);
                 $this->_connectionExchange->publish($pv, $this->routingKey);
-                Log::info("{$message} 推送数据：" . $pv);
+                $this->log("{$message} 推送数据：" . $pv);
             }
         } catch (Exception $e) {
-            Log::error($message . ' Error:' . $e->getMessage());
+            $this->log($message . ' Error:' . $e->getMessage());
         } finally {
             if ($this->closeLink) {
                 $this->close();
@@ -137,7 +136,7 @@ class RabbitMq
                     );
                     // 从信封获取数据
                     $msg = $envelope->getBody();
-                    Log::info("{$recordMessage} 获取消息：" . $msg);
+                    $this->log("{$recordMessage} 获取消息：" . $msg);
                     consoleLine("{$recordMessage} 获取消息：" . $msg);
                     // 从信封获取数据的唯一标识
                     $envelopeID = $envelope->getDeliveryTag();
@@ -163,7 +162,7 @@ class RabbitMq
                         $queue->ack($envelopeID);
                     } catch (\Throwable $e) {
                         $queue->ack($envelopeID);
-                        Log::error("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
+                        $this->log("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
                         consoleLine("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
                     }
                     /************ 处理业务逻辑 end **********/
@@ -180,19 +179,19 @@ class RabbitMq
                 sleep(5); // 等待5秒再尝试重连
 
                 if ($this->_reconnectAttempts >= $this->_maxReconnectAttempts) {
-                    Log::error(sprintf("【Que】%s 消费者 重连失败已达上限 (%s 次)，退出消费者", $this->queue, $this->_maxReconnectAttempts));
+                    $this->log(sprintf("【Que】%s 消费者 重连失败已达上限 (%s 次)，退出消费者", $this->queue, $this->_maxReconnectAttempts));
                     consoleLine("RabbitMQ 重连失败已达上限 ({$this->_maxReconnectAttempts} 次)，退出消费者。");
                     $this->close();
                     break;
                 }
             } catch (\AMQPChannelException $e) {
                 // 专门处理 RabbitMQ 通道问题
-                Log::error(sprintf("【Que】%s 消费者通道异常：%s", $this->queue, $e->getMessage()));
+                $this->log(sprintf("【Que】%s 消费者通道异常：%s", $this->queue, $e->getMessage()));
                 consoleLine("RabbitMQ 通道异常：" . $e->getMessage());
                 break; // 如果是通道问题，可以选择直接退出消费者
             } catch (\Throwable $e) {
                 // 其他未预见的异常
-                Log::error(sprintf("【Que】%s 消费者未知异常：%s", $this->queue, $e->getMessage()));
+                $this->log(sprintf("【Que】%s 消费者未知异常：%s", $this->queue, $e->getMessage()));
                 consoleLine("RabbitMQ 未知异常：" . $e->getMessage());
                 break; // 其他异常是否退出需要根据具体需求调整
             } finally {
@@ -265,6 +264,13 @@ class RabbitMq
         foreach ($diff as $dv) {
             $key         = 'AMQP_' . strtoupper($dv);
             $this->{$dv} = env($key);
+        }
+    }
+
+    protected function log($message)
+    {
+        if (function_exists('logWrite')) {
+            logWrite($message);
         }
     }
 
