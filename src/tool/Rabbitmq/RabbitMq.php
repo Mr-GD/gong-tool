@@ -5,6 +5,7 @@ namespace gong\tool\Rabbitmq;
 use Exception;
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
+use gong\helper\traits\Log;
 use gong\tool\base\api\RabbitMqConsume;
 
 /**
@@ -22,7 +23,7 @@ use gong\tool\base\api\RabbitMqConsume;
  */
 class RabbitMq
 {
-    use Data, Instance;
+    use Data, Instance, Log;
 
     /** 交换机 */
     protected $exchange;
@@ -266,12 +267,4 @@ class RabbitMq
             $this->{$dv} = env($key);
         }
     }
-
-    protected function log($message)
-    {
-        if (function_exists('logWrite')) {
-            logWrite($message);
-        }
-    }
-
 }

@@ -4,10 +4,10 @@ namespace gong\tool\Observer;
 
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
+use gong\helper\traits\Log;
 use gong\tool\base\abs\ObserverAbs;
 use gong\tool\base\api\Observer;
 use gong\tool\base\api\Subject;
-use gong\tool\Log\Log;
 
 /**
  * 观察者模式
@@ -15,7 +15,7 @@ use gong\tool\Log\Log;
  */
 class Action implements Subject
 {
-    use Instance, Data;
+    use Instance, Data, Log;
 
     private array $_observer = [];
     protected array $result = [];
@@ -72,7 +72,7 @@ class Action implements Subject
                 $this->result[$classname] = $observer->setAction($this)->watch();
             } catch (\Exception $e) {
                 $message = '【观察者】Classname:' . $classname . ' Error:' . $e->getMessage();
-                Log::error($message);
+                $this->log($message);
             }
         }
 

@@ -4,9 +4,9 @@ namespace gong\tool\base\abs\Excel;
 
 use gong\helper\traits\HasVariables;
 use gong\helper\traits\Instance;
+use gong\helper\traits\Log;
 use gong\helper\traits\Params;
 use gong\tool\File\SaveLocally;
-use gong\tool\Log\Log;
 use Vtiful\Kernel\Excel;
 
 /**
@@ -15,7 +15,7 @@ use Vtiful\Kernel\Excel;
  */
 abstract class XlswriterLocalFileImport
 {
-    use Instance, Params, HasVariables;
+    use Instance, Params, HasVariables, Log;
 
     protected $importData = [];
 
@@ -84,7 +84,7 @@ abstract class XlswriterLocalFileImport
                 $this->importData[] = $data;
             }
         } catch (\Throwable $e) {
-            Log::warning(sprintf('【%s】导入失败 Error:%s', get_called_class(), $e->getMessage()));
+            $this->log(sprintf('【%s】导入失败 Error:%s', get_called_class(), $e->getMessage()));
             throw $e;
         }
 
@@ -97,7 +97,7 @@ abstract class XlswriterLocalFileImport
         $this->keys        = array_keys($this->title);
         $this->titleLength = count($this->title);
         /** sheetList()方法代码里没找到，但官方文档上有 */
-        $this->sheetName   = $this->excel->sheetList();
+        $this->sheetName = $this->excel->sheetList();
         if (empty($this->sheetName)) {
             throw new \Exception('没有找到sheet');
         }
