@@ -2,13 +2,11 @@
 
 namespace gong\tool\base\abs\Request;
 
-use Exception;
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
 use gong\tool\base\api\Request\MakeRequest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
-use InvalidArgumentException;
 
 /**
  * @method $this setFeatures(string $features) //设置功能点
@@ -89,7 +87,6 @@ abstract class MakeRequestAbs implements MakeRequest
 
         if ($this->response->getStatusCode() != 200) {
             $this->unusualNotification();
-            throw new Exception('接口请求失败');
         }
 
         $this->resetFeatures();
@@ -102,7 +99,9 @@ abstract class MakeRequestAbs implements MakeRequest
         try {
             $this->fail();
         } catch (\Throwable $e) {
-            $this->log(sprintf('【三方接口请求异常】通知失败 Message: %s', $e->getMessage()));
+            $message = $e->getMessage();
+            $this->exception($message);
+            $this->log(sprintf('【三方接口请求异常】通知失败 Message: %s', $message));
         }
     }
 
@@ -129,7 +128,7 @@ abstract class MakeRequestAbs implements MakeRequest
     {
         // 添加请求方法验证
         if (empty($this->requestType)) {
-            throw new InvalidArgumentException('Request method must be set before making a request');
+            $this->exception('Request method must be set before making a request');
         }
         $this->setClient();
 
@@ -185,7 +184,6 @@ abstract class MakeRequestAbs implements MakeRequest
             return;
         }
 
-
         $content = [
             'url'      => $this->url,
             'method'   => $this->requestType,
@@ -233,5 +231,17 @@ abstract class MakeRequestAbs implements MakeRequest
         return $this;
     }
 
+    /**
+     * 日志记录
+     * @param ...$args
+     * @return mixed
+     */
     abstract function log(...$args);
+
+    /**
+     * 异常处理
+     * @param string $message
+     * @return mixed
+     */
+    abstract function exception(string $message);
 }
