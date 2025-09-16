@@ -20,6 +20,7 @@ use gong\tool\base\api\RabbitMqConsume;
  * @method $this setVhost(string $vhost) 设置虚拟主机
  * @method $this setHeartbeat(int $heartbeat) 设置心跳
  * @method $this setCloseLink(bool $isClose) 关闭连接
+ * @method mixed getData() 获取数据
  */
 class RabbitMq
 {
@@ -29,6 +30,7 @@ class RabbitMq
     protected $exchange;
     /** 队列 */
     protected $queue;
+    protected $data;
 
     protected $host;
     protected $port;
@@ -143,7 +145,7 @@ class RabbitMq
                     $envelopeID = $envelope->getDeliveryTag();
 
                     /************ 处理业务逻辑 start **********/
-                    $data = is_string($msg) ? json_decode($msg, true) : $msg;
+                    $this->data = $data = is_string($msg) ? json_decode($msg, true) : $msg;
                     try {
                         if (is_callable($callback)) {
                             $callback($data);
