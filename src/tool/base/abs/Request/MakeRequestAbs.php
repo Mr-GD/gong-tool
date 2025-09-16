@@ -100,7 +100,6 @@ abstract class MakeRequestAbs implements MakeRequest
             $this->fail();
         } catch (\Throwable $e) {
             $message = $e->getMessage();
-            $this->exception($message);
             $this->log(sprintf('【三方接口请求异常】通知失败 Message: %s', $message));
         }
     }
@@ -126,10 +125,6 @@ abstract class MakeRequestAbs implements MakeRequest
 
     protected function beforeRequest()
     {
-        // 添加请求方法验证
-        if (empty($this->requestType)) {
-            $this->exception('Request method must be set before making a request');
-        }
         $this->setClient();
 
         $this->headers = $this->userDefinedHeader !== null ? $this->userDefinedHeader : $this->setHeaders();
@@ -237,11 +232,4 @@ abstract class MakeRequestAbs implements MakeRequest
      * @return mixed
      */
     abstract function log(...$args);
-
-    /**
-     * 异常处理
-     * @param string $message
-     * @return mixed
-     */
-    abstract function exception(string $message);
 }
