@@ -77,7 +77,11 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->beforeRequest();
         $this->getFeatures();
         $this->requestStartTime = millisecond();
-        $this->response         = $this->client->request($this->requestType, $this->url, $this->options);
+        try {
+            $this->response         = $this->client->request($this->requestType, $this->url, $this->options);
+        }catch (\Throwable $e) {
+            $this->exceptionThrown($e);
+        }
         $this->requestEndTime   = millisecond();
         $return                 = $this->response->getBody();
         $return                 = json_decode($return, true);
@@ -232,4 +236,11 @@ abstract class MakeRequestAbs implements MakeRequest
      * @return mixed
      */
     abstract function log(...$args);
+
+    /**
+     * 异常抛出
+     * @param \Throwable $e
+     * @return mixed
+     */
+    abstract function exceptionThrown(\Throwable $e);
 }
