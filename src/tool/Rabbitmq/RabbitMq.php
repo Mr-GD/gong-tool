@@ -6,7 +6,7 @@ use Exception;
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
 use gong\helper\traits\Log;
-use gong\tool\base\api\RabbitMqConsume;
+use gong\tool\base\abs\RabbitConsumeAbs;
 
 /**
  * @method $this setExchange(string $exchange) 设置交换机
@@ -151,13 +151,15 @@ class RabbitMq
                             $callback($data);
                         } else {
                             $callback = new $callback($data);
-                            if ($callback instanceof RabbitMqConsume) {
+                            if ($callback instanceof RabbitConsumeAbs) {
                                 try {
                                     $callback->consume();
                                 } catch (\Throwable $e) {
                                     $callback->fail($this, $e);
                                     throw $e;
                                 }
+
+                                $callback->triggerEvent($this);
                             }
                         }
 
