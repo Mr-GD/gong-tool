@@ -5,6 +5,7 @@ namespace gong\tool\base\abs;
 
 use gong\helper\traits\AssignParameter;
 use gong\helper\traits\Data;
+use gong\helper\traits\Log;
 use gong\tool\base\api\Observer;
 use gong\tool\Observer\Action;
 
@@ -15,7 +16,7 @@ use gong\tool\Observer\Action;
  */
 abstract class ObserverAbs implements Observer
 {
-    use Data, AssignParameter;
+    use Data, AssignParameter, Log;
 
     protected Action $action;
 
@@ -26,4 +27,40 @@ abstract class ObserverAbs implements Observer
         $this->params = $params;
         $this->assignParameter($params);
     }
+
+    public function watch()
+    {
+        $this->verification();
+
+        try {
+            $this->handle();
+        }catch (\Throwable $e) {
+            $message = sprintf('【观察者】%s 错误：%s', get_called_class(), $e->getMessage());
+            $this->log($message);
+            $this->fail();
+            return;
+        }
+
+        $this->triggerEvent();
+    }
+
+    /**
+     * 前置校验
+     */
+    abstract protected function verification();
+
+    /**
+     * 观察者逻辑
+     */
+    abstract protected function handle();
+
+    /**
+     * 失败逻辑
+     */
+    abstract protected function fail();
+
+    /**
+     * 触发事件
+     */
+    abstract protected function triggerEvent();
 }

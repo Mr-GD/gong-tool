@@ -5,17 +5,39 @@ namespace gong\example\Observer;
 use gong\tool\base\abs\ObserverAbs;
 use gong\tool\base\api\Observer;
 
-class BObserver extends ObserverAbs implements Observer
+class BObserver extends ObserverAbs
 {
     public $age = 0;
 
-    public function __construct(int $age = 1)
+    /**
+     * 观察者逻辑
+     */
+    protected function handle()
     {
-        $this->age = $age;
+
     }
-    
-    public function watch()
+
+    /**
+     * 触发事件
+     */
+    protected function triggerEvent()
     {
-        // TODO: Implement watch() method.
+
+    }
+
+    /**
+     * 前置校验
+     */
+    protected function verification()
+    {
+
+    }
+
+    /**
+     * 失败逻辑
+     */
+    protected function fail()
+    {
+
     }
 }
