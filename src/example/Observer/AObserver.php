@@ -3,8 +3,6 @@
 namespace gong\example\Observer;
 
 use gong\tool\base\abs\ObserverAbs;
-use gong\tool\base\api\Observer;
-use JetBrains\PhpStorm\NoReturn;
 
 class AObserver extends ObserverAbs
 {

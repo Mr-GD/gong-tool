@@ -6,6 +6,7 @@ namespace gong\tool\base\abs;
 use gong\helper\traits\AssignParameter;
 use gong\helper\traits\Data;
 use gong\helper\traits\Log;
+use gong\helper\traits\Package;
 use gong\tool\base\api\Observer;
 use gong\tool\Observer\Action;
 
@@ -16,7 +17,7 @@ use gong\tool\Observer\Action;
  */
 abstract class ObserverAbs implements Observer
 {
-    use Data, AssignParameter, Log;
+    use Data, AssignParameter, Log, Package;
 
     protected Action $action;
 
@@ -43,24 +44,4 @@ abstract class ObserverAbs implements Observer
 
         $this->triggerEvent();
     }
-
-    /**
-     * 前置校验
-     */
-    abstract protected function verification();
-
-    /**
-     * 观察者逻辑
-     */
-    abstract protected function handle();
-
-    /**
-     * 失败逻辑
-     */
-    abstract protected function fail();
-
-    /**
-     * 触发事件
-     */
-    abstract protected function triggerEvent();
 }

@@ -3,7 +3,6 @@
 namespace gong\example\Observer;
 
 use gong\tool\base\abs\ObserverAbs;
-use gong\tool\base\api\Observer;
 
 class BObserver extends ObserverAbs
 {
