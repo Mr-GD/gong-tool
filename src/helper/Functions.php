@@ -216,6 +216,24 @@ if (!function_exists('millisecond')) {
 }
 
 /**
+ * 获取毫秒级格式化日期
+ * 返回：2024-09-18 15:30:45.123
+ */
+if (!function_exists('millisecondFormatDate')) {
+    function millisecondFormatDate()
+    {
+        // 获取当前时间的微秒数和秒数
+        list($microseconds, $seconds) = explode(' ', microtime());
+
+        // 提取毫秒（微秒取前3位）
+        $milliseconds = (int)round($microseconds * 1000);
+
+        // 格式化日期时间（秒级）+ 毫秒
+        return date('Y-m-d H:i:s', $seconds) . '.' . str_pad($milliseconds, 3, '0', STR_PAD_LEFT);
+    }
+}
+
+/**
  * 观察者单例模式
  */
 if (!function_exists('listen')) {

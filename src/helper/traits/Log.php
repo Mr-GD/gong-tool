@@ -14,7 +14,7 @@ trait Log
         }
 
         $fileDir = $dir . sprintf('%s.log', date('d'));
-        $message .= PHP_EOL;
-        file_put_contents($fileDir, $message, FILE_APPEND);
+        $write   = sprintf('[%s]%s%s', millisecondFormatDate(), $message, PHP_EOL);
+        file_put_contents($fileDir, $write, FILE_APPEND);
     }
 }
