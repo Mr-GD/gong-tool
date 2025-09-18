@@ -5,6 +5,7 @@ namespace gong\tool\base\abs;
 
 use gong\helper\traits\AssignParameter;
 use gong\helper\traits\Data;
+use gong\helper\traits\Instance;
 use gong\helper\traits\Log;
 use gong\helper\traits\Package;
 use gong\tool\base\api\Observer;
@@ -17,7 +18,7 @@ use gong\tool\Observer\Action;
  */
 abstract class ObserverAbs implements Observer
 {
-    use Data, AssignParameter, Log, Package;
+    use Data, AssignParameter, Log, Package, Instance;
 
     protected Action $action;
 
