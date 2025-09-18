@@ -3,6 +3,7 @@
 namespace gong\tool\Rabbitmq;
 
 use Exception;
+use gong\constant\Snowflake\Datacenter;
 use gong\helper\traits\Data;
 use gong\helper\traits\Instance;
 use gong\helper\traits\Log;
@@ -85,9 +86,12 @@ class RabbitMq
         );
         try {
             $this->_connection();
-            $pushData = isManyArray($pushData) ? $pushData : [$pushData];
+            $pushData  = isManyArray($pushData) ? $pushData : [$pushData];
+            $requestId = variable()->get('request_id');
+            $requestId = $requestId ?: generateSnowflakeId(Datacenter::CLI);
             foreach ($pushData as $pv) {
-                $pv = json_encode($pv, JSON_UNESCAPED_UNICODE);
+                $pv['request_id'] = $requestId;
+                $pv               = json_encode($pv, JSON_UNESCAPED_UNICODE);
                 $this->_connectionExchange->publish($pv, $this->routingKey);
                 $this->log("{$message} 推送数据：" . $pv);
             }

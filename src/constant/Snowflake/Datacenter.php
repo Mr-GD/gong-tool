@@ -11,6 +11,7 @@ class Datacenter
     const XCX     = 5;
     const APP     = 6;
     const ARTISAN = 7;
+    const CLI     = 8;
 
     const LABELS = [
         self::ADMIN   => 'admin',
@@ -20,5 +21,6 @@ class Datacenter
         self::XCX     => 'xcx',
         self::APP     => 'app',
         self::ARTISAN => 'artisan',
+        self::CLI     => 'cli',
     ];
 }
