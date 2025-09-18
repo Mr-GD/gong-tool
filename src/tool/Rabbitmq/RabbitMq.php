@@ -271,4 +271,9 @@ class RabbitMq
             $this->{$dv} = env($key);
         }
     }
+
+    protected function getLogCatalogue()
+    {
+        return $this->queue;
+    }
 }

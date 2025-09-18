@@ -36,8 +36,7 @@ abstract class ObserverAbs implements Observer
         try {
             $this->handle();
         }catch (\Throwable $e) {
-            $message = sprintf('【观察者】%s 错误：%s', get_called_class(), $e->getMessage());
-            $this->log($message);
+            $this->log($e->getMessage());
             $this->fail($e);
             return;
         }
