@@ -21,7 +21,6 @@ abstract class RabbitConsumeAbs implements RabbitMqConsume
     /**
      * 触发事件
      * @param RabbitMq $rabbitMq
-     * @return mixed
      */
     abstract public function triggerEvent(RabbitMq $rabbitMq);
 }
