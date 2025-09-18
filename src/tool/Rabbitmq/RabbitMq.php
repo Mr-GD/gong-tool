@@ -274,6 +274,6 @@ class RabbitMq
 
     protected function getLogCatalogue()
     {
-        return $this->queue;
+        return sprintf('RabbitMq/%s/%s', $this->exchange, $this->queue);
     }
 }
