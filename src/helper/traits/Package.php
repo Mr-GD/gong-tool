@@ -17,7 +17,7 @@ trait Package
     /**
      * 失败逻辑
      */
-    abstract protected function fail();
+    abstract protected function fail(\Throwable $e);
 
     /**
      * 触发事件
