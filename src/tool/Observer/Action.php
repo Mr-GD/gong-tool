@@ -101,4 +101,9 @@ class Action implements Subject
     {
         return $this->_observer;
     }
+
+    protected function getLogCatalogue()
+    {
+        return 'Action';
+    }
 }

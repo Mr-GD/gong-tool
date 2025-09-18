@@ -112,4 +112,9 @@ abstract class XlswriterLocalFileImport
         /** 清除variables变量中临时保存的数据 */
         $this->variables = [];
     }
+
+    protected function getLogCatalogue()
+    {
+        return sprintf('XlswriterLocalFileImport/%s', str_replace('\\', '.', get_called_class()));
+    }
 }

@@ -11,7 +11,7 @@ use gong\tool\base\api\Observer;
 use gong\tool\Observer\Action;
 
 /**
- *观察者抽象类
+ * 观察者抽象类
  * @method Action getAction() 获取Action对象
  * @method $this setAction(Action $action) 设置Action对象
  */
@@ -42,5 +42,10 @@ abstract class ObserverAbs implements Observer
         }
 
         $this->triggerEvent();
+    }
+
+    protected function getLogCatalogue()
+    {
+        return sprintf('Observer/%s', str_replace('\\', '.', get_called_class()));
     }
 }
