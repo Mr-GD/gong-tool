@@ -240,7 +240,6 @@ abstract class MakeRequestAbs implements MakeRequest
     /**
      * 异常抛出
      * @param \Throwable $e
-     * @return mixed
      */
     abstract function exceptionThrown(\Throwable $e);
 }
