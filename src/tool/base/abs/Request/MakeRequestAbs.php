@@ -78,13 +78,13 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->getFeatures();
         $this->requestStartTime = millisecond();
         try {
-            $this->response         = $this->client->request($this->requestType, $this->url, $this->options);
-        }catch (\Throwable $e) {
+            $this->response = $this->client->request($this->requestType, $this->url, $this->options);
+        } catch (\Throwable $e) {
             $this->exceptionThrown($e);
         }
-        $this->requestEndTime   = millisecond();
-        $return                 = $this->response->getBody();
-        $return                 = json_decode($return, true);
+        $this->requestEndTime = millisecond();
+        $return               = $this->response->getBody();
+        $return               = json_decode($return, true);
 
         $this->afterRequest();
         $this->recordLog($return);
@@ -104,7 +104,10 @@ abstract class MakeRequestAbs implements MakeRequest
             $this->fail();
         } catch (\Throwable $e) {
             $message = $e->getMessage();
-            $this->log(sprintf('【三方接口请求异常】通知失败 Message: %s', $message));
+            $this->log([
+                'message'    => sprintf('【三方接口请求异常】通知失败 Message: %s', $message),
+                'request_id' => variable()->get('request_id'),
+            ]);
         }
     }
 
@@ -184,11 +187,13 @@ abstract class MakeRequestAbs implements MakeRequest
         }
 
         $content = [
-            'url'      => $this->url,
-            'method'   => $this->requestType,
-            'params'   => is_array($this->params) ? json_encode($this->params, JSON_UNESCAPED_UNICODE) : $this->params,
-            'headers'  => json_encode($this->headers, JSON_UNESCAPED_UNICODE),
-            'response' => json_encode($response, JSON_UNESCAPED_UNICODE)
+            'url'        => $this->url,
+            'method'     => $this->requestType,
+            'params'     => is_array($this->params) ? json_encode($this->params, JSON_UNESCAPED_UNICODE) : $this->params,
+            'headers'    => json_encode($this->headers, JSON_UNESCAPED_UNICODE),
+            'response'   => json_encode($response, JSON_UNESCAPED_UNICODE),
+            'message'    => '',
+            'request_id' => variable()->get('request_id'),
         ];
 
         $this->log($content);
