@@ -21,7 +21,7 @@ class GlobalVariable
      */
     public function set($name, $value)
     {
-        if (is_callable($value)) {
+        if (is_callable($value) && (is_object($value) || is_array($value))) {
             $saveValue = $value($this);
         } else {
             $saveValue = $value;
