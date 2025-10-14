@@ -86,11 +86,10 @@ class RabbitMq
         );
         try {
             $this->_connection();
-            $pushData  = isManyArray($pushData) ? $pushData : [$pushData];
-            $requestId = variable()->get('request_id');
-            $requestId = $requestId ?: generateSnowflakeId(Datacenter::CLI);
+            $pushData = isManyArray($pushData) ? $pushData : [$pushData];
             foreach ($pushData as $pv) {
-                $pv['request_id'] = $requestId;
+                $requestId        = $pv['request_id'] ?? variable()->get('request_id');
+                $pv['request_id'] = $requestId ?: generateSnowflakeId(Datacenter::CLI);
                 $pv               = json_encode($pv, JSON_UNESCAPED_UNICODE);
                 $this->_connectionExchange->publish($pv, $this->routingKey);
                 $this->log("{$message} 推送数据：" . $pv);
