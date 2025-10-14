@@ -14,11 +14,13 @@ trait Log
         }
 
         $fileCount = countFilesInDir($dir);
-        $fileDir   = $dir . sprintf('/%s.log', $fileCount);
+        $fileCount = $fileCount ? $fileCount - 1 : $fileCount;
+        $fileDir   = $dir . sprintf('/log-%s.log', $fileCount);
         $fileSize  = getFileSize($fileDir);
 
-        if ($fileSize > variable()->get('runtime_max_file_size', 50000)) {
-            $fileDir = $dir . sprintf('/%s.log', ++$fileCount);
+        // 大于50M切割新文件
+        if ($fileSize > variable()->get('runtime_max_file_size', 50000000)) {
+            $fileDir = $dir . sprintf('/log-%s.log', ++$fileCount);
         }
 
         $write = sprintf('[%s]%s%s', millisecondFormatDate(), $message, PHP_EOL);
