@@ -282,3 +282,47 @@ if (!function_exists('renderYield')) {
         }
     }
 }
+
+/**
+ * 判断指定目录下有多少文件
+ */
+if (!function_exists('countFilesInDir')) {
+    function countFilesInDir($dir)
+    {
+        $count = 0;
+        // 检查目录是否存在且可访问
+        if (!is_dir($dir) || !is_readable($dir)) {
+            return $count;
+        }
+
+        // 匹配所有文件（排除目录），GLOB_NOSORT 提高效率
+        $files = glob(rtrim($dir, '/') . '/*', GLOB_NOSORT);
+        if ($files === false) {
+            return $count;
+        }
+
+        foreach ($files as $file) {
+            // 只统计文件（排除目录）
+            if (is_file($file)) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+}
+
+/**
+ * 获取文件大小
+ */
+if (!function_exists('getFileSize')) {
+    function getFileSize($filePath)
+    {
+        // 检查文件是否存在且可访问
+        if (!file_exists($filePath) || !is_file($filePath) || !is_readable($filePath)) {
+            return 0;
+        }
+        // 获取文件大小（字节）
+        return filesize($filePath);
+    }
+}
+
