@@ -153,10 +153,9 @@ class RabbitMq
                         if (is_callable($callback)) {
                             $callback($data);
                         } else {
-                            $callback = new $callback($data);
                             if ($callback instanceof RabbitConsumeAbs) {
                                 try {
-                                    $callback->consume();
+                                    $callback->setParams($data)->formatParams()->consume();
                                 } catch (\Throwable $e) {
                                     $callback->fail($this, $e);
                                     throw $e;

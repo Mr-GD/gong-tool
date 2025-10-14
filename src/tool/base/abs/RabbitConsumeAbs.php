@@ -3,19 +3,21 @@
 namespace gong\tool\base\abs;
 
 use gong\helper\traits\AssignParameter;
+use gong\helper\traits\Params;
 use gong\tool\base\api\RabbitMqConsume;
 use gong\tool\Rabbitmq\RabbitMq;
 
+/**
+ * 消费者抽象类
+ */
 abstract class RabbitConsumeAbs implements RabbitMqConsume
 {
-    use AssignParameter;
+    use AssignParameter, Params;
 
-    public array $params = [];
-
-    public function __construct(array $params = [])
+    public function formatParams()
     {
-        $this->params = $params;
         $this->assignParameter($this->params);
+        return $this;
     }
 
     /**
