@@ -262,6 +262,20 @@ class RabbitMq
         }
     }
 
+    /**
+     * 连接
+     * @return $this
+     * @throws \AMQPChannelException
+     * @throws \AMQPConnectionException
+     * @throws \AMQPExchangeException
+     * @throws \AMQPQueueException
+     */
+    public function connection()
+    {
+        $this->_connection();
+        return $this;
+    }
+
     private function _setConfig()
     {
         foreach ($this->config as $settingKey => $value) {
