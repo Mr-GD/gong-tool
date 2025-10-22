@@ -288,6 +288,19 @@ class RabbitMq
         }
     }
 
+    /**
+     * 检测连接状态
+     * @return bool
+     */
+    public function isConnected()
+    {
+        if (!$this->_connection) {
+            return false;
+        }
+
+        return $this->_connection->isConnected();
+    }
+
     protected function getLogCatalogue()
     {
         return sprintf('RabbitMq/%s/%s', $this->exchange, $this->queue);
