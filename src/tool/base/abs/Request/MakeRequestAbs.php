@@ -55,6 +55,9 @@ abstract class MakeRequestAbs implements MakeRequest
 
     protected int $timeout = 3;
 
+    /**
+     * @var bool 是否记录日志
+     */
     public bool $recordLog = true;
 
     protected bool $debug = false;
@@ -64,7 +67,7 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->debug = $debug;
     }
 
-    public function setClient()
+    protected function setClient()
     {
         $this->client = new Client([
             'timeout' => $this->timeout,
@@ -72,7 +75,7 @@ abstract class MakeRequestAbs implements MakeRequest
         ]);
     }
 
-    public function request(?callable $callable = null)
+    protected function request(?callable $callable = null)
     {
         $this->beforeRequest();
         $this->getFeatures();
@@ -206,30 +209,30 @@ abstract class MakeRequestAbs implements MakeRequest
         $this->userDefinedHeader = null;
     }
 
-    public function debug(?callable $callback)
+    protected function debug(?callable $callback)
     {
         $callback($this);
     }
 
-    public function get()
+    protected function get()
     {
         $this->requestType = 'GET';
         return $this;
     }
 
-    public function post()
+    protected function post()
     {
         $this->requestType = 'POST';
         return $this;
     }
 
-    public function put()
+    protected function put()
     {
         $this->requestType = 'PUT';
         return $this;
     }
 
-    public function delete()
+    protected function delete()
     {
         $this->requestType = 'DELETE';
         return $this;
