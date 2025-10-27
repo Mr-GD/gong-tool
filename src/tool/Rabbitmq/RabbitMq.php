@@ -149,6 +149,7 @@ class RabbitMq
 
                     /************ 处理业务逻辑 start **********/
                     $this->data = $data = is_string($msg) ? json_decode($msg, true) : $msg;
+                    variable()->set('request_id', $data['request_id'] ?? sprintf('cli_%s', generateSnowflakeId(Datacenter::CLI)));
                     try {
                         if (is_callable($callback)) {
                             $callback($data);
