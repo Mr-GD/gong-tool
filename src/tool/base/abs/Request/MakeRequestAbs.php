@@ -158,6 +158,7 @@ abstract class MakeRequestAbs implements MakeRequest
             $this->options['headers']['Content-Type'] = 'application/json;charset=utf-8';
         }
 
+        $this->requestType = strtoupper($this->requestType);
         $this->setFormParams();
     }
 
