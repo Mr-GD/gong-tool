@@ -19,7 +19,7 @@ use GuzzleHttp\Psr7\Response;
  * @method $this setUserDefinedHeader(array $headers) //设置自定义头信息 注意：设置之后就不能再使用setHeader的结果了
  * @method $this setDebug(bool $debug) //设置调试模式
  */
-abstract class MakeRequestAbs implements MakeRequest
+abstract class MakeRequestAbs
 {
     use Instance, Data;
 
@@ -251,4 +251,14 @@ abstract class MakeRequestAbs implements MakeRequest
      * @param \Throwable $e
      */
     abstract protected function exceptionThrown(\Throwable $e);
+
+    abstract protected function setHeaders(): array;
+
+    abstract protected function setUrl(): string;
+
+    abstract protected function analyze($response);
+
+    abstract protected function afterRequest();
+
+    abstract protected function fail();
 }
