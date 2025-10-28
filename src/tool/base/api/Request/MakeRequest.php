@@ -4,13 +4,13 @@ namespace gong\tool\base\api\Request;
 
 interface MakeRequest
 {
-    function setHeaders(): array;
+    public function setHeaders(): array;
 
-    function setUrl(): string;
+    public function setUrl(): string;
 
-    function analyze($response);
+    public function analyze($response);
 
-    function afterRequest();
+    public function afterRequest();
 
-    function fail();
+    public function fail();
 }

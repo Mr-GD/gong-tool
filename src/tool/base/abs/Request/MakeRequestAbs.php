@@ -244,11 +244,11 @@ abstract class MakeRequestAbs implements MakeRequest
      * @param ...$args
      * @return mixed
      */
-    abstract function log(...$args);
+    abstract protected function log(...$args);
 
     /**
      * 异常抛出
      * @param \Throwable $e
      */
-    abstract function exceptionThrown(\Throwable $e);
+    abstract protected function exceptionThrown(\Throwable $e);
 }
