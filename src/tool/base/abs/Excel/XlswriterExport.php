@@ -2,7 +2,7 @@
 
 namespace gong\tool\base\abs\Excel;
 
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\helper\traits\Params;
 use Vtiful\Kernel\Excel;
 
@@ -15,7 +15,7 @@ use Vtiful\Kernel\Excel;
  */
 abstract class XlswriterExport
 {
-    use Params, Instance;
+    use Params, Make;
 
     protected $exportData = [];
 

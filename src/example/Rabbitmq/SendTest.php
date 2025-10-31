@@ -8,7 +8,7 @@ class SendTest
 {
     public function publish()
     {
-        $rabbitMq = RabbitMq::instance()
+        $rabbitMq = RabbitMq::make()
                             ->setExchange(env('STAFF_EXCHANGE'))
                             ->setQueue(env('STAFF_JOB_GRADE_IMPORT_QUE'))
                             ->setRoutingKey(env('STAFF_JOB_GRADE_IMPORT_ROUTING_KEY'))
@@ -28,7 +28,7 @@ class SendTest
 
     public function useConsume()
     {
-        RabbitMq::instance()
+        RabbitMq::make()
                 ->setExchange(env('STAFF_EXCHANGE'))
                 ->setQueue(env('STAFF_JOB_GRADE_IMPORT_QUE'))
                 ->setRoutingKey(env('STAFF_JOB_GRADE_IMPORT_ROUTING_KEY'))

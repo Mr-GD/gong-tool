@@ -5,7 +5,7 @@ namespace gong\tool\Rabbitmq;
 use Exception;
 use gong\constant\Snowflake\Datacenter;
 use gong\helper\traits\Data;
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\helper\traits\Log;
 use gong\tool\base\abs\RabbitConsumeAbs;
 
@@ -25,7 +25,7 @@ use gong\tool\base\abs\RabbitConsumeAbs;
  */
 class RabbitMq
 {
-    use Data, Instance, Log;
+    use Data, Make, Log;
 
     /** 交换机 */
     protected $exchange;

@@ -2,13 +2,13 @@
 
 namespace gong\helper\traits;
 
-trait Instance
+trait Make
 {
     /**
      * 实例
      * @return static
      */
-    public static function instance()
+    public static function make()
     {
         return new static(...func_get_args());
     }

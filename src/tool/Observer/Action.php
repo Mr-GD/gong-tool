@@ -3,7 +3,7 @@
 namespace gong\tool\Observer;
 
 use gong\helper\traits\Data;
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\helper\traits\Log;
 use gong\tool\base\abs\ObserverAbs;
 use gong\tool\base\api\Observer;
@@ -15,7 +15,7 @@ use gong\tool\base\api\Subject;
  */
 class Action implements Subject
 {
-    use Instance, Data, Log;
+    use Make, Data, Log;
 
     private array $_observer = [];
     protected array $result = [];

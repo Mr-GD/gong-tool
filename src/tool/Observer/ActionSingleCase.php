@@ -11,7 +11,7 @@ class ActionSingleCase extends Action
             return self::$instance;
         }
 
-        self::$instance = self::instance();
+        self::$instance = self::make();
         return self::$instance;
     }
 

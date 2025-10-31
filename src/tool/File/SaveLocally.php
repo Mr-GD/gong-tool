@@ -4,7 +4,7 @@ namespace gong\tool\File;
 
 
 use gong\helper\traits\Data;
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\tool\base\api\Execute;
 
 /**
@@ -13,7 +13,7 @@ use gong\tool\base\api\Execute;
  */
 class SaveLocally implements Execute
 {
-    use Instance, Data;
+    use Make, Data;
 
     /**
      * @var string

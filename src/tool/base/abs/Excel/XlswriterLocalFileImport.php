@@ -3,7 +3,7 @@
 namespace gong\tool\base\abs\Excel;
 
 use gong\helper\traits\HasVariables;
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\helper\traits\Log;
 use gong\helper\traits\Params;
 use gong\tool\File\SaveLocally;
@@ -15,7 +15,7 @@ use Vtiful\Kernel\Excel;
  */
 abstract class XlswriterLocalFileImport
 {
-    use Instance, Params, HasVariables, Log;
+    use Make, Params, HasVariables, Log;
 
     protected $importData = [];
 
@@ -68,7 +68,7 @@ abstract class XlswriterLocalFileImport
     public function execute()
     {
         try {
-            $this->localFile = SaveLocally::instance($this->remoteFile)->execute();
+            $this->localFile = SaveLocally::make($this->remoteFile)->execute();
             $pathInfo        = pathinfo($this->localFile);
             $this->excel     = new Excel(['path' => $pathInfo['dirname']]);
             $this->excel->openFile($pathInfo['basename']);

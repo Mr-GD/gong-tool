@@ -3,7 +3,7 @@
 namespace gong\tool\base\abs\Request;
 
 use gong\helper\traits\Data;
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\tool\base\api\Request\MakeRequest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
@@ -21,7 +21,7 @@ use GuzzleHttp\Psr7\Response;
  */
 abstract class MakeRequestAbs
 {
-    use Instance, Data;
+    use Make, Data;
 
     protected string $features = '';
 

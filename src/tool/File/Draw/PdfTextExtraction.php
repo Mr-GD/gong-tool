@@ -2,7 +2,7 @@
 
 namespace gong\tool\File\Draw;
 
-use gong\helper\traits\Instance;
+use gong\helper\traits\Make;
 use gong\helper\traits\Params;
 use gong\tool\base\api\Execute;
 use Smalot\PdfParser\Document;
@@ -20,7 +20,7 @@ use Smalot\PdfParser\Parser;
 class PdfTextExtraction implements Execute
 {
 
-    use Instance, Params;
+    use Make, Params;
 
     /**
      * @var Document
