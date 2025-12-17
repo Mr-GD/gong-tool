@@ -91,14 +91,18 @@ abstract class XlswriterExport
 
     public function export()
     {
-        $this->beforeExport();
         $this->initialise();
+        $this->beforeExport();
         ob_start();
 
         foreach ($this->sheetNames() as $sheetName) {
             if ($this->sheetName != $sheetName) {
-                $this->excel->addSheet($sheetName);
                 $this->sheetName = $sheetName;
+                if ($this->excel->existSheet($sheetName)) {
+                    $this->excel->checkoutSheet($sheetName);
+                } else {
+                    $this->excel->addSheet($sheetName);
+                }
             }
             $this->customHeader();
             $this->lines = $this->setLiens();
@@ -110,12 +114,6 @@ abstract class XlswriterExport
                 $this->render();
             }
         }
-
-        /** 没效果，应该是这个版本不支持，但官方文档上可以这样调用 */
-//        if ($this->sheetName != 'Sheet1') {
-//            /** 切换到Sheet1工作表并隐藏它 */
-//            $this->excel->checkoutSheet('Sheet1')->setCurrentSheetHide();
-//        }
 
         return $this->execution();
     }
@@ -167,7 +165,8 @@ abstract class XlswriterExport
         $this->title    = $this->setTitle();
         $this->fileName = $this->setFileName();
         $excel          = new Excel($this->config($this->savePath));
-        $this->excel    = $excel->fileName($this->fileName . '.xlsx');
+        $sheetName      = $this->sheetNames()[0] ?? $this->sheetName;
+        $this->excel    = $excel->fileName($this->fileName . '.xlsx', $sheetName);
         if ($this->whetherPage) {
             $this->excel->constMemory($this->fileName . '.xlsx');
         }
