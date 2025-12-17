@@ -168,7 +168,7 @@ abstract class XlswriterExport
         $sheetName      = $this->sheetNames()[0] ?? $this->sheetName;
         $this->excel    = $excel->fileName($this->fileName . '.xlsx', $sheetName);
         if ($this->whetherPage) {
-            $this->excel->constMemory($this->fileName . '.xlsx');
+            $this->excel->constMemory($this->fileName . '.xlsx', $sheetName);
         }
     }
 
