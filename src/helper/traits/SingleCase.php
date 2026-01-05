@@ -4,20 +4,25 @@ namespace gong\helper\traits;
 
 trait SingleCase
 {
-    public static ?self $instance = null;
+    protected static ?self $instance = null;
 
     /**
-     *
+     * @param ...$args
      * @return static
-     * @date 2025/3/20 09:36
      */
-    public static function instance()
+    public static function instance(...$args)
     {
         if (static::$instance instanceof static) {
             return static::$instance;
         }
 
-        static::$instance = new static();
+        static::$instance = new static(...$args);
         return static::$instance;
     }
+
+    /** 禁止克隆 */
+    private function __clone() {}
+
+    /** 禁止外部实例化 */
+    private function __construct(...$args) {}
 }
