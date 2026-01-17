@@ -10,6 +10,7 @@ use gong\helper\traits\Log;
 use gong\tool\base\abs\RabbitConsumeAbs;
 
 /**
+ * -- setter
  * @method $this setExchange(string $exchange) 设置交换机
  * @method $this setQueue(string $queue) 设置队列
  * @method $this setRoutingKey(string $routingKey) 设置路由键
@@ -22,6 +23,17 @@ use gong\tool\base\abs\RabbitConsumeAbs;
  * @method $this setHeartbeat(int $heartbeat) 设置心跳
  * @method $this setCloseLink(bool $isClose) 关闭连接
  * @method mixed getData() 获取数据
+ * -- getter
+ * @method string exchange(string $exchange) 获取交换机
+ * @method string queue(string $queue) 获取队列
+ * @method string routingKey(string $routingKey) 获取路由键
+ * @method string remark(string $remark) 获取备注
+ * @method string host(string $host) 获取主机
+ * @method int port(int $port) 获取端口
+ * @method string login(string $login) 获取用户名
+ * @method string password(string $password) 获取密码
+ * @method string vhost(string $vhost) 获取虚拟主机
+ * @method int heartbeat(int $heartbeat) 获取心跳
  */
 class RabbitMq
 {
