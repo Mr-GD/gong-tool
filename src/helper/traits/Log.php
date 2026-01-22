@@ -10,7 +10,7 @@ trait Log
         $logCatalogue  = method_exists($this, 'getLogCatalogue') ? $this->getLogCatalogue() : str_replace('\\', '.', get_called_class());
         $dir           = sprintf('%s%s/%s/%s/%s', $runtimeLogDir, $logCatalogue, date('Y'), date('m'), date('d'));
         if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
+            @mkdir($dir, 0777, true);
         }
 
         $fileCount = countFilesInDir($dir);
@@ -23,7 +23,13 @@ trait Log
             $fileDir = $dir . sprintf('/log-%s.log', ++$fileCount);
         }
 
-        $write = sprintf('[%s]%s%s', millisecondFormatDate(), $message, PHP_EOL);
-        file_put_contents($fileDir, $write, FILE_APPEND);
+        $write  = sprintf('[%s]%s%s', millisecondFormatDate(), $message, PHP_EOL);
+        $handle = @fopen($fileDir, 'a');
+        if ($handle) {
+            flock($handle, LOCK_EX); // 加排他锁，避免并发写入错乱
+            fwrite($handle, $write);
+            flock($handle, LOCK_UN); // 释放锁
+            fclose($handle);
+        }
     }
 }
