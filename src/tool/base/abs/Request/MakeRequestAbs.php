@@ -75,7 +75,7 @@ abstract class MakeRequestAbs
         ]);
     }
 
-    protected function request(?callable $callable = null)
+    protected function request(callable|null $callable = null)
     {
         $this->beforeRequest();
         $this->getFeatures();

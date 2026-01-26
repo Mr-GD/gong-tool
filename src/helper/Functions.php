@@ -169,7 +169,7 @@ if (!function_exists('generateSnowflakeId')) {
 if (!function_exists('snowflakeId')) {
     function snowflakeId(int $datacenterId = 0, int $workerId = 0)
     {
-        return (new Snowflake($datacenterId, $workerId))->id();
+        return new Snowflake($datacenterId, $workerId)->id();
     }
 }
 
@@ -272,7 +272,7 @@ if (!function_exists('getIp')) {
 }
 
 if (!function_exists('renderYield')) {
-    function renderYield($data, callable $callback = null)
+    function renderYield($data, callable|null $callback = null)
     {
         foreach ($data as $item) {
             if (is_callable($callback)) {

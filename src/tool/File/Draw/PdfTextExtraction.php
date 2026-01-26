@@ -84,7 +84,7 @@ class PdfTextExtraction implements Execute
      * @param Page|null $page
      * @return string
      */
-    public function mateKeyword(?Page $page = null)
+    public function mateKeyword(Page|null $page = null)
     {
         if (empty($page)) {
             return '';
