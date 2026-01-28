@@ -123,11 +123,22 @@ class RabbitMq
      */
     public function close()
     {
-        if (!empty($this->_channel)) {
-            $this->_channel->close();
-        }
-        if (!empty($this->_connection)) {
-            $this->_connection->disconnect();
+        try {
+            // 关键：先校验连接是否有效，再关闭通道/连接
+            $isConnected = $this->_connection && $this->_connection->isConnected();
+
+            if (!empty($this->_channel) && $isConnected) {
+                $this->_channel->close();
+            }
+            if (!empty($this->_connection) && $isConnected) {
+                $this->_connection->disconnect();
+            }
+        } catch (\Throwable $e) {
+            // 置空所有相关对象，避免复用
+            $this->_channel = null;
+            $this->_connection = null;
+            $this->_connectionExchange = null;
+            $this->_connectionQueue = null;
         }
 
         return true;
