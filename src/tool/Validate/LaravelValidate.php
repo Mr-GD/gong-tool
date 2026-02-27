@@ -30,7 +30,7 @@ abstract class LaravelValidate extends FieldValidation
     }
 
     /** 验证 */
-    public function validator(array $data, string $scene)
+    public static function validator(array $data, string $scene)
     {
         $validate = parent::make($data);
         $scene    = lcfirst(str_replace('action', '', $scene));

@@ -72,4 +72,4 @@ class TestValidate extends LaravelValidate
 $params = [
     'a' => 1
 ];
-(new TestValidate)->validator($params, 'checkStaffThereAsset');
+TestValidate::validator($params, 'checkStaffThereAsset');
