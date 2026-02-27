@@ -3,7 +3,6 @@
 namespace gong\tool\Validate;
 
 use Exception;
-use gong\tool\base\api\ValidateInterface;
 use Inhere\Validate\FieldValidation;
 
 //规则配置类似于Laravel
@@ -11,7 +10,7 @@ use Inhere\Validate\FieldValidation;
 /**
  * 文档地址：https://github.com/inhere/php-validate/wiki/config-rules-like-laravel
  */
-abstract class LaravelValidate extends FieldValidation implements ValidateInterface
+abstract class LaravelValidate extends FieldValidation
 {
     # 进行验证前处理,返回false则停止验证,但没有错误信息,可以在逻辑中调用 addError 增加错误信息
     public function beforeValidate(): bool
@@ -75,20 +74,8 @@ abstract class LaravelValidate extends FieldValidation implements ValidateInterf
             'intList'            => '{attr} 数组里面必须是整形数值',
             'customIntList'      => '{attr} 数组里面必须是整形数值',
             'dateFormat'         => '{attr} 不满足日期格式【{value0}】',
+            'ltField'            => '{attr} 不能大于【{value0}】',
         ];
-    }
-
-    /**
-     * 错误提示
-     * @return string[]
-     * @date 2023/5/17 9:27
-     */
-    public function translates(): array
-    {
-        return array_merge([
-            'page'            => '页数',
-            'size'            => '每页数量',
-        ], $this->translate());
     }
 
     /**
@@ -169,4 +156,36 @@ abstract class LaravelValidate extends FieldValidation implements ValidateInterf
         return true;
     }
 
+    public function customEachNumberValidator($data)
+    {
+        if (!is_array($data)) {
+            return false;
+        }
+
+        foreach ($data as $dv) {
+            if (!is_numeric($dv)) {
+                return false;
+            }
+
+            if ($dv != intval($dv)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 规则
+     */
+    abstract public function rules(): array;
+
+    /**
+     * 场景
+     */
+    abstract public function scenarios(): array;
+
+    /**
+     * 字段翻译
+     */
+    abstract public function translates(): array;
 }
