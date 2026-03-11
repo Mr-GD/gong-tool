@@ -10,6 +10,7 @@ use Vtiful\Kernel\Excel;
  * Excel文件导出基类
  * @method $this setWhetherPage(bool $whetherPage) 设置是否分页导出
  * @method $this setDownload(bool $isDownload) 是否下载文件
+ * @method $this setMaxLimit(int $maxLimit) 设置最大导出行数
  *
  * https://xlswriter-docs.viest.me/zh-cn
  */
@@ -55,6 +56,9 @@ abstract class XlswriterExport
 
     abstract protected function beforeExport();
 
+    /**
+     * @param string $savePath 目录全路径 /www/wwwroot/flash_sign_cloud/console/runtime/SaveLocalFile/
+     */
     public function __construct(string $savePath = '')
     {
         $this->extension();
@@ -217,10 +221,10 @@ abstract class XlswriterExport
 
     protected function setDir()
     {
-        $dir = variable()->get('runtime_dir', '/');
         if ($this->path) {
-            $dir .= $this->path;
+            $dir = rtrim($this->path, '.') . '/';
         } else {
+            $dir      = variable()->get('runtime_dir', '/');
             $classDir = explode('\\', get_called_class());
             $classDir = array_splice($classDir, -2, 2);
             $dir      .= '/Xlswriter/' . implode('/', $classDir) . '/';

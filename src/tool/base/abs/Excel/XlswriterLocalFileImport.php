@@ -11,13 +11,20 @@ use Vtiful\Kernel\Excel;
 
 /**
  * @method $this setRemoteFile(string $remoteFile) 设置远程文件地址
- * @method array getImportData()
+ * @method array getImportData() 获取导入数据
+ * @method $this setRemoveLocalFile(bool $removeLocalFile) 是否删除本地文件
+ * @method array getTitle() 获取表头
  */
 abstract class XlswriterLocalFileImport
 {
     use Make, Params, HasVariables, Log;
 
     protected $importData = [];
+
+    /**
+     * @var bool 是否删除本地文件
+     */
+    protected $removeLocalFile = true;
 
     /**
      * @var string 远程文件地址
@@ -63,12 +70,15 @@ abstract class XlswriterLocalFileImport
      */
     protected abstract function formatData($row): array;
 
-    protected abstract function title();
+    protected abstract function title() : array;
 
     public function execute()
     {
         try {
-            $this->localFile = SaveLocally::make($this->remoteFile)->execute();
+            $this->localFile = $this->remoteFile;
+            if (str_contains($this->remoteFile, 'https://') || str_contains($this->remoteFile, 'http://')) {
+                $this->localFile = SaveLocally::make($this->remoteFile)->execute();
+            }
             $pathInfo        = pathinfo($this->localFile);
             $this->excel     = new Excel(['path' => $pathInfo['dirname']]);
             $this->excel->openFile($pathInfo['basename']);
@@ -105,7 +115,7 @@ abstract class XlswriterLocalFileImport
 
     public function __destruct()
     {
-        if ($this->localFile) {
+        if ($this->localFile && $this->removeLocalFile) {
             @unlink($this->localFile);
         }
 
