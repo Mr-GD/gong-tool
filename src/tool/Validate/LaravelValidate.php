@@ -173,19 +173,4 @@ abstract class LaravelValidate extends FieldValidation
         }
         return true;
     }
-
-    /**
-     * 规则
-     */
-    abstract public function rules(): array;
-
-    /**
-     * 场景
-     */
-    abstract public function scenarios(): array;
-
-    /**
-     * 字段翻译
-     */
-    abstract public function translates(): array;
 }
