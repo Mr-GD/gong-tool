@@ -347,3 +347,44 @@ if (!function_exists('recursiveGlob')) {
         return $allFiles;
     }
 }
+
+/**
+ * 提取接口文档信息
+ * @param string $comment 注释内容
+ * @return array
+ */
+if (!function_exists('extractDocApi')) {
+    function extractDocApi(string $comment)
+    {
+        $result = [
+            'doc'    => '',
+            'method' => '', // 请求方法：post
+            'route'  => ''   // 路由地址：/extra/auth/login
+        ];
+
+        // 按行拆分
+        $lines = explode("\n", $comment);
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+
+            // 提取 @doc
+            if (str_starts_with($line, '* @doc')) {
+                $result['doc'] = trim(str_replace('* @doc', '', $line));
+            }
+
+            // 提取 @api 并拆分 method 和 route
+            if (str_starts_with($line, '* @api')) {
+                $apiContent = trim(str_replace('* @api', '', $line));
+
+                // 匹配 {post} 格式
+                if (preg_match('/^\{(\w+)\}\s*(.+)$/', $apiContent, $matches)) {
+                    $result['method'] = strtolower($matches[1]); // post
+                    $result['route']  = trim($matches[2]);        // /extra/auth/login
+                }
+            }
+        }
+
+        return $result;
+    }
+}
