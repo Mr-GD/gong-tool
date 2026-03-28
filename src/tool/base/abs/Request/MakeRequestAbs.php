@@ -192,9 +192,9 @@ abstract class MakeRequestAbs
         $content = [
             'url'        => $this->url,
             'method'     => $this->requestType,
-            'params'     => is_array($this->params) ? json_encode($this->params, JSON_UNESCAPED_UNICODE) : $this->params,
-            'headers'    => json_encode($this->headers, JSON_UNESCAPED_UNICODE),
-            'response'   => json_encode($response, JSON_UNESCAPED_UNICODE),
+            'params'     => $this->params,
+            'headers'    => $this->headers,
+            'response'   => $response,
             'message'    => '',
             'request_id' => variable()->get('request_id'),
         ];
