@@ -106,9 +106,8 @@ abstract class MakeRequestAbs
         try {
             $this->fail();
         } catch (\Throwable $e) {
-            $message = $e->getMessage();
             $this->log([
-                'message'    => sprintf('【三方接口请求异常】通知失败 Message: %s', $message),
+                'message'    => sprintf('【%s】请求异常 Message: %s', $this->features, $e->getMessage()),
                 'request_id' => variable()->get('request_id'),
             ]);
         }
@@ -241,10 +240,10 @@ abstract class MakeRequestAbs
 
     /**
      * 日志记录
-     * @param ...$args
+     * @param $params
      * @return mixed
      */
-    abstract protected function log(...$args);
+    abstract protected function log($params);
 
     /**
      * 异常抛出
