@@ -44,33 +44,33 @@ abstract class Log
      */
     abstract protected function asyncRecord();
 
-    public function info(string $message, ?\Throwable $e = null)
+    public function info($message, ?\Throwable $e = null)
     {
         $this->logType = 'info';
         $this->execute($message, $e);
     }
 
-    public function warning(string $message, ?\Throwable $e = null)
+    public function warning($message, ?\Throwable $e = null)
     {
         $this->logType = 'warning';
         $this->execute($message, $e);
     }
 
-    public function error(string $message, ?\Throwable $e = null)
+    public function error($message, ?\Throwable $e = null)
     {
         $this->logType = 'error';
         $this->execute($message, $e);
     }
 
-    public function debug(string $message, ?\Throwable $e = null)
+    public function debug($message, ?\Throwable $e = null)
     {
         $this->logType = 'debug';
         $this->execute($message, $e);
     }
 
-    protected function execute(string $message, ?\Throwable $e = null)
+    protected function execute($message, ?\Throwable $e = null)
     {
-        $this->message = $message;
+        $this->message = is_string($message) ? $message : json_encode($message, JSON_UNESCAPED_UNICODE);
         $this->e       = $e;
         if ($this->isAsync) {
             $this->asyncRecord();
@@ -123,9 +123,9 @@ abstract class Log
         }
 
         $fileDir = $this->dir . sprintf('/log-%s.log', $fileCount);
-        $logMsg  = sprintf(' [%s] ', $this->logType) . trim($this->message);
+        $logMsg  = sprintf('[%s] ', $this->logType) . trim($this->message);
         if ($this->e !== null) {
-            $logMsg .= '| Exception: ' . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
+            $logMsg .= ' | Exception: ' . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
         }
 
         $write  = sprintf('[%s] %s%s', $this->millFormatDate, $logMsg, PHP_EOL);
