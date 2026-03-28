@@ -4,7 +4,7 @@ namespace gong\helper\traits;
 
 trait Log
 {
-    protected function log($message)
+    protected function log($message, null|\Throwable $e = null)
     {
         $runtimeLogDir = variable()->get('runtime_log_dir', '/runtime/logs/');
         $logCatalogue  = method_exists($this, 'getLogCatalogue') ? $this->getLogCatalogue() : str_replace('\\', '.', get_called_class());
@@ -23,8 +23,9 @@ trait Log
             $fileDir = $dir . sprintf('/log-%s.log', ++$fileCount);
         }
 
-        $write  = sprintf('[%s]%s%s', millisecondFormatDate(), $message, PHP_EOL);
-        $handle = @fopen($fileDir, 'a');
+        $message = $e ? $message . ' ' . $e : $message;
+        $write   = sprintf('[%s]%s%s', millisecondFormatDate(), $message, PHP_EOL);
+        $handle  = @fopen($fileDir, 'a');
         if ($handle) {
             flock($handle, LOCK_EX); // 加排他锁，避免并发写入错乱
             fwrite($handle, $write);
