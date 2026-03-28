@@ -20,6 +20,7 @@ trait UsageLogs
         if (empty($logger)) {
             throw new \Exception('LOGGER is not exist');
         }
-        call_user_func([$logger, $level], $message, $e, $logCatalogue);
+
+        $logger::make($logCatalogue)->$level($message, $e);
     }
 }

@@ -6,10 +6,11 @@ use gong\helper\traits\Make;
 
 /**
  * @method $this setLogCatalogue(string $logCatalogue) 设置日志目录
+ * @method $this setLogType(string $logType) 设置日志类型
  */
 abstract class Log
 {
-    use Make, LogTrait;
+    use Make;
 
     protected string $dir;
     protected string $millFormatDate;
@@ -19,13 +20,16 @@ abstract class Log
      */
     protected bool $isAsync = false;
 
+    protected string $message;
+
+    protected ?\Throwable $e;
+
+    /**
+     * @var string info、warning、error、debug
+     */
+    protected string $logType;
+
     public function __construct(
-        protected string $message,
-        protected string $logType,
-        /**
-         * @var string info、warning、error、debug
-         */
-        protected ?\Throwable $e = null,
         /**
          * @var string 日志文件夹
          */
@@ -36,10 +40,44 @@ abstract class Log
     }
 
     /**
-     * @return mixed
      * @doc 异步记录日志
      */
-    abstract public function asyncRecord();
+    abstract protected function asyncRecord();
+
+    public function info(string $message, ?\Throwable $e = null)
+    {
+        $this->logType = 'info';
+        $this->execute($message, $e);
+    }
+
+    public function warning(string $message, ?\Throwable $e = null)
+    {
+        $this->logType = 'warning';
+        $this->execute($message, $e);
+    }
+
+    public function error(string $message, ?\Throwable $e = null)
+    {
+        $this->logType = 'error';
+        $this->execute($message, $e);
+    }
+
+    public function debug(string $message, ?\Throwable $e = null)
+    {
+        $this->logType = 'debug';
+        $this->execute($message, $e);
+    }
+
+    protected function execute(string $message, ?\Throwable $e = null)
+    {
+        $this->message = $message;
+        $this->e       = $e;
+        if ($this->isAsync) {
+            $this->asyncRecord();
+            return;
+        }
+        $this->record();
+    }
 
     protected function option()
     {
@@ -51,15 +89,6 @@ abstract class Log
             $logCatalogue,
             date('Y/m/d')
         );
-
-        /** 异步记录 */
-        if ($this->isAsync) {
-            $this->asyncRecord();
-            return;
-        }
-
-        /** 同步记录 */
-        $this->record();
     }
 
     public function record()
