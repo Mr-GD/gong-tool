@@ -4,7 +4,7 @@ namespace gong\tool\base\abs\Excel;
 
 use gong\helper\traits\HasVariables;
 use gong\helper\traits\Make;
-use gong\helper\traits\Log;
+use gong\helper\traits\UsageLogs;
 use gong\helper\traits\Params;
 use gong\tool\File\SaveLocally;
 use Vtiful\Kernel\Excel;
@@ -17,7 +17,7 @@ use Vtiful\Kernel\Excel;
  */
 abstract class XlswriterLocalFileImport
 {
-    use Make, Params, HasVariables, Log;
+    use Make, Params, HasVariables, UsageLogs;
 
     protected $importData = [];
 
@@ -70,7 +70,7 @@ abstract class XlswriterLocalFileImport
      */
     protected abstract function formatData($row): array;
 
-    protected abstract function title() : array;
+    protected abstract function title(): array;
 
     public function execute()
     {
@@ -79,8 +79,8 @@ abstract class XlswriterLocalFileImport
             if (str_contains($this->remoteFile, 'https://') || str_contains($this->remoteFile, 'http://')) {
                 $this->localFile = SaveLocally::make($this->remoteFile)->execute();
             }
-            $pathInfo        = pathinfo($this->localFile);
-            $this->excel     = new Excel(['path' => $pathInfo['dirname']]);
+            $pathInfo    = pathinfo($this->localFile);
+            $this->excel = new Excel(['path' => $pathInfo['dirname']]);
             $this->excel->openFile($pathInfo['basename']);
             $this->before();
             $this->excel->openSheet();
@@ -94,7 +94,7 @@ abstract class XlswriterLocalFileImport
                 $this->importData[] = $data;
             }
         } catch (\Throwable $e) {
-            $this->log(sprintf('【%s】导入失败 Error:%s', get_called_class(), $e->getMessage()));
+            $this->log(sprintf('【%s】导入失败', get_called_class()), 'error', $e);
             throw $e;
         }
 

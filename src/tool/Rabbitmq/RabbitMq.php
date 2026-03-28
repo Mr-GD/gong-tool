@@ -6,7 +6,7 @@ use Exception;
 use gong\constant\Snowflake\Datacenter;
 use gong\helper\traits\Data;
 use gong\helper\traits\Make;
-use gong\helper\traits\Log;
+use gong\helper\traits\UsageLogs;
 use gong\tool\base\abs\RabbitConsumeAbs;
 
 /**
@@ -37,7 +37,7 @@ use gong\tool\base\abs\RabbitConsumeAbs;
  */
 class RabbitMq
 {
-    use Data, Make, Log;
+    use Data, Make, UsageLogs;
 
     /** 交换机 */
     protected $exchange;
@@ -73,7 +73,7 @@ class RabbitMq
 
     public $config = [];
 
-    const SETTING_KEY = [
+    const array SETTING_KEY = [
         'host', 'port', 'login', 'password', 'vhost',
     ];
 
@@ -104,10 +104,11 @@ class RabbitMq
                 $pv['request_id'] = $requestId ?: generateSnowflakeId(Datacenter::CLI);
                 $pv               = json_encode($pv, JSON_UNESCAPED_UNICODE);
                 $this->_connectionExchange->publish($pv, $this->routingKey);
-                $this->log("{$message} 推送数据：" . $pv);
+                $message .= ' 推送数据：' . $pv;
+                $this->log($message);
             }
         } catch (Exception $e) {
-            $this->log($message . ' Error:' . $e->getMessage());
+            $this->log($message, 'error', $e);
         } finally {
             if ($this->closeLink) {
                 $this->close();
@@ -135,10 +136,10 @@ class RabbitMq
             }
         } catch (\Throwable $e) {
             // 置空所有相关对象，避免复用
-            $this->_channel = null;
-            $this->_connection = null;
+            $this->_channel            = null;
+            $this->_connection         = null;
             $this->_connectionExchange = null;
-            $this->_connectionQueue = null;
+            $this->_connectionQueue    = null;
         }
 
         return true;
@@ -165,7 +166,8 @@ class RabbitMq
                     );
                     // 从信封获取数据
                     $msg = $envelope->getBody();
-                    $this->log("{$recordMessage} 获取消息：" . $msg);
+                    $log = "{$recordMessage} 获取消息：" . $msg;
+                    $this->log($log);
                     consoleLine("{$recordMessage} 获取消息：" . $msg);
                     // 从信封获取数据的唯一标识
                     $envelopeID = $envelope->getDeliveryTag();
@@ -193,7 +195,7 @@ class RabbitMq
                         $queue->ack($envelopeID);
                     } catch (\Throwable $e) {
                         $queue->ack($envelopeID);
-                        $this->log("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
+                        $this->log("$recordMessage Params: $msg", 'error', $e);
                         consoleLine("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
                     }
                     /************ 处理业务逻辑 end **********/
@@ -210,19 +212,22 @@ class RabbitMq
                 sleep(5); // 等待5秒再尝试重连
 
                 if ($this->_reconnectAttempts >= $this->_maxReconnectAttempts) {
-                    $this->log(sprintf("【Que】%s 消费者 重连失败已达上限 (%s 次)，退出消费者", $this->queue, $this->_maxReconnectAttempts));
+                    $message = sprintf("【Que】%s 消费者 重连失败已达上限 (%s 次)，退出消费者", $this->queue, $this->_maxReconnectAttempts);
+                    $this->log($message, 'error', $e);
                     consoleLine("RabbitMQ 重连失败已达上限 ({$this->_maxReconnectAttempts} 次)，退出消费者。");
                     $this->close();
                     break;
                 }
             } catch (\AMQPChannelException $e) {
                 // 专门处理 RabbitMQ 通道问题
-                $this->log(sprintf("【Que】%s 消费者通道异常：%s", $this->queue, $e->getMessage()));
+                $message = sprintf("【Que】%s 消费者通道异常：%s", $this->queue, $e->getMessage());
+                $this->log($message, 'error', $e);
                 consoleLine("RabbitMQ 通道异常：" . $e->getMessage());
                 break; // 如果是通道问题，可以选择直接退出消费者
             } catch (\Throwable $e) {
                 // 其他未预见的异常
-                $this->log(sprintf("【Que】%s 消费者未知异常：%s", $this->queue, $e->getMessage()));
+                $message = sprintf("【Que】%s 消费者未知异常：%s", $this->queue, $e->getMessage());
+                $this->log($message, 'error', $e);
                 consoleLine("RabbitMQ 未知异常：" . $e->getMessage());
                 break; // 其他异常是否退出需要根据具体需求调整
             } finally {

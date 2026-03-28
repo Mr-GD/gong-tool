@@ -4,7 +4,7 @@ namespace gong\tool\Observer;
 
 use gong\helper\traits\Data;
 use gong\helper\traits\Make;
-use gong\helper\traits\Log;
+use gong\helper\traits\UsageLogs;
 use gong\tool\base\abs\ObserverAbs;
 use gong\tool\base\api\Observer;
 use gong\tool\base\api\Subject;
@@ -15,7 +15,7 @@ use gong\tool\base\api\Subject;
  */
 class Action implements Subject
 {
-    use Make, Data, Log;
+    use Make, Data, UsageLogs;
 
     private array $_observer = [];
     protected array $result = [];
@@ -71,8 +71,8 @@ class Action implements Subject
             try {
                 $this->result[$classname] = $observer->setAction($this)->watch();
             } catch (\Exception $e) {
-                $message = '【观察者】Classname:' . $classname . ' Error:' . $e->getMessage();
-                $this->log($message);
+                $message = '【观察者】Classname:' . $classname;
+                $this->log($message, 'error', $e);
             }
         }
 

@@ -3,6 +3,7 @@
 namespace gong\helper;
 
 use gong\helper\traits\SingleCase;
+use gong\tool\Log\Log;
 
 class GlobalVariable
 {
@@ -11,6 +12,7 @@ class GlobalVariable
     /** @var array 通用变量 */
     public array $variable = [
         'LOGGER_PATH' => './runtime/logs/', //日志保存默认地址
+        'LOGGER'      => Log::class, //日志类
     ];
 
     /**

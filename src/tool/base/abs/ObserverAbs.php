@@ -6,7 +6,7 @@ namespace gong\tool\base\abs;
 use gong\helper\traits\AssignParameter;
 use gong\helper\traits\Data;
 use gong\helper\traits\Make;
-use gong\helper\traits\Log;
+use gong\helper\traits\UsageLogs;
 use gong\helper\traits\Package;
 use gong\tool\base\api\Observer;
 use gong\tool\Observer\Action;
@@ -18,7 +18,7 @@ use gong\tool\Observer\Action;
  */
 abstract class ObserverAbs implements Observer
 {
-    use Data, AssignParameter, Log, Package, Make;
+    use Data, AssignParameter, UsageLogs, Package, Make;
 
     protected Action $action;
 
@@ -36,7 +36,7 @@ abstract class ObserverAbs implements Observer
 
         try {
             $this->handle();
-        }catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             $this->log($e->getMessage());
             $this->fail($e);
             return;
