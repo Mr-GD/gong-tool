@@ -93,8 +93,11 @@ abstract class Log
 
     public function record()
     {
-        if (!is_dir($this->dir) && !mkdir($this->dir, 0755, true) && !is_dir($this->dir)) {
-            return;
+        if (!is_dir($this->dir)) {
+            mkdir($this->dir, 0755, true, true);
+            if (!is_dir($this->dir)) {
+                return;
+            }
         }
 
         $maxNum = -1;
