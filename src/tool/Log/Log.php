@@ -117,12 +117,11 @@ abstract class Log
         }
 
         $fileCount = max($maxNum, 0);
-        $maxSize   = variable()->get('runtime_max_file_size', 52428); //50M
         $checkFile = $this->dir . sprintf('/log-%s.log', $fileCount);
 
         if (file_exists($checkFile)) {
             $fileSize = filesize($checkFile) ?: 0;
-            if ($fileSize >= $maxSize) {
+            if ($fileSize >= $this->maxFileSize) {
                 $fileCount++;
             }
         }
