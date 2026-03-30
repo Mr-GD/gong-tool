@@ -57,7 +57,8 @@ if (!function_exists('treeStructure')) {
  * @param string $fileName
  */
 if (!function_exists('exportCsv')) {
-    #[NoReturn] function exportCsv(array $title, array $data, string $fileName = '导出csv文件')
+    #[NoReturn]
+    function exportCsv(array $title, array $data, string $fileName = '导出csv文件')
     {
         ob_start();
         // 文件名，这里都要将utf-8编码转为gbk，要不可能出现乱码现象
@@ -249,25 +250,33 @@ if (!function_exists('listen')) {
 if (!function_exists('getIp')) {
     function getIp()
     {
-        // 检查可信代理传递的 X-Forwarded-For
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-            $ip  = trim($ips[0]);
-            if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                return $ip;
+        try {
+            if (php_sapi_name() === 'cli') {
+                return '';
             }
-        }
 
-        // 检查其他可信头（需确保代理可信）
-        $headers = ['HTTP_CLIENT_IP', 'HTTP_X_REAL_IP'];
-        foreach ($headers as $header) {
-            if (isset($_SERVER[$header]) && filter_var($_SERVER[$header], FILTER_VALIDATE_IP)) {
-                return $_SERVER[$header];
+            // 检查可信代理传递的 X-Forwarded-For
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+                $ip  = trim($ips[0]);
+                if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                    return $ip;
+                }
             }
-        }
 
-        // 最终回退到 REMOTE_ADDR
-        return $_SERVER['REMOTE_ADDR'] ?? '';
+            // 检查其他可信头（需确保代理可信）
+            $headers = ['HTTP_CLIENT_IP', 'HTTP_X_REAL_IP'];
+            foreach ($headers as $header) {
+                if (isset($_SERVER[$header]) && filter_var($_SERVER[$header], FILTER_VALIDATE_IP)) {
+                    return $_SERVER[$header];
+                }
+            }
+
+            // 最终回退到 REMOTE_ADDR
+            return $_SERVER['REMOTE_ADDR'] ?? '';
+        } catch (\Throwable $e) {
+            return '';
+        }
     }
 }
 
@@ -352,6 +361,10 @@ if (!function_exists('recursiveGlob')) {
  * 提取接口文档信息
  * @param string $comment 注释内容
  * @return array
+ *
+ * 接口文档示例：
+ * @doc 测试接口示例
+ * @api {get} /admin/index/index
  */
 if (!function_exists('extractDocApi')) {
     function extractDocApi(string $comment)
@@ -386,5 +399,33 @@ if (!function_exists('extractDocApi')) {
         }
 
         return $result;
+    }
+}
+
+/**
+ * 生成图形验证码
+ * @return string base64 图片
+ */
+if (function_exists('captcha')) {
+    function captcha()
+    {
+        session_start();
+        $code = (string)mt_rand(1000, 9999);
+
+        $w   = 120;
+        $h   = 40;
+        $img = imagecreatetruecolor($w, $h);
+        $bg  = imagecolorallocate($img, 255, 255, 255);
+        $fg  = imagecolorallocate($img, 0, 0, 0);
+
+        imagefill($img, 0, 0, $bg);
+        imagestring($img, 5, 35, 10, $code, $fg);
+
+        ob_start();
+        imagepng($img);
+        $base64 = base64_encode(ob_get_clean());
+        imagedestroy($img);
+
+        return 'data:image/png;base64,' . $base64;
     }
 }

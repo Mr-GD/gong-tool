@@ -12,6 +12,8 @@ abstract class Log
 {
     use Make;
 
+    protected static $fileNums = [];
+
     protected string $dir;
     protected string $millFormatDate;
 
@@ -23,6 +25,10 @@ abstract class Log
     protected string $message;
 
     protected ?\Throwable $e;
+
+    protected int $maxFileSize = 52428800;
+
+    protected int $fileCount;
 
     /**
      * @var string info、warning、error、debug
@@ -89,6 +95,8 @@ abstract class Log
             $logCatalogue,
             date('Y/m/d')
         );
+        $this->maxFileSize    = variable()->get('runtime_max_file_size', 52428800); //50M
+        $this->fileCount      = $this->_getFileNums();
     }
 
     public function record()
@@ -100,35 +108,18 @@ abstract class Log
             }
         }
 
-        $maxNum = -1;
-        $files  = glob($this->dir . '/log-*.log');
-        if ($files) {
-            foreach ($files as $file) {
-                if (preg_match('#log-(\d+)\.log$#i', $file, $m)) {
-                    $num = (int)$m[1];
-                    if ($num > $maxNum) $maxNum = $num;
-                }
-            }
-        }
-
-        $fileCount = max($maxNum, 0);
-        $maxSize   = variable()->get('runtime_max_file_size', 52428800); //50M
-        $checkFile = $this->dir . sprintf('/log-%s.log', $fileCount);
-
-        if (file_exists($checkFile)) {
-            $fileSize = filesize($checkFile) ?: 0;
-            if ($fileSize >= $maxSize) {
-                $fileCount++;
-            }
-        }
-
-        $fileDir = $this->dir . sprintf('/log-%s.log', $fileCount);
+        $fileDir = $this->dir . sprintf('/log-%s.log', $this->fileCount);
         $logMsg  = sprintf('[%s] ', $this->logType) . trim($this->message);
         if ($this->e !== null) {
             $logMsg .= ' | Exception: ' . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
         }
 
-        $write  = sprintf('[%s] %s%s', $this->millFormatDate, $logMsg, PHP_EOL);
+        $write  = sprintf('[%s][%s][%s] %s%s',
+            $this->millFormatDate,
+            getIp(),
+            variable()->get('request_id', '-'),
+            $logMsg,
+            PHP_EOL);
         $handle = fopen($fileDir, 'ab');
 
         if (!$handle) {
@@ -142,5 +133,51 @@ abstract class Log
         } finally {
             fclose($handle);
         }
+
+        clearstatcache();
+        if (filesize($fileDir) > $this->maxFileSize) {
+            if (!empty(static::$fileNums)) {
+                static::$fileNums['num']++;
+                $this->fileCount++;
+            }
+        }
+    }
+
+    private function _getFileNums()
+    {
+        if (!empty(static::$fileNums) && static::$fileNums['date'] == date('Ymd')) {
+            $fileDir = $this->dir . sprintf('/log-%s.log', static::$fileNums['num']);
+            if (file_exists($fileDir) && filesize($fileDir) > $this->maxFileSize) {
+                static::$fileNums['num']++;
+            }
+            return static::$fileNums['num'];
+        }
+
+        static::$fileNums = [
+            'date' => date('Ymd'),
+            'num'  => 0
+        ];
+        $maxNum           = -1;
+        $files            = glob($this->dir . '/log-*.log');
+        if ($files) {
+            foreach ($files as $file) {
+                if (preg_match('#log-(\d+)\.log$#i', $file, $m)) {
+                    $num = (int)$m[1];
+                    if ($num > $maxNum) $maxNum = $num;
+                }
+            }
+        }
+
+        static::$fileNums['num'] = max($maxNum, 0);
+        $checkFile               = $this->dir . sprintf('/log-%s.log', static::$fileNums['num']);
+
+        if (file_exists($checkFile)) {
+            $fileSize = filesize($checkFile) ?: 0;
+            if ($fileSize >= $this->maxFileSize) {
+                static::$fileNums['num']++;
+            }
+        }
+
+        return static::$fileNums['num'];
     }
 }
