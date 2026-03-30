@@ -93,7 +93,7 @@ abstract class Log
             $logCatalogue,
             date('Y/m/d')
         );
-        $this->maxFileSize    = variable()->get('runtime_max_file_size', 52428); //50M
+        $this->maxFileSize    = variable()->get('runtime_max_file_size', 52428800); //50M
     }
 
     public function record()
