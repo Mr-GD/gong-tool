@@ -138,6 +138,12 @@ abstract class Log
             variable()->get('request_id', '-'),
             $logMsg,
             PHP_EOL);
+
+        if ($this->isAsync) {
+            file_put_contents($fileDir, $write, FILE_APPEND);
+            return;
+        }
+
         $handle = fopen($fileDir, 'ab');
 
         if (!$handle) {
