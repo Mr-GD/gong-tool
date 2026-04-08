@@ -9,6 +9,13 @@ namespace gong\tool\Validate;
  */
 abstract class Validate extends \think\Validate
 {
+
+    /**
+     * @return array
+     * @doc 规则
+     */
+    abstract protected function regulation(): array;
+
     /**
      * @return array
      * @doc 场景
@@ -20,12 +27,6 @@ abstract class Validate extends \think\Validate
      * @doc 字段翻译
      */
     abstract protected function translates(): array;
-
-    /**
-     * @return array
-     * @doc 规则
-     */
-    abstract protected function regulation(): array;
 
     /**
      * @param $data
