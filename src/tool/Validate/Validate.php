@@ -39,6 +39,7 @@ abstract class Validate extends \think\Validate
         $make          = validate(static::class);
         $make->rule    = $make->regulation();
         $make->message = $make->translates();
+        $make->scene   = $make->scenarios();
         if ($scene) {
             $make->scene($scene);
         }
