@@ -28,6 +28,8 @@ abstract class Log
 
     protected int $fileCount;
 
+    protected ?string $ip;
+
     /**
      * @var string info、warning、error、debug
      */
@@ -94,6 +96,7 @@ abstract class Log
             date('Y/m/d')
         );
         $this->maxFileSize    = variable()->get('runtime_max_file_size', 52428800); //50M
+        $this->ip = getIp();
     }
 
     public function record()
@@ -134,7 +137,7 @@ abstract class Log
 
         $write  = sprintf('[%s][%s][%s] %s%s',
             $this->millFormatDate,
-            getIp(),
+            $this->ip,
             variable()->get('request_id', '-'),
             $logMsg,
             PHP_EOL);
