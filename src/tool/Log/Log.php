@@ -35,6 +35,11 @@ abstract class Log
      */
     protected string $logType;
 
+    /**
+     * @var string 请求ID
+     */
+    protected string $requestId;
+
     public function __construct(
         /**
          * @var string 日志文件夹
@@ -96,7 +101,8 @@ abstract class Log
             date('Y/m/d')
         );
         $this->maxFileSize    = variable()->get('runtime_max_file_size', 52428800); //50M
-        $this->ip = getIp();
+        $this->ip             = getIp();
+        $this->requestId      = variable()->get('request_id', '-');
     }
 
     public function record()
@@ -135,10 +141,10 @@ abstract class Log
             $logMsg .= sprintf(' | [%s] Exception: ', $this->e->getCode()) . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
         }
 
-        $write  = sprintf('[%s][%s][%s] %s%s',
+        $write = sprintf('[%s][%s][%s] %s%s',
             $this->millFormatDate,
             $this->ip,
-            variable()->get('request_id', '-'),
+            $this->requestId,
             $logMsg,
             PHP_EOL);
 
