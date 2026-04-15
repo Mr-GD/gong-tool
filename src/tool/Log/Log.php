@@ -138,7 +138,7 @@ abstract class Log
         $fileDir = $this->dir . sprintf('/log-%s.log', $fileCount);
         $logMsg  = sprintf('[%s] ', $this->logType) . trim($this->message);
         if ($this->e !== null) {
-            $logMsg .= sprintf(' | [%s] Exception: ', $this->e->getCode()) . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
+            $logMsg .= sprintf(' | [%s] Exception: ', method_exists($this->e, 'getCode') ? $this->e->getCode() : '-') . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
         }
 
         $write = sprintf('[%s][%s][%s] %s%s',
