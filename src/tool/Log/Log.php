@@ -136,9 +136,9 @@ abstract class Log
         }
 
         $fileDir = $this->dir . sprintf('/log-%s.log', $fileCount);
-        $logMsg  = sprintf('[%s] ', $this->logType) . trim($this->message);
+        $logMsg  = sprintf('[%s]', $this->logType) . trim($this->message);
         if ($this->e !== null) {
-            $logMsg .= sprintf(' | [%s] Exception: ', method_exists($this->e, 'getCode') ? $this->e->getCode() : '-') . $this->e->getMessage() . PHP_EOL . $this->e->getTraceAsString();
+            $logMsg .= sprintf(' | [%s] Exception: ', $this->_getCode()) . $this->_getMessage() . PHP_EOL . $this->e->getTraceAsString();
         }
 
         $write = sprintf('[%s][%s][%s] %s%s',
@@ -165,6 +165,24 @@ abstract class Log
             flock($handle, LOCK_UN);
         } finally {
             fclose($handle);
+        }
+    }
+
+    private function _getCode()
+    {
+        try {
+            return method_exists($this->e, 'getCode') ? $this->e->getCode() : '-';
+        } catch (\Throwable $e) {
+            return '-';
+        }
+    }
+
+    private function _getMessage()
+    {
+        try {
+            return method_exists($this->e, 'getMessage') ? $this->e->getMessage() : '';
+        } catch (\Throwable $e) {
+            return '';
         }
     }
 }
