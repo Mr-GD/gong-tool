@@ -14,6 +14,21 @@ abstract class RabbitConsumeAbs implements RabbitMqConsume
 {
     use AssignParameter, Params;
 
+    protected $defaultValues = [];
+
+    public function __construct()
+    {
+        $this->defaultValues = get_class_vars(static::class);
+    }
+
+    public function reset()
+    {
+        foreach ($this->defaultValues as $property => $value) {
+            $this->{$property} = $value;
+        }
+        return $this;
+    }
+
     public function formatParams()
     {
         $this->assignParameter($this->params);
