@@ -179,15 +179,16 @@ class RabbitMq
                         if (is_callable($callback)) {
                             $callback($data);
                         } else {
-                            if ($callback instanceof RabbitConsumeAbs) {
+                            $make = new $callback();
+                            if ($make instanceof RabbitConsumeAbs) {
                                 try {
-                                    $callback->reset()->setParams($data)->formatParams()->consume();
+                                    $make->setParams($data)->formatParams()->consume();
                                 } catch (\Throwable $e) {
-                                    $callback->fail($this, $e);
+                                    $make->fail($this, $e);
                                     throw $e;
                                 }
 
-                                $callback->triggerEvent($this);
+                                $make->triggerEvent($this);
                             }
                         }
 
