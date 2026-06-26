@@ -114,31 +114,75 @@ abstract class Log
             }
         }
 
-        $maxNum = -1;
-        $files  = glob($this->dir . '/log-*.log');
-        if ($files) {
-            foreach ($files as $file) {
-                if (preg_match('#log-(\d+)\.log$#i', $file, $m)) {
-                    $num = (int)$m[1];
-                    if ($num > $maxNum) $maxNum = $num;
+        // ──── 4 槽持柄缓存 ────
+        static $cache = []; // ['dir' => ['file','size','handle','lastWrite']]
+
+        $slot = &$cache[$this->dir];
+
+        $hit = isset($slot['file'])
+            && $slot['size'] < $this->maxFileSize
+            && is_resource($slot['handle']);
+
+        if (!$hit) {
+            if (isset($slot['handle']) && is_resource($slot['handle'])) {
+                fclose($slot['handle']);
+            }
+
+            $maxNum = -1;
+            $files  = glob($this->dir . '/log-*.log');
+            if ($files) {
+                foreach ($files as $file) {
+                    if (preg_match('#log-(\d+)\.log$#i', $file, $m)) {
+                        $num = (int)$m[1];
+                        if ($num > $maxNum) $maxNum = $num;
+                    }
+                }
+            }
+
+            $fileCount = max($maxNum, 0);
+            $checkFile = $this->dir . sprintf('/log-%s.log', $fileCount);
+            $fileSize  = 0;
+
+            if (file_exists($checkFile)) {
+                $fileSize = filesize($checkFile) ?: 0;
+                if ($fileSize >= $this->maxFileSize) {
+                    $fileCount++;
+                    $fileSize = 0;
+                }
+            }
+
+            $fileDir = $this->dir . sprintf('/log-%s.log', $fileCount);
+
+            $handle = fopen($fileDir, 'ab');
+            if (!$handle) {
+                return;
+            }
+
+            $slot = [
+                'file'   => $fileDir,
+                'size'   => $fileSize,
+                'handle' => $handle,
+            ];
+
+            // 超过 4 槽：关最旧的
+            if (count($cache) > 4) {
+                $ordered = array_keys($cache);
+                $keep    = array_slice($ordered, -4, 4);
+                foreach ($cache as $k => $v) {
+                    if (!in_array($k, $keep, true)) {
+                        is_resource($v['handle']) && fclose($v['handle']);
+                        unset($cache[$k]);
+                    }
                 }
             }
         }
 
-        $fileCount = max($maxNum, 0);
-        $checkFile = $this->dir . sprintf('/log-%s.log', $fileCount);
-
-        if (file_exists($checkFile)) {
-            $fileSize = filesize($checkFile) ?: 0;
-            if ($fileSize >= $this->maxFileSize) {
-                $fileCount++;
-            }
-        }
-
-        $fileDir = $this->dir . sprintf('/log-%s.log', $fileCount);
-        $logMsg  = sprintf('[%s]', $this->logType) . trim($this->message);
+        $logMsg = sprintf('[%s]', $this->logType) . trim($this->message);
         if ($this->e !== null) {
-            $logMsg .= sprintf(' | [%s] Exception: ', $this->_getCode()) . $this->_getMessage() . PHP_EOL . $this->e->getTraceAsString();
+            $logMsg .= sprintf(' | [%s] Exception: ', $this->_getCode())
+                . $this->_getMessage()
+                . PHP_EOL
+                . $this->e->getTraceAsString();
         }
 
         $write = sprintf('[%s][%s][%s] %s%s',
@@ -149,22 +193,24 @@ abstract class Log
             PHP_EOL);
 
         if ($this->isAsync) {
-            file_put_contents($fileDir, $write, FILE_APPEND);
-            return;
+            $written = fwrite($slot['handle'], $write);
+        } else {
+            flock($slot['handle'], LOCK_EX);
+            $written = fwrite($slot['handle'], $write);
+            flock($slot['handle'], LOCK_UN);
         }
 
-        $handle = fopen($fileDir, 'ab');
+        $slot['size']      += ($written !== false ? $written : 0);
+        $slot['lastWrite'] = time();
 
-        if (!$handle) {
-            return;
-        }
-
-        try {
-            flock($handle, LOCK_EX);
-            fwrite($handle, $write);
-            flock($handle, LOCK_UN);
-        } finally {
-            fclose($handle);
+        // ──── 惰性回收：关闭超过 10 分钟没写入的句柄 ────
+        $now    = time();
+        $expire = $now - 600; // 10 分钟
+        foreach ($cache as $k => $v) {
+            if ($v['lastWrite'] < $expire) {
+                is_resource($v['handle']) && fclose($v['handle']);
+                unset($cache[$k]);
+            }
         }
     }
 
