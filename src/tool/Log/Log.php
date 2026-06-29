@@ -22,13 +22,13 @@ abstract class Log
 
     protected string $message;
 
-    protected ?\Throwable $e;
+    public ?\Throwable $e;
 
     protected int $maxFileSize = 52428800;
 
     protected int $fileCount;
 
-    protected ?string $ip;
+    public ?string $ip;
 
     /**
      * @var string info、warning、error、debug
@@ -44,7 +44,7 @@ abstract class Log
         /**
          * @var string 日志文件夹
          */
-        protected string $logCatalogue = ''
+        public string $logCatalogue = ''
     )
     {
         $this->option();
