@@ -2,15 +2,23 @@
 
 namespace gong\tool\Log;
 
+use gong\helper\traits\Data;
 use gong\helper\traits\Make;
 
 /**
  * @method $this setLogCatalogue(string $logCatalogue) 设置日志目录
  * @method $this setLogType(string $logType) 设置日志类型
+ * @method string logCatalogue() 日志目录
+ * @method string ip()  ip
+ * @method string requestId() 请求ID
+ * @method string logType() 日志类型
+ * @method string message() 传入的日志内容
+ * @method string e() 异常
+ * @method string writeMessage() 写入日志内容
  */
 abstract class Log
 {
-    use Make;
+    use Make, Data;
 
     protected string $dir;
     protected string $millFormatDate;
@@ -22,13 +30,13 @@ abstract class Log
 
     protected string $message;
 
-    public ?\Throwable $e;
+    protected ?\Throwable $e;
 
     protected int $maxFileSize = 52428800;
 
     protected int $fileCount;
 
-    public ?string $ip;
+    protected ?string $ip;
 
     /**
      * @var string info、warning、error、debug
@@ -40,11 +48,13 @@ abstract class Log
      */
     protected string $requestId;
 
+    protected string $writeMessage;
+
     public function __construct(
         /**
          * @var string 日志文件夹
          */
-        public string $logCatalogue = ''
+        protected string $logCatalogue = ''
     )
     {
         $this->option();
@@ -186,7 +196,7 @@ abstract class Log
                 . $this->e->getTraceAsString();
         }
 
-        $write = sprintf('[%s][%s][%s] %s%s',
+        $this->writeMessage = sprintf('[%s][%s][%s] %s%s',
             $this->millFormatDate,
             $this->ip,
             $this->requestId,
@@ -194,10 +204,10 @@ abstract class Log
             PHP_EOL);
 
         if ($this->isAsync) {
-            $written = fwrite($slot['handle'], $write);
+            $written = fwrite($slot['handle'], $this->writeMessage);
         } else {
             flock($slot['handle'], LOCK_EX);
-            $written = fwrite($slot['handle'], $write);
+            $written = fwrite($slot['handle'], $this->writeMessage);
             flock($slot['handle'], LOCK_UN);
         }
 
