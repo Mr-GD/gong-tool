@@ -100,6 +100,7 @@ abstract class Log
             $logCatalogue,
             date('Y/m/d')
         );
+        $this->logCatalogue   = $logCatalogue;
         $this->maxFileSize    = variable()->get('runtime_max_file_size', 52428800); //50M
         $this->ip             = getIp();
         $this->requestId      = variable()->get('request_id', '-');
