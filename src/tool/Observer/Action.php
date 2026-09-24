@@ -29,7 +29,6 @@ class Action implements Subject
     public function getNodeResult(Observer $panelPoint)
     {
         $classname = get_class($panelPoint);
-        $classname = basename(str_replace('\\', '/', $classname));
         return $this->result[$classname] ?? null;
     }
 
@@ -52,7 +51,6 @@ class Action implements Subject
     public function detach(Observer $observer)
     {
         $classname = get_class($observer);
-        $classname = basename(str_replace('\\', '/', $classname));
         unset($this->result[$classname]);
         return $this;
     }
@@ -67,16 +65,19 @@ class Action implements Subject
         /** @var ObserverAbs $observer */
         foreach ($this->_observer as $observer) {
             $classname = get_class($observer);
-            $classname = basename(str_replace('\\', '/', $classname));
             try {
-                $this->result[$classname] = $observer->setAction($this)->watch();
-            } catch (\Exception $e) {
-                $message = '【观察者】Classname:' . $classname;
-                $this->log($message, 'error', $e);
+                $observer->setAction($this)->watch();
+            } catch (\Throwable $e) {
+                $this->log(sprintf('[Observer notify error] %s Message:%s', $classname, $e->getMessage()), 'error', $e);
+                /** 可重试的观察者异常向上冒泡，交由队列重试机制处理 */
+                if ($observer instanceof ObserverAbs && $observer->isRetryable()) {
+                    throw $e;
+                }
             }
         }
 
         $this->_observer = [];
+        $this->result     = [];
 
         return true;
     }
@@ -105,5 +106,26 @@ class Action implements Subject
     protected function getLogCatalogue()
     {
         return 'Action';
+    }
+
+    /**
+     * 检测并移除不可序列化的观察者（含闭包、资源等），避免整批入队失败
+     * @return array 被移除的观察者类名列表
+     */
+    public function filterSerializable(): array
+    {
+        $removed = [];
+        foreach ($this->_observer as $key => $observer) {
+            try {
+                serialize($observer);
+            } catch (\Throwable $e) {
+                $classname = get_class($observer);
+                $removed[] = $classname;
+                $this->log(sprintf('[Observer not serializable, removed] %s Message:%s', $classname, $e->getMessage()), 'error', $e);
+                unset($this->_observer[$key]);
+            }
+        }
+        $this->_observer = array_values($this->_observer);
+        return $removed;
     }
 }

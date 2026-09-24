@@ -24,6 +24,12 @@ abstract class ObserverAbs implements Observer
 
     public array $params = [];
 
+    /**
+     * 失败时是否允许队列重试（默认 false，保持原有行为）
+     * 子类如需在临时故障时由队列重试，可设为 true
+     */
+    protected bool $retryable = false;
+
     public function __construct(array $params = [])
     {
         $this->params = $params;
@@ -37,12 +43,44 @@ abstract class ObserverAbs implements Observer
         try {
             $this->handle();
         } catch (\Throwable $e) {
-            $this->log($e->getMessage());
+            $this->log(sprintf('[Observer error] %s Message:%s Error:%s', static::class, $e->getMessage(), $e->getTraceAsString()), 'error', $e);
             $this->fail($e);
+            if ($this->retryable) {
+                throw $e;
+            }
             return;
         }
 
         $this->triggerEvent();
+    }
+
+    /**
+     * 是否允许重试
+     */
+    public function isRetryable(): bool
+    {
+        return $this->retryable;
+    }
+
+    /**
+     * 序列化时排除 $action（Action 持有 observer 列表，会循环引用），
+     * 只序列化 params 及子类属性，减少序列化体积
+     */
+    public function __sleep(): array
+    {
+        $properties = [];
+        $reflection = new \ReflectionObject($this);
+        do {
+            foreach ($reflection->getProperties() as $property) {
+                $name = $property->getName();
+                if ($name === 'action') {
+                    continue;
+                }
+                $properties[] = $name;
+            }
+        } while ($reflection = $reflection->getParentClass());
+
+        return array_unique($properties);
     }
 
     protected function getLogCatalogue()
