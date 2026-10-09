@@ -14,13 +14,13 @@ trait UsageLogs
      */
     protected function log($message, string $level = 'info', ?\Throwable $e = null)
     {
-        $logCatalogue = $this->getLogCatalogue();
+//        $logCatalogue = $this->getLogCatalogue();
         /** @var Log $logger */
         $logger = variable()->get('LOGGER');
         if (empty($logger)) {
             throw new \Exception('LOGGER is not exist');
         }
 
-        $logger::make($logCatalogue)->$level($message, $e);
+        $logger::make()->$level($message, $e);
     }
 }
