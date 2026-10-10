@@ -103,11 +103,6 @@ class Action implements Subject
         return $this->_observer;
     }
 
-    protected function getLogCatalogue()
-    {
-        return 'Action';
-    }
-
     /**
      * 检测并移除不可序列化的观察者（含闭包、资源等），避免整批入队失败
      * @return array 被移除的观察者类名列表

@@ -82,9 +82,4 @@ abstract class ObserverAbs implements Observer
 
         return array_unique($properties);
     }
-
-    protected function getLogCatalogue()
-    {
-        return sprintf('Observer/%s', str_replace('\\', '.', get_called_class()));
-    }
 }

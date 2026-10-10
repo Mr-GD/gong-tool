@@ -90,25 +90,26 @@ class RabbitMq
      */
     public function sendMessage(array $pushData = [])
     {
-        $message = sprintf('【生产者】【%s】Ex:%s Que: %s RoutingKey: %s',
+        $recordMessage = sprintf('【生产者】【%s】Ex:%s Que: %s RoutingKey: %s',
             $this->remark ?: '-',
             $this->exchange,
             $this->queue ?: '-',
             $this->routingKey ?: '-'
         );
+        $published = null;
         try {
             $this->_connection();
             $pushData = isManyArray($pushData) ? $pushData : [$pushData];
             foreach ($pushData as $pv) {
                 $requestId        = $pv['request_id'] ?? variable()->get('request_id');
                 $pv['request_id'] = $requestId ?: generateSnowflakeId(Datacenter::CLI);
-                $pv               = json_encode($pv, JSON_UNESCAPED_UNICODE);
-                $this->_connectionExchange->publish($pv, $this->routingKey);
-                $message .= ' 推送数据：' . $pv;
-                $this->log($message);
+                $published        = json_encode($pv, JSON_UNESCAPED_UNICODE);
+                $this->_connectionExchange->publish($published, $this->routingKey);
+                $this->log("{$recordMessage} 推送数据：{$published}");
             }
         } catch (Exception $e) {
-            $this->log($message, 'error', $e);
+            // 只记当前失败这条，不要把已推送成功的数据重复累加进同一行
+            $this->log("{$recordMessage} 推送失败" . ($published === null ? '' : " 数据：{$published}"), 'error', $e);
         } finally {
             if ($this->closeLink) {
                 $this->close();
@@ -168,7 +169,7 @@ class RabbitMq
                     $msg = $envelope->getBody();
                     $log = "{$recordMessage} 获取消息：" . $msg;
                     $this->log($log);
-                    consoleLine("{$recordMessage} 获取消息：" . $msg);
+                    consoleLine($log);
                     // 从信封获取数据的唯一标识
                     $envelopeID = $envelope->getDeliveryTag();
 
@@ -329,10 +330,5 @@ class RabbitMq
         }
 
         return $this->_connection->isConnected();
-    }
-
-    protected function getLogCatalogue()
-    {
-        return sprintf('RabbitMq/%s/%s', $this->exchange, $this->queue);
     }
 }
