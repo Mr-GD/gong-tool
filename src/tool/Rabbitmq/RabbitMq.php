@@ -22,6 +22,7 @@ use gong\tool\base\abs\RabbitConsumeAbs;
  * @method $this setVhost(string $vhost) 设置虚拟主机
  * @method $this setHeartbeat(int $heartbeat) 设置心跳
  * @method $this setCloseLink(bool $isClose) 关闭连接
+ * @method $this setRequeueOnFailure(bool $enabled) 消费失败是否重新入队并退出，默认关闭
  * @method mixed getData() 获取数据
  * -- getter
  * @method string exchange() 获取交换机
@@ -38,6 +39,9 @@ use gong\tool\base\abs\RabbitConsumeAbs;
 class RabbitMq
 {
     use Data, Make, UsageLogs;
+
+    /** 新消费者可选择失败重入队，现有消费者仍按原约定ACK失败消息。 */
+    protected bool $requeueOnFailure = false;
 
     /** 交换机 */
     protected $exchange;
@@ -196,6 +200,11 @@ class RabbitMq
                         //ack机制（消息确认机制，告知RabbitMQ数据已接收处理完成，可以安全删除）
                         $queue->ack($envelopeID);
                     } catch (\Throwable $e) {
+                        if ($this->requeueOnFailure) {
+                            $queue->nack($envelopeID, AMQP_REQUEUE);
+                            $this->log("$recordMessage Params: $msg", 'error', $e);
+                            throw $e;
+                        }
                         $queue->ack($envelopeID);
                         $this->log("$recordMessage Params: $msg", 'error', $e);
                         consoleLine("{$recordMessage} Error:" . $e->getMessage() . ' params:' . $msg);
